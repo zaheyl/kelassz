@@ -99,7 +99,7 @@
     font-size: 1.2rem;
     font-weight: bold;
 
-    border-radius: 6px;
+    border-radius: 15px;
 
     opacity: 0;
     transition: opacity 0.25s ease;
