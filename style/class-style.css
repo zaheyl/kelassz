@@ -1,0 +1,224 @@
+/* STACKED BOXES */
+.stack-container {
+    width: 100%;
+    margin: 0 auto 60px;
+}
+
+.stack {
+    background: #ddd;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+/*COURSE BOXES*/
+.stack-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 0px;
+}
+
+.stack1,
+.stack2,
+.stack3,
+.stack4 {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    margin: 0px;
+    border: 1px solid #ddd;
+    border-radius:20px;
+    transition: transform 0.25s ease;
+
+    background: linear-gradient(135deg, #0b1525, #2f5bae, #0b1525);
+    background-size: 300% 300%;
+    background-position: left center;
+
+    transition: background-position 1.5s ease;
+
+    text-decoration: none;
+    color: inherit;
+}
+
+.stack1:hover,
+.stack2:hover,
+.stack3:hover,
+.stack4:hover {
+    transform: scale(1.02);
+    background-position: right center;
+}
+
+.course-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.image-details {
+    display: none;
+    margin-top: 10px;
+}
+
+.class-wrapper.active .image-details {
+    display: block;
+}
+
+.course-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+    cursor: pointer;
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    border-radius: 6px;
+
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.image-wrapper:hover .image-overlay {
+    opacity: 1;
+}
+
+.course-content {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.course-content h3 {
+    margin: 0 0 6px;
+    font-size: 25px;
+    color: #ffffff;
+}
+.course-content h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.course-content p {
+    margin: 0 0 8px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.course-content button {
+    border: none;
+    height: 30px;
+    width: 100%;
+    color: #0b1525;
+    background-color: #ff6f91;
+    border-radius: 10px;
+}
+
+.course-content button:hover {
+    color: #0b1525;
+    background-color: #ff89a4;
+    cursor: pointer;
+}
+
+.course-content button:active {
+    color: #0b1525;
+    background-color: #ff6f91;
+    cursor: pointer;
+}
+
+.course-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.dot {
+    color: #999;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    display: block;
+    max-width: 90vw;
+    max-height: 90vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.modal-content-wrapper {
+    display: flex;
+    gap: 20px;
+    background: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 12px;
+    max-width: 900px;
+}
+
+.modal-left img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+}
+
+.modal-right img {
+    width: 200%;
+    max-width: 600px;
+    margin-left: 20px;
+}
+
+@keyframes popupIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

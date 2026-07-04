@@ -1,0 +1,53 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    font-family: "Inter", -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", sans-serif;
+
+    background-color: rgba(255, 255, 255, 0.902);
+    height: 5000px;
+}
+
+.page-container {
+    margin: 0 auto;
+    padding: 0 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#ctn-1,
+#title-header-2,
+#title-header-3 {
+    scroll-margin-top: var(--nav-height);
+}
+
+#title-header-1,
+#title-header-2,
+#title-header-3 {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    font-size:50px;
+    font-weight:normal;
+}
+
+/* Fade-in animation */
+#ctn-2,
+#ctn-3,
+#ctn-4 {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* When visible */
+#ctn-2.show,
+#ctn-3.show,
+#ctn-4.show {
+    opacity: 1;
+    transform: translateY(0);
+}

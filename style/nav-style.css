@@ -1,0 +1,36 @@
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgb(255, 255, 255);
+    z-index: 1000;
+
+    transition: box-shadow 0.3s ease;
+    
+}
+
+:root {
+    --nav-height: 70px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: auto;
+
+    height: var(--nav-height);
+}
+
+.nav-container a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    transition: 0.1s;
+    font-size: 17px;
+
+}
+
+.nav-container a:hover {
+    color: rgb(139, 61, 88);
+}
