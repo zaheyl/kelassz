@@ -12,6 +12,8 @@ body {
     height: 5000px;
 }
 
+
+
 .page-container {
     margin: 0 auto;
     padding: 0 20px;
@@ -19,7 +21,7 @@ body {
     padding-right: 20px;
 }
 
-#ctn-1,
+#ctn-1-1,
 #title-header-2,
 #title-header-3 {
     scroll-margin-top: var(--nav-height);
@@ -50,4 +52,14 @@ body {
 #ctn-4.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+@media (max-width: 1234px) {
+
+    html,
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
 }
