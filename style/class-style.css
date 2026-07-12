@@ -20,10 +20,7 @@
     width: 100%;
 }
 
-.stack1,
-.stack2,
-.stack3,
-.stack4 {
+.stack1 {
     display: flex;
     align-items: flex-start;
     gap: 12px;
@@ -43,10 +40,7 @@
     color: inherit;
 }
 
-.stack1:hover,
-.stack2:hover,
-.stack3:hover,
-.stack4:hover {
+.stack1:hover {
     transform: scale(1.02);
     background-position: right center;
 }
@@ -220,15 +214,16 @@
 
 @media (max-width: 650px) {
 
+    .stack1:hover {
+        transform: scale(1);
+        background-position: right center;
+    }
     .stack-container {
         grid-template-columns: repeat(1, 100%);
         justify-content: center;
         min-width: 350px;
     }
-    .stack1,
-    .stack2,
-    .stack3,
-    .stack4 {
+    .stack1 {
         flex-direction: column;
     }
 
@@ -245,10 +240,10 @@
     }
 
     .modal {
-        display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         align-items: center;
+        padding: 15px;
     }
     .modal-left,
     .modal-right {
@@ -256,7 +251,7 @@
     }
 
     .modal-left img {
-        width: 200%;
+        width: 110%;
         margin: 0;
     }
 

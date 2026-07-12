@@ -12,8 +12,6 @@ body {
     height: 5000px;
 }
 
-
-
 .page-container {
     margin: 0 auto;
     padding: 0 20px;
@@ -42,7 +40,7 @@ body {
 #ctn-3,
 #ctn-4 {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 

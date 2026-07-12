@@ -52,37 +52,43 @@ document.addEventListener("DOMContentLoaded", () => {
                 extraImg.style.display = "none";
             }
 
+            let scrollY = window.scrollY;
+
             modal.style.display = "flex";
+
+            document.body.style.position = "fixed";
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = "100%";
+            
         });
     });
 
-    // close on background click
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = "none";
-        }
+    // close on click
+    modal.addEventListener('click', () => {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
     });
 
-});
-
-document.querySelectorAll('.popup-image').forEach(img => {
-    img.addEventListener('click', () => {
-        console.log('Image clicked');
+    document.querySelectorAll('.popup-image').forEach(img => {
+        img.addEventListener('click', () => {
+            console.log('Image clicked');
+        });
     });
-});
 
-const sections = document.querySelectorAll("#ctn-2, #ctn-3, #ctn-4");
+    const sections = document.querySelectorAll("#ctn-2, #ctn-3, #ctn-4");
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-        } else {
-            entry.target.classList.remove("show");
-        }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+            } else {
+                entry.target.classList.remove("show");
+            }
+        });
+    }, {
+        threshold: 0.001
     });
-}, {
-    threshold: 0.1
-});
 
-sections.forEach(section => observer.observe(section));
+    sections.forEach(section => observer.observe(section));
+
+});
