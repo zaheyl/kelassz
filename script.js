@@ -36,6 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainImg = document.getElementById('modalMainImage');
     const extraImg = document.getElementById('modalExtraImage');
 
+    let savedScrollY = 0;
+
+    function getScrollbarWidth() {
+        return window.innerWidth - document.documentElement.clientWidth;
+    }
+
     document.querySelectorAll('.image-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
             const card = overlay.closest('.class-wrapper');
@@ -52,21 +58,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 extraImg.style.display = "none";
             }
 
-            let scrollY = window.scrollY;
+            savedScrollY = window.scrollY;
+            const scrollbarWidth = getScrollbarWidth();
 
             modal.style.display = "flex";
+            document.body.classList.add("modal-open");
 
+            document.body.style.overflow = "hidden";
             document.body.style.position = "fixed";
-            document.body.style.top = `-${scrollY}px`;
+            document.body.style.top = `-${savedScrollY}px`;
+            document.body.style.left = "0";
+            document.body.style.right = "0";
             document.body.style.width = "100%";
-            
+            document.body.style.paddingRight = `${scrollbarWidth}px`; // compensate for scrollbar removal
         });
     });
 
     // close on click
-    modal.addEventListener('click', () => {
+    modal.addEventListener("click", () => {
         modal.style.display = "none";
-        document.body.style.overflow = "auto";
+        document.body.classList.remove("modal-open");
+
+        document.body.style.overflow = "";
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+        document.body.style.paddingRight = "";
+
+        window.scrollTo({ top: savedScrollY, behavior: "instant" }); // no animation, no visible jump
     });
 
     document.querySelectorAll('.popup-image').forEach(img => {

@@ -2,11 +2,10 @@ header {
     position: sticky;
     top: 0;
     width: 100%;
-    background: rgb(255, 255, 255);
-    z-index: 1000;
+    background: rgb(232, 243, 255);
+    z-index: 9999;
 
     transition: box-shadow 0.3s ease;
-    
 }
 
 :root {
@@ -28,9 +27,22 @@ header {
     color: rgb(0, 0, 0);
     transition: 0.1s;
     font-size: 17px;
-
 }
 
 .nav-container a:hover {
     color: rgb(139, 61, 88);
+}
+
+
+
+@media (max-width: 650px) {
+    .nav-container a {
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+        transition: 0.1s;
+        font-size: 16px;
+    }
+    .nav-container {
+        gap: 20px;
+    }
 }

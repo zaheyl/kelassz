@@ -83,7 +83,7 @@
         gap: 8px;
     }
     .box {
-        height: clamp(160px, 45vw, 250px);
+        height: clamp(100px, 45vw, 150px);
         padding: clamp(12px, 4vw, 20px);
     }
     .box-text {
