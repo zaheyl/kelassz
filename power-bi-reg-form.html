@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_top">
+    <title>Join Power BI Class now!</title>
+    <link rel="stylesheet" href="style/reg-form/power-bi.css">
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+
+        <div class="class-image">
+            <img src="photo/class/powerbi.png">
+        </div>
+
+
+        <div class="container">
+
+            <h2>Register Now!</h2>
+
+            <div class="row">
+                <label>Name</label>
+                <input id="name" placeholder="Muhammad Ali bin Abu" required>
+            </div>
+
+            <div class="row">
+                <label>Phone Number</label>
+                <input type="tel" id="phone" placeholder="0132461004" required>
+            </div>
+
+            <div class="row">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="training@gmail.com" required>
+            </div>
+
+            <div class="row">
+                <label>Choose Class</label>
+                <select id="kelas" required>
+                    <option>Kelas Rm39 10/7/2026</option>
+                    <option>Kelas Rm39 17/7/2026</option>
+                    <option>Kelas Rm39 24/7/2026</option>
+                    <option>Kelas Rm39 31/7/2026</option>
+                </select>
+            </div>
+
+            <button id="joinBtn" onclick="join()">Join Us</button>
+
+        </div>
+
+    </div>
+
+        <div class="popup" id="popup">
+        <div class="popup-content">
+          <h3>
+          Thank you for joining SSZ Training! 🎉
+          </h3>
+          <img src="photo/qr-bank.jpg">
+          <h3>
+          You're only one step away! 
+          </h3>
+          <p>
+            <i>
+                Please make payment through this QR to confirm your registration. 
+                Once payment is confirmed, you received a invitation link to your class through your email!
+                This would take up to 24 hours.
+            </i>
+          </p>
+          <button id="popup" onclick="closePopup()">
+          Close
+          </button>
+        </div>
+      </div>
+
+    <script src="script/power-bi-script.js"></script>
+</body>
+</html>
