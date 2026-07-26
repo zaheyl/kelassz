@@ -62,7 +62,7 @@ function join(){
         phone:phone,
         email:email,
         classChoice:kelas,
-        sheetName: "Power BI"
+        sheetName: "SQL Level 2"
     };
 
 
