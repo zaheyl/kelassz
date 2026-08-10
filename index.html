@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SSZ Training</title>
+    <meta name="description" content="SSZ Training offers affordable, practical tech skills classes in Kuala Lumpur — Power BI, SQL, Excel, Python, and Web Development.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/container/about-style.css">
@@ -12,40 +17,44 @@
     <link rel="stylesheet" href="style/container/vm-style.css">
     <link rel="stylesheet" href="style/slideshow/slideshow-style.css">
     <link rel="stylesheet" href="style/slideshow/slide1.css">
-    <link rel="stylesheet" href="style/slideshow/slide2.css">
-
 
 </head>
 
 <body>
     <header>
         <nav class="nav-container">
-            <a href="#ctn-1-1">What's new</a>
-            <a href="#title-header-2">Class</a>
-            <a href="#title-header-3">About Us</a>
-            <a href="https://wa.link/3wliqw" target="_blank">Contact Us</a>
+            <a href="#ctn-1-1" class="nav-logo">SSZ <span>Training</span></a>
+            <div class="nav-links">
+                <a href="#ctn-1-1">What's new</a>
+                <a href="#eyebrow-2">Class</a>
+                <a href="#eyebrow-3">About Us</a>
+                <a href="https://wa.link/3wliqw" target="_blank" class="nav-cta">Contact Us</a>
+            </div>
         </nav>
     </header>
 
     <div class="content-wrapper">
-        <div id="ctn-1-1" class="slideshow-container">
-            <div class="slides">
-                <div class="slide1">
-                    <div class="slide1-content">
-                        <img class="bnr1" src="photo/slideshow/banner-1.PNG">
-                        <img class="bnr11" src="photo/slideshow/banner-text-1-1.png">
-                        <img class="bnr12" src="photo/slideshow/banner-text-1-2.png">
-                    </div>
-                </div>
+
+        <div id="ctn-1-1" class="hero">
+            <!-- placeholder photo — swap for real SSZ Training photography. The dissolve
+                 on desktop and the dimmed full-bleed treatment on mobile are both pure
+                 CSS (mask-image / filter), so any photo dropped in here picks up both. -->
+            <div class="hero-media" aria-hidden="true">
+                <img src="https://picsum.photos/seed/ssz-training-hero/1600/1400" alt="">
             </div>
-        </div>
-        <div id="ctn-1-2" class="slideshow-container">
-            <div class="slides">
-                <div class="slide2">
-                    <div class="slide2-content">
-                        <img class="bnr2" src="photo/slideshow/banner-1.PNG">
-                        <img class="bnr21" src="photo/slideshow/banner-text-1-1.png">
-                        <img class="bnr22" src="photo/slideshow/banner-text-1-2.png">
+
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <div class="hero-eyebrow">Practical skills, real results</div>
+                    <h1 class="hero-title">Learn skills that <em>actually</em> get you hired.</h1>
+                    <p class="hero-lede">
+                        Hands-on Power BI, SQL, Excel, Python, and web development
+                        classes — taught by real trainers, priced for students and
+                        fresh grads.
+                    </p>
+                    <div class="hero-cta-row">
+                        <a href="#title-header-2" class="hero-btn">Explore our classes</a>
+                        <a href="#title-header-3" class="hero-btn-ghost">Meet the team</a>
                     </div>
                 </div>
             </div>
@@ -54,7 +63,10 @@
         <div class="page-container">
 
             <!-- VM initially, but removed to replaced ads -->
-            <h1 id="title-header-1">Why should you join us?</h1>
+            <div class="section-heading">
+                <span class="eyebrow" id="eyebrow-1">Why SSZ Training</span>
+                <h1 id="title-header-1">Why should you join us?</h1>
+            </div>
             <div id="ctn-2" class="vm-container">
                 <div class="box">
                     <div class="box-text">
@@ -106,23 +118,11 @@
                 </div>
             </div>
 
-        </div>
-
-        <div id="ctn-1-3" class="slideshow-container">
-            <div class="slides">
-                <div class="slide2">
-                    <div class="slide2-content">
-                        <img class="bnr2" src="photo/slideshow/banner-1.PNG">
-                        <img class="bnr21" src="photo/slideshow/banner-text-1-1.png">
-                        <img class="bnr22" src="photo/slideshow/banner-text-1-2.png">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-container">
             <!-- CLASS OFFERED -->
-            <h1 id="title-header-2">Explore our class today...</h1>
+            <div class="section-heading">
+                <span class="eyebrow" id="eyebrow-2">Our Programs</span>
+                <h1 id="title-header-2">Explore our class today...</h1>
+            </div>
             <div id="ctn-3" class="stack-container">
                 <!--STARTCLASS-->
 
@@ -159,6 +159,7 @@
                             <h4 class="course-text">1 hour 45 minutes</h4>
                             <p class="dot">•</p>
                             <h4 class="course-text">★★☆☆☆</h4>
+                            
                         </div>
 
                         <button class="enroll" onclick="window.location.href='course-reg-form/power-bi-reg-form.html'">Enroll now!</button>
@@ -228,7 +229,6 @@
                                 <br>✅ Retrieve data using SELECT
                                 <br>✅ Filter, sort & search data
                                 <br>✅ Create simple reports with SQL queries
-                                <br><br>
                             </em>
                         </p>
 
@@ -377,10 +377,6 @@
                         <img src="photo/class-details/web-dev-details.png">
                     </div>
 
-                    <div class="image-details">
-                        <img src="photo/class/powerbi.png">
-                    </div>
-
                     <div class="course-content">
                         <h3>Website Development - Beginner</h3>
                         <p class="course-text">
@@ -409,9 +405,12 @@
             </div>
 
             <!-- ABOUT -->
-            <h1 id="title-header-3">About Our Team</h1>
+            <div class="section-heading">
+                <span class="eyebrow" id="eyebrow-3">The Team</span>
+                <h1 id="title-header-3">About Our Team</h1>
+            </div>
 
-            <div id="ctn-4" class="newspaper-container">
+            <div id="ctn-4" class="team-container">
 
                 <article class="team-intro">
 
@@ -442,7 +441,7 @@
 
                 <section class="team-grid">
 
-                    <div class="member">
+                    <div class="member" data-initial="E">
                         <h3>Epul</h3>
                         <h4>Business Developer</h4>
                         <p>
@@ -454,7 +453,7 @@
                     </div>
 
 
-                    <div class="member">
+                    <div class="member" data-initial="S">
                         <h3>Safar</h3>
                         <h4>Marketing & Sales Analyst</h4>
                         <p>
@@ -466,7 +465,7 @@
                     </div>
 
 
-                    <div class="member">
+                    <div class="member" data-initial="Z">
                         <h3>Zahil</h3>
                         <h4>Software Developer</h4>
                         <p>
@@ -478,7 +477,7 @@
                     </div>
 
 
-                    <div class="member">
+                    <div class="member" data-initial="Y">
                         <h3>Yus</h3>
                         <h4>Business Executive</h4>
                         <p>
@@ -489,7 +488,7 @@
                     </div>
 
 
-                    <div class="member">
+                    <div class="member" data-initial="A">
                         <h3>Ali</h3>
                         <h4>Business Executive</h4>
                         <p>

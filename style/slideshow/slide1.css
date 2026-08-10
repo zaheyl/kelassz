@@ -1,114 +1,178 @@
-.slide1 {
-    min-width:100%;
-    height:auto;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-shrink:0;
+/* =========================================================
+   HERO — text pinned to the left, photo bleeding in from the
+   right and dissolving into the dark ground via a CSS mask
+   (no hard edge). On narrow screens the photo becomes a dimmed
+   full-bleed background instead, since there's no room for a
+   side-by-side split.
+   Scoped to its own --hero-* custom properties so it doesn't
+   affect the rest of the (light navy/amber) page.
+   ========================================================= */
 
-    background:linear-gradient(135deg,#04235d,#a885f9,#04235d);
-    background-size:200% 200%;
-    background-position:left center;
-    
-    transition:background-position 1.5s ease;
+.hero {
+    --hero-bg: #1c1815;
+    --hero-panel: #241f1b;
+    --hero-ink: #f2ece3;
+    --hero-muted: #b9ab9a;
+    --hero-accent: #e08a3e;
+    --hero-accent-hover: #f0a15d;
+    --hero-line: #38312b;
+
+    position: relative;
+    overflow: hidden;
+    background: var(--hero-bg);
+    min-height: 560px;
+    display: flex;
+    align-items: center;
 }
 
-.slide1:hover {
-    background-position:right center;
+/* ---- photo, masked to dissolve into the left side ---- */
+.hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
 }
 
-.slide1-content {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:40px;
+.hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
 
-    max-width:1000px;
-    width:100%;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 45%, rgba(0, 0, 0, 0.6) 70%, #000 90%);
+    mask-image: linear-gradient(to right, transparent 0%, transparent 45%, rgba(0, 0, 0, 0.6) 70%, #000 90%);
 }
 
-.bnr1 {
-    width:360px;
+.hero-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--hero-bg) 0%, rgba(28, 24, 21, 0.55) 32%, transparent 58%);
 }
 
-.bnr11 {
-    width:650px;
+/* ---- text, pinned to the left edge of the page grid ---- */
+.hero-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 40px;
 }
 
-.bnr12 {
-    display:none;
+.hero-text {
+    max-width: 460px;
+    padding: 7vw 0;
 }
 
-@media(max-width:1200px) and (min-width:950px){
-
-    .slide1-content{
-        gap:20px;
-        padding:0 20px;
-    }
-
-    .bnr1{
-        width:275px;
-    }
-
-    .bnr11{
-        width:500px;
-    }
+.hero-eyebrow {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hero-accent);
+    margin-bottom: 1.25rem;
 }
 
-@media(max-width:949px) and (min-width:700px){
-
-    .slide1{
-        min-height:300px;
-    }
-
-    .slide1-content{
-        gap:20px;
-        padding:0 20px;
-    }
-
-    .bnr1{
-        width:275px;
-    }
-
-    .bnr11{
-        width:350px;
-    }
+.hero-title {
+    font-family: Georgia, "Iowan Old Style", serif;
+    font-weight: normal;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.14;
+    margin: 0 0 1.25rem;
+    color: var(--hero-ink);
 }
 
-@media (max-width: 699px) {
+.hero-title em {
+    font-style: italic;
+    color: var(--hero-accent);
+}
 
-    .slide1{
-        width: 100vw;          /* stretches full left-to-right */
-        min-height: 300px;
-        min-width: 100px;
+.hero-lede {
+    font-family: Georgia, "Iowan Old Style", serif;
+    color: var(--hero-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0 0 2.25rem;
+}
+
+.hero-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    display: inline-block;
+    background: var(--hero-accent);
+    color: var(--hero-bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 3px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.hero-btn:hover,
+.hero-btn:focus-visible {
+    background: var(--hero-accent-hover);
+    transform: translateY(-1px);
+}
+
+.hero-btn-ghost {
+    color: var(--hero-muted);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--hero-line);
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.hero-btn-ghost:hover,
+.hero-btn-ghost:focus-visible {
+    color: var(--hero-ink);
+    border-color: var(--hero-accent);
+}
+
+/* ---- mobile: photo becomes a dimmed full-bleed background ---- */
+@media (max-width: 650px) {
+    .hero {
+        min-height: 480px;
     }
 
-    .slide1-content{
-        display: flex;
+    .hero-media img {
+        object-position: center;
+        filter: brightness(0.4);
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .hero-media::after {
+        background: rgba(28, 24, 21, 0.35);
+    }
+
+    .hero-inner {
+        padding: 0 20px;
+    }
+
+    .hero-text {
+        max-width: 100%;
+        padding: 18vw 0 14vw;
+    }
+
+    .hero-title {
+        font-size: 1.9rem;
+    }
+
+    .hero-cta-row {
         flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        max-width: 600px;      /* keeps content from stretching too wide */
-        margin: 0 auto;        /* centers it inside slide1 */
-        height: 300px;
+        align-items: flex-start;
+        gap: 1rem;
     }
-
-    .bnr12{
-        display:flex;
-        max-width:300px;
-        margin: 0 auto;        /* centers this block too */
-        order:1;
-    }
-
-    .bnr11{
-        display:none;      
-    }
-
-    .bnr1{
-        width:190px;
-        margin: 0 auto;
-        order:2;
-    }
-
 }

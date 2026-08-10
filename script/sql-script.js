@@ -66,7 +66,7 @@ function join(){
     };
 
 
-    fetch("https://script.google.com/macros/s/AKfycbypfD9VhiXor7DG1wmHKoDcuYtKveaVvv493JEk0fswS7Q81bdTv0RKPll0qRIh2CBo/exec",{
+    fetch("https://script.google.com/macros/s/AKfycbwn6aBHRKGA8TrYGAtEDyNHEb_Jt-h9z3GrBKonXKRAkOh6U9c2T6YrGycWxGmo3W5s/exec",{
 
         method:"POST",
 

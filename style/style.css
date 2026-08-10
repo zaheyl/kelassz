@@ -1,40 +1,142 @@
+/* =========================================================
+   SSZ TRAINING — DESIGN TOKENS
+   Palette: ink navy (trust/competence) + signal amber (credential/
+   highlight gold) + paper blue (calm, airy background).
+   Type: Space Grotesk (display) / Inter (body) / IBM Plex Mono (data,
+   labels — course meta and section eyebrows read like a syllabus).
+   ========================================================= */
+
+:root {
+    --color-ink: #10233f;
+    --color-navy: #1b3a64;
+    --color-navy-light: #2a5187;
+    --color-amber: #e8a33d;
+    --color-amber-dark: #c7842a;
+    --color-paper: #eaf2fc;
+    --color-white: #ffffff;
+    --color-slate: #5b6b7c;
+    --color-border: #dde6f0;
+
+    --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+    --nav-height: 76px;
+
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 8px;
+
+    --shadow-sm: 0 2px 10px rgba(16, 35, 63, 0.06);
+    --shadow-md: 0 10px 30px rgba(16, 35, 63, 0.08);
+    --shadow-lg: 0 24px 50px rgba(16, 35, 63, 0.16);
+
+    --container-max: 1200px;
+}
+
 html {
     scroll-behavior: smooth;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    background-color: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+}
 
-    font-family: "Inter", -apple-system, BlinkMacSystemFont,
-                 "Segoe UI", sans-serif;
-
-    background-color: rgb(232, 243, 255);
+img {
+    max-width: 100%;
 }
 
 .page-container {
+    max-width: var(--container-max);
     margin: 0 auto;
-    padding: 0 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0 40px;
 }
 
 #ctn-1-1,
 #title-header-2,
-#title-header-3 {
+#title-header-3,
+#eyebrow-1,
+#eyebrow-2,
+#eyebrow-3 {
     scroll-margin-top: var(--nav-height);
 }
 
-#title-header-1,
-#title-header-2,
-#title-header-3 {
+/* ---- Section heading signature: mono eyebrow + amber rule ---- */
+.section-heading {
     text-align: center;
-    padding-top: 30px;
-    padding-bottom: 10px;
-    font-size:50px;
-    font-weight:normal;
+    padding-top: 70px;
+    padding-bottom: 34px;
 }
 
-/* Fade-in animation */
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-amber-dark);
+    margin-bottom: 14px;
+    padding-top: 20px;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+    content: "";
+    width: 24px;
+    height: 2px;
+    background: var(--color-amber);
+    border-radius: 2px;
+}
+
+.eyebrow-1,
+.eyebrow-2,
+.eyebrow-3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-amber-dark);
+    margin-bottom: 14px;
+}
+
+.eyebrow-1::before,
+.eyebrow-1::after,
+.eyebrow-2::before,
+.eyebrow-2::after,
+.eyebrow-3::before,
+.eyebrow-3::after {
+    content: "";
+    width: 24px;
+    height: 2px;
+    background: var(--color-amber);
+    border-radius: 2px;
+}
+
+.section-heading h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 44px;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+}
+
+/* Fade-in animation on scroll */
 #ctn-2,
 #ctn-3,
 #ctn-4 {
@@ -43,7 +145,6 @@ body {
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* When visible */
 #ctn-2.show,
 #ctn-3.show,
 #ctn-4.show {
@@ -52,24 +153,23 @@ body {
 }
 
 @media (max-width: 1234px) {
-
     .content-wrapper {
         width: 100%;
         overflow-x: hidden;
     }
-
 }
 
 @media (max-width: 650px) {
-
-    #title-header-1,
-    #title-header-2,
-    #title-header-3 {
-        text-align: center;
-        padding-top: 30px;
-        padding-bottom: 10px;
-        font-size:35px;
-        font-weight:normal;
+    .page-container {
+        padding: 0 20px;
     }
 
+    .section-heading {
+        padding-top: 46px;
+        padding-bottom: 22px;
+    }
+
+    .section-heading h1 {
+        font-size: 30px;
+    }
 }

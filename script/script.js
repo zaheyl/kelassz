@@ -1,29 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ===== Slideshow ===== 
-    /*let index = 0;
-    const slides = document.querySelector(".slides");
-    const slideItems = document.querySelectorAll(".slide1, .slide2");
-    const totalSlides = slideItems.length;
-
-    function updateSlide() {
-        slides.style.transform = `translateX(-${index * 100}%)`;
-    }
-
-    window.changeSlide = function(step) {
-        index += step;
-
-        if (index >= totalSlides) index = 0;
-        if (index < 0) index = totalSlides - 1;
-
-        updateSlide();
-    };
-
-    setInterval(() => {
-        changeSlide(1);
-    }, 15000);
-    */
-
     // ===== Header Shadow =====
     const header = document.querySelector('header');
 
@@ -96,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // ===== Scroll reveal =====
     const sections = document.querySelectorAll("#ctn-2, #ctn-3, #ctn-4");
 
     const observer = new IntersectionObserver((entries) => {
