@@ -11,12 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/container/about-style.css">
-    <link rel="stylesheet" href="style/container/class-style.css">
-    <link rel="stylesheet" href="style/container/nav-style.css">
-    <link rel="stylesheet" href="style/container/vm-style.css">
-    <link rel="stylesheet" href="style/slideshow/slideshow-style.css">
-    <link rel="stylesheet" href="style/slideshow/slide1.css">
 
 </head>
 
@@ -53,8 +47,8 @@
                         fresh grads.
                     </p>
                     <div class="hero-cta-row">
-                        <a href="#title-header-2" class="hero-btn">Explore our classes</a>
-                        <a href="#title-header-3" class="hero-btn-ghost">Meet the team</a>
+                        <a href="#eyebrow-2" class="hero-btn">Explore our classes</a>
+                        <a href="#eyebrow-3" class="hero-btn-ghost">Meet the team</a>
                     </div>
                 </div>
             </div>
@@ -518,7 +512,18 @@
 
             <script src="script/script.js"></script>
         </div>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <p>&copy; <span id="copyright-year">2026</span> SSZ Training. All rights reserved.</p>
+            </div>
+        </footer>
+
     </div>    
+
+    <script>
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
 
 </body>
 
