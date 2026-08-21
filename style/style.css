@@ -71,12 +71,12 @@ img {
     padding: 0 40px;
 }
 
-#ctn-1-1,
+#home,
 #title-header-2,
 #title-header-3,
 #eyebrow-1,
-#eyebrow-2,
-#eyebrow-3 {
+#our-programs,
+#the-team {
     scroll-margin-top: var(--nav-height);
 }
 
@@ -111,8 +111,8 @@ img {
 }
 
 .eyebrow-1,
-.eyebrow-2,
-.eyebrow-3 {
+.our-programs,
+.the-team {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -127,10 +127,10 @@ img {
 
 .eyebrow-1::before,
 .eyebrow-1::after,
-.eyebrow-2::before,
-.eyebrow-2::after,
-.eyebrow-3::before,
-.eyebrow-3::after {
+.our-programs::before,
+.our-programs::after,
+.the-team::before,
+.the-team::after {
     content: "";
     width: 24px;
     height: 2px;
