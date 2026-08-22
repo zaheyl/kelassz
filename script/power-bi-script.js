@@ -1,5 +1,99 @@
 alert("Please make sure all info entered are correct :)\nThe official name and email will be used for certificates purposes\n\nDo not hesitate to contact us if there is wrongly submitted info!\nThank you!")
 
+document.addEventListener("DOMContentLoaded", () => {
+    const monthLabel = document.getElementById('calendarMonthLabel');
+    const grid = document.getElementById('calendarGrid');
+    const prevBtn = document.getElementById('prevMonth');
+    const nextBtn = document.getElementById('nextMonth');
+    const kelasInput = document.getElementById('kelas');
+
+    const monthNames = ["January","February","March","April","May","June",
+                         "July","August","September","October","November","December"];
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let viewYear = today.getFullYear();
+    let viewMonth = today.getMonth();
+
+    function pad(n) {
+        return String(n).padStart(2, '0');
+    }
+
+    function renderCalendar(year, month) {
+        grid.innerHTML = '';
+        monthLabel.textContent = `${monthNames[month]} ${year}`;
+
+        const firstDay = new Date(year, month, 1);
+        const startWeekday = firstDay.getDay(); // 0 = Sunday
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 0; i < startWeekday; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'calendar-day empty';
+            grid.appendChild(empty);
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const cellDate = new Date(year, month, d);
+            const weekday = cellDate.getDay(); // 5 = Friday, 6 = Saturday
+            const dateStr = `${cellDate.getFullYear()}-${pad(cellDate.getMonth() + 1)}-${pad(cellDate.getDate())}`;
+
+            const cell = document.createElement('div');
+            cell.className = 'calendar-day';
+            cell.textContent = d;
+
+            const BLOCKED_DATES = new Set([
+                "",
+            ]);
+
+            const EXTRA_DATES = new Set([
+                "",
+            ]);
+
+            //saturday only
+            const isFriOrSat = (weekday === 5);
+            const isBlocked = BLOCKED_DATES.has(dateStr);
+            const isExtra = EXTRA_DATES.has(dateStr);
+            const isPast = cellDate < today;
+
+            if ((isFriOrSat || isExtra) && !isPast && !isBlocked) {
+                cell.classList.add('available');
+                cell.addEventListener('click', () => selectDate(cellDate, dateStr, cell));
+            } else {
+                cell.classList.add('disabled');
+            }
+
+            if (kelasInput.value === dateStr) {
+                cell.classList.add('selected');
+            }
+
+            grid.appendChild(cell);
+        }
+    }
+
+    function selectDate(date, dateStr, cell) {
+        document.querySelectorAll('.calendar-day.selected').forEach(el => el.classList.remove('selected'));
+        cell.classList.add('selected');
+
+        kelasInput.value = dateStr;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        viewMonth--;
+        if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+        renderCalendar(viewYear, viewMonth);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        viewMonth++;
+        if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+        renderCalendar(viewYear, viewMonth);
+    });
+
+    renderCalendar(viewYear, viewMonth);
+});
+
 function join(){
     const btn = document.getElementById("joinBtn");
 

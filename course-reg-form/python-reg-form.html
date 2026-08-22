@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base target="_top">
     <title>Join Python Class now!</title>
-    <link rel="stylesheet" href="../style/reg-form/power-bi.css">
+    <link rel="stylesheet" href="../style/reg-form.css">
 </head>
 
 <body>
@@ -37,13 +37,23 @@
             </div>
 
             <div class="row">
-                <label>Choose Class</label>
-                <select id="kelas" required>
-                    <option>Kelas Rm39 10/7/2026</option>
-                    <option>Kelas Rm39 17/7/2026</option>
-                    <option>Kelas Rm39 24/7/2026</option>
-                    <option>Kelas Rm39 31/7/2026</option>
-                </select>
+                <label for="kelas">Choose Class</label>
+                <input type="text" id="kelas" name="kelas"
+                    class="kelas-input"
+                    placeholder="Select a Friday or Saturday below"
+                    readonly required>
+
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <button type="button" id="prevMonth" aria-label="Previous month">&lsaquo;</button>
+                        <span id="calendarMonthLabel"></span>
+                        <button type="button" id="nextMonth" aria-label="Next month">&rsaquo;</button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
             </div>
 
             <button id="joinBtn" onclick="join()">Join Us</button>
