@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===== Modal =====
     const modal = document.getElementById('imageModal');
     const mainImg = document.getElementById('modalMainImage');
-    const extraImg = document.getElementById('modalExtraImage');
+    const detailsPanel = document.getElementById('modalDetailsPanel');
 
     let savedScrollY = 0;
 
@@ -23,15 +23,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = overlay.closest('.class-wrapper');
 
             const img1 = card.querySelector('.image-wrapper img');
-            const img2 = card.querySelector('.image-details img');
+            const details = card.querySelector('.image-details .modal-details');
 
             mainImg.src = img1.src;
 
-            if (img2) {
-                extraImg.src = img2.src;
-                extraImg.style.display = "block";
+            if (details) {
+                detailsPanel.innerHTML = details.innerHTML;
+                detailsPanel.style.display = "block";
             } else {
-                extraImg.style.display = "none";
+                detailsPanel.innerHTML = "";
+                detailsPanel.style.display = "none";
             }
 
             savedScrollY = window.scrollY;

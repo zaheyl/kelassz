@@ -4,7 +4,7 @@
 }
 
 body{
-    background:#f4f6fa;
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 40%, #f7d3de 100%);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -65,7 +65,7 @@ select{
 input:focus,
 select:focus{
     outline:none;
-    border:1px solid #0066ff;
+    border:1px solid #000000;
 }
 
 button{
@@ -75,13 +75,13 @@ button{
     border-radius:8px;
     cursor:pointer;
     font-size:16px;
-    background:#0066ff;
+    background:#000000;
     color:white;
     font-weight:bold;
 }
 
 button:hover{
-    background:#004fcc;
+    background:#b20000;
 }
 
 button:disabled{

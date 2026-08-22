@@ -8,10 +8,10 @@
 
 :root {
     /* ---- Core palette: main blue / light blue accent / pink accent / white ---- */
-    --color-blue: #1a4d80;
-    --color-blue-light: #5b9bd5;
-    --color-pink: #d6567e;
-    --color-pink-dark: #b5395f;
+    --color-blue: #000000;
+    --color-blue-light: #6dcefb;
+    --color-pink: #ff95b6;
+    --color-pink-dark: #b20000;
     --color-white: #ffffff;
 
     /* Legacy variable names kept so the rest of the stylesheet doesn't need
@@ -27,9 +27,9 @@
 
     --bg-gradient: linear-gradient(180deg, #ffffff 0%, #ffffff 40%, #f7d3de 100%);
 
-    --font-display: "Space Grotesk", "Segoe UI", sans-serif;
-    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-mono: "IBM Plex Mono", "Courier New", monospace;
+    --font-display: "Calibri", "Segoe UI", sans-serif;
+    --font-body: "Calibri", "Segoe UI", sans-serif;
+    --font-mono: "Calibri", "Segoe UI", sans-serif;
 
     --nav-height: 76px;
 
@@ -495,7 +495,6 @@ header.scrolled {
     }
 
     .hero-text {
-        max-width: 100%;
         padding: 18vw 0 14vw;
     }
 
@@ -516,7 +515,6 @@ header.scrolled {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 
-    width: 100%;
 }
 
 .box {
@@ -595,7 +593,7 @@ header.scrolled {
 }
 
 .box-image img {
-    width: 100%;
+    width: 120%;
     height: auto;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
 }
@@ -612,7 +610,9 @@ header.scrolled {
 /* Below 1200px: 2 columns */
 @media (max-width: 1200px) {
     .vm-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 300px);
+        justify-content: center;
+
     }
 }
 
@@ -837,26 +837,104 @@ body.modal-open {
 }
 
 .modal-content-wrapper {
+    position: relative;
     display: flex;
+    flex-direction: row;
+    align-items: stretch;
     gap: 20px;
     background: var(--color-white);
-    padding: 14px;
+    padding: 16px;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     max-width: 900px;
+    max-height: 90vh;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(16, 35, 63, 0.08);
+    color: var(--color-ink);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.modal-close:hover {
+    background: var(--color-amber);
+    color: var(--color-white);
+}
+
+.modal-left {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
 }
 
 .modal-left img {
-    max-width: 400px;
+    width: 360px;
+    max-width: 100%;
     border-radius: var(--radius-md);
     display: block;
+    object-fit: cover;
 }
 
-.modal-right img {
-    max-width: 600px;
-    margin-left: 20px;
+/* ---- Right panel: dark detail card (replaces the old details image) ---- */
+.modal-right {
+    flex: 1 1 360px;
+    min-width: 280px;
+    max-width: 460px;
+    background: #14181f;
+    color: var(--color-white);
     border-radius: var(--radius-md);
-    display: block;
+    padding: 28px 30px;
+    overflow-y: auto;
+    max-height: calc(90vh - 32px);
+}
+
+.modal-details-heading {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--color-white);
+}
+
+.modal-details-heading:not(:first-child) {
+    margin-top: 22px;
+}
+
+.modal-details-sub {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.modal-details-list {
+    margin: 10px 0 0;
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.modal-details-list li {
+    margin-bottom: 8px;
+    font-size: 14.5px;
+    line-height: 1.5;
+}
+
+.modal-details-list li::marker {
+    color: var(--color-amber);
 }
 
 @keyframes popupIn {
@@ -878,6 +956,7 @@ body.modal-open {
 
     .stack-container {
         min-width: 0;
+            grid-template-columns: repeat(1, 1fr);
     }
 
     .stack1 {
@@ -916,23 +995,31 @@ body.modal-open {
 
     .modal-content-wrapper {
         flex-direction: column;
-        gap: 10px;
-        align-items: center;
-        max-height: 85vh;
+        gap: 14px;
+        align-items: stretch;
+        max-width: 92vw;
+        max-height: 88vh;
         overflow-y: auto;
+        padding: 16px;
     }
 
     .modal-left,
     .modal-right {
         width: 100%;
+        max-width: 100%;
         margin-left: 0;
+        flex: none;
     }
 
-    .modal-left img,
-    .modal-right img {
+    .modal-left img {
         width: 100%;
         max-width: 100%;
         margin: 0;
+    }
+
+    .modal-right {
+        max-height: none;
+        padding: 22px 20px;
     }
 
     .course-content button.enroll {
