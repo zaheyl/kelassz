@@ -366,13 +366,28 @@ header.scrolled {
 }
 
 .hero-media img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: right center;
+    margin-left: auto;
 
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 45%, rgba(0, 0, 0, 0.6) 70%, #000 90%);
-    mask-image: linear-gradient(to right, transparent 0%, transparent 45%, rgba(0, 0, 0, 0.6) 70%, #000 90%);
+    object-fit: cover;
+    object-position: right 70%;
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        transparent 5%,
+        rgba(0, 0, 0, 0.6) 70%,
+        #000 90%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        transparent 5%,
+        rgba(0, 0, 0, 0.6) 70%,
+        #000 90%
+    );
 }
 
 .hero-media::after {
@@ -484,6 +499,7 @@ header.scrolled {
         filter: brightness(0.4);
         -webkit-mask-image: none;
         mask-image: none;
+        object-position: right 90%;
     }
 
     .hero-media::after {
