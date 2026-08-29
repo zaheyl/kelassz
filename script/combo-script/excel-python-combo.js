@@ -12,12 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return String(n).padStart(2, '0');
     }
 
-    /**
-     * Creates an independent calendar instance bound to its own
-     * input, dropdown, and nav buttons, so multiple calendars can
-     * exist on the same page without sharing state.
-     */
-    function createCalendar({ inputId, rowId, wrapperId, gridId, monthLabelId, prevBtnId, nextBtnId }) {
+    function createCalendar({ inputId, rowId, wrapperId, gridId, monthLabelId, prevBtnId, nextBtnId, availableDays, blockedDates = [], extraDates = [] }) {
         const kelasInput = document.getElementById(inputId);
         const kelasRow = document.getElementById(rowId);
         const calendarWrapper = document.getElementById(wrapperId);
@@ -25,6 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const monthLabel = document.getElementById(monthLabelId);
         const prevBtn = document.getElementById(prevBtnId);
         const nextBtn = document.getElementById(nextBtnId);
+
+        const BLOCKED_DATES = new Set(blockedDates);
+        const EXTRA_DATES = new Set(extraDates);
 
         let viewYear = today.getFullYear();
         let viewMonth = today.getMonth();
@@ -45,22 +43,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             for (let d = 1; d <= daysInMonth; d++) {
                 const cellDate = new Date(year, month, d);
-                const weekday = cellDate.getDay(); // 5 = Friday
+                const weekday = cellDate.getDay();
                 const dateStr = `${cellDate.getFullYear()}-${pad(cellDate.getMonth() + 1)}-${pad(cellDate.getDate())}`;
 
                 const cell = document.createElement('div');
                 cell.className = 'calendar-day';
                 cell.textContent = d;
 
-                const BLOCKED_DATES = new Set([""]);
-                const EXTRA_DATES = new Set([""]);
-
-                const isFriOrSat = (weekday === 5);
+                const isAllowedWeekday = availableDays.includes(weekday);
                 const isBlocked = BLOCKED_DATES.has(dateStr);
                 const isExtra = EXTRA_DATES.has(dateStr);
                 const isPast = cellDate < today;
 
-                if ((isFriOrSat || isExtra) && !isPast && !isBlocked) {
+                if ((isAllowedWeekday || isExtra) && !isPast && !isBlocked) {
                     cell.classList.add('available');
                     cell.addEventListener('click', () => selectDate(dateStr, cell));
                 } else {
@@ -120,16 +115,28 @@ document.addEventListener("DOMContentLoaded", () => {
         return { closeCalendar, row: kelasRow };
     }
 
+    // ==================================================================
+    // PER-CALENDAR AVAILABILITY CONFIG
+    // Weekday numbers use JS's native getDay(): 0=Sun, 1=Mon, 2=Tue,
+    // 3=Wed, 4=Thu, 5=Fri, 6=Sat.
+    // ==================================================================
+
     const calendar1 = createCalendar({
         inputId: 'kelas1', rowId: 'kelasRow1', wrapperId: 'calendarWrapper1',
         gridId: 'calendarGrid1', monthLabelId: 'calendarMonthLabel1',
-        prevBtnId: 'prevMonth1', nextBtnId: 'nextMonth1'
+        prevBtnId: 'prevMonth1', nextBtnId: 'nextMonth1',
+        availableDays: [5],           // EXCEL  — Friday
+        blockedDates: [],             // e.g. ["2026-09-04"]
+        extraDates: []                // e.g. ["2026-09-16"]
     });
 
     const calendar2 = createCalendar({
         inputId: 'kelas2', rowId: 'kelasRow2', wrapperId: 'calendarWrapper2',
         gridId: 'calendarGrid2', monthLabelId: 'calendarMonthLabel2',
-        prevBtnId: 'prevMonth2', nextBtnId: 'nextMonth2'
+        prevBtnId: 'prevMonth2', nextBtnId: 'nextMonth2',
+        availableDays: [6],           // Python — Saturday
+        blockedDates: [],
+        extraDates: []
     });
 
     // Close whichever calendar is open when clicking outside both rows
@@ -146,7 +153,7 @@ function join(){
     const name = document.getElementById("name").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const email = document.getElementById("email").value.trim();
-    const kelas1 = document.getElementById("kelas1").value; // Excel date
+    const kelas1 = document.getElementById("kelas1").value; // SQL date
     const kelas2 = document.getElementById("kelas2").value; // Python date
 
     if(!name || !phone || !email || !kelas1 || !kelas2){
@@ -200,7 +207,9 @@ function join(){
     btn.innerHTML = "Loading QR Payment... Please Wait";
     btn.disabled = true;
 
-    // Each entry pairs a sheet with its matching selected date
+    // Each entry pairs a sheet 
+    // with its matching selected date
+    // CHANGE THIS ROW FOR THE SHEET REFLECTED
     const submissions = [
         { sheetName: "Excel", classChoice: kelas1 },
         { sheetName: "Python", classChoice: kelas2 }

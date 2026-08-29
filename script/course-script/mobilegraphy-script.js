@@ -53,7 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 "",
             ]);
 
-            //saturday only
+            //SET THE WORKING DATE
+            //FRIDAY
+            //
             const isFriOrSat = (weekday === 5);
             const isBlocked = BLOCKED_DATES.has(dateStr);
             const isExtra = EXTRA_DATES.has(dateStr);

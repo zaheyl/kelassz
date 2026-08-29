@@ -53,8 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "",
             ]);
 
-            //saturday only
-            const isFriOrSat = (weekday === 5);
+            //SET THE WORKING DATE
+            //SATURDAY
+            //
+            const isFriOrSat = (weekday === 6);
             const isBlocked = BLOCKED_DATES.has(dateStr);
             const isExtra = EXTRA_DATES.has(dateStr);
             const isPast = cellDate < today;
