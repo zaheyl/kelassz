@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return window.innerWidth - document.documentElement.clientWidth;
     }
 
-    document.querySelectorAll('.image-overlay').forEach(overlay => {
+    document.querySelectorAll('.image-overlay, .combo-image-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
             const card = overlay.closest('.class-wrapper');
 
-            const img1 = card.querySelector('.image-wrapper img');
+            const img1 = card.querySelector('.image-wrapper img, .combo-image-wrapper img');
             const details = card.querySelector('.image-details .modal-details');
 
             mainImg.src = img1.src;
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.style.left = "0";
             document.body.style.right = "0";
             document.body.style.width = "100%";
-            document.body.style.paddingRight = `${scrollbarWidth}px`; // compensate for scrollbar removal
+            document.body.style.paddingRight = `${scrollbarWidth}px`;
         });
     });
 
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ===== Scroll reveal =====
-    const sections = document.querySelectorAll("#ctn-2, #ctn-3, #ctn-4");
+    const sections = document.querySelectorAll("#ctn-2, #ctn-3, #ctn-4, #ctn-5");
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

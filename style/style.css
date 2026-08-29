@@ -152,7 +152,8 @@ img {
 /* Fade-in animation on scroll */
 #ctn-2,
 #ctn-3,
-#ctn-4 {
+#ctn-4,
+#ctn-5 {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s ease;
@@ -160,7 +161,8 @@ img {
 
 #ctn-2.show,
 #ctn-3.show,
-#ctn-4.show {
+#ctn-4.show,
+#ctn-5.show {
     opacity: 1;
     transform: translateY(0);
 }
@@ -1296,150 +1298,241 @@ body.modal-open {
     }
 }
 
-/* ================= ABOUT ================= */
-.team-container {
+/* ================= CONTACT CTA + FOOTER ================= */
+.contact-wrap{
     max-width: 1100px;
     margin: 0 auto 80px;
-    padding: 50px;
+}
 
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
+.contact-cta{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+
+    background: var(--color-ink);
+    color: var(--color-white);
+    padding: 44px 48px;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
 }
 
-/* Intro */
-.team-intro {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 44px;
-    align-items: center;
-
-    padding-bottom: 40px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.team-image img {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-}
-
-.team-description h2 {
+.contact-cta-text h2{
+    margin: 0 0 12px;
     font-family: var(--font-display);
     font-size: 26px;
     font-weight: 600;
-    letter-spacing: -0.01em;
-    margin: 0 0 16px;
+    line-height: 1.3;
+    color: var(--color-white);
+}
+
+.contact-cta-text p{
+    margin: 0;
+    max-width: 420px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.75);
+}
+
+.contact-cta-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    background: var(--color-pink);
     color: var(--color-ink);
+    font-weight: 600;
+    font-size: 14.5px;
+    text-decoration: none;
+    padding: 14px 22px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.team-description p {
-    font-size: 16px;
-    line-height: 1.75;
-    color: var(--color-slate);
-    margin: 0 0 14px;
+.contact-cta-btn:hover{
+    background: var(--color-pink-dark);
 }
 
-.team-description p:last-child {
+.contact-footer{
+    margin-top: 24px;
+    background: var(--color-ink);
+    color: var(--color-white);
+    border-radius: var(--radius-lg);
+    border-top: 3px solid var(--color-pink);
+    padding: 44px 48px 26px;
+}
+
+.contact-footer-inner{
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 32px;
+}
+
+.contact-footer-logo{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--color-white);
+    margin-bottom: 14px;
+}
+
+.contact-footer-logo img{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.contact-footer-logo em{
+    font-style: normal;
+    color: var(--color-pink);
+}
+
+.contact-footer-brand p{
+    margin: 0 0 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.65);
+    max-width: 260px;
+}
+
+.contact-footer-note{
+    font-family: var(--font-mono);
+    font-size: 12px !important;
+    color: var(--color-pink) !important;
+}
+
+.contact-footer-col h4{
+    margin: 0 0 16px;
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--color-white);
+}
+
+.contact-footer-col a{
+    display: block;
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 13.5px;
+    line-height: 2;
+    transition: color 0.2s ease;
+}
+
+.contact-footer-col a:hover{
+    color: var(--color-pink);
+}
+
+.contact-footer-team .team-mini-grid{
+    display: flex;
+    gap: 24px;
+}
+
+.contact-footer-team .team-mini-col{
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-footer-team .team-mini{
+    margin-bottom: 12px;
+}
+
+.contact-footer-team .team-mini:last-child{
     margin-bottom: 0;
 }
 
-/* Team members */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px;
-}
-
-.member {
-    padding: 24px;
-    background: var(--color-paper);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.member:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-.member::before {
-    content: attr(data-initial);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 48px;
-    height: 48px;
-    margin-bottom: 14px;
-
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--color-ink);
-
-    background: var(--color-amber);
-    border-radius: 50%;
-}
-
-.member h3 {
-    font-family: var(--font-display);
-    font-size: 21px;
+.team-mini-name{
+    margin: 0 0 2px;
+    font-size: 13px;
     font-weight: 600;
-    margin: 0 0 4px;
-    color: var(--color-ink);
+    color: var(--color-white);
 }
 
-.member h4 {
+.team-mini-name span{
+    font-weight: 400;
+    color: var(--color-pink);
+    font-size: 12px;
+}
+
+.team-mini-desc{
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
+    color: rgba(255,255,255,0.6);
+}
+
+.contact-footer-office p{
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 0 12px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.7);
+}
+
+.contact-footer-office svg{
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--color-pink);
+}
+
+.contact-footer-office a{
+    display: inline;
+    color: rgba(255,255,255,0.85);
+    text-decoration: underline;
+}
+
+.contact-footer-office a:hover{
+    color: var(--color-pink);
+}
+
+.contact-footer-divider{
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    margin: 30px 0 20px;
+}
+
+.contact-footer-copyright{
+    margin: 0;
+    text-align: center;
     font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-amber-dark);
-    margin: 0 0 12px;
+    color: rgba(255,255,255,0.55);
 }
 
-.member p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--color-slate);
-    margin: 0;
-}
-
-/* Make last person centered */
-.member:last-child {
-    grid-column: span 2;
-}
-
-.member:last-child p {
-    max-width: 640px;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .team-container {
-        padding: 30px 22px;
+@media (max-width: 900px){
+    .contact-footer-inner{
+        grid-template-columns: 1fr 1fr;
     }
+    .contact-footer-brand{
+        grid-column: span 2;
+        margin-bottom: 10px;
+    }
+}
 
-    .team-intro {
+@media (max-width: 650px){
+    .contact-cta{
+        padding: 30px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .contact-cta-btn{
+        width: 100%;
+        justify-content: center;
+    }
+    .contact-footer{
+        padding: 32px 22px 22px;
+    }
+    .contact-footer-inner{
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 26px;
     }
-
-    .team-image img {
-        height: 220px;
-    }
-
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .member:last-child {
+    .contact-footer-brand{
         grid-column: span 1;
     }
 }
