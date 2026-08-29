@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base target="_top">
-    <title>Join SQL Class now!</title>
+    <title>Join Combo Class now!</title>
     <link rel="stylesheet" href="../style/reg-form.css">
 </head>
 
@@ -13,7 +13,7 @@
     <div class="main-wrapper">
 
         <div class="class-image">
-            <img src="../photo/class/sql.png">
+            <img src="../photo/combo/excel+python.png">
         </div>
 
 
@@ -36,24 +36,45 @@
                 <input type="email" id="email" placeholder="training@gmail.com" required>
             </div>
 
-            <div class="row" id="kelasRow">
-                <label for="kelas">Choose Class</label>
-                <input type="text" id="kelas" name="kelas"
+            <div class="row" id="kelasRow1">
+                <label for="kelas1">Please choose date for Excel</label>
+                <input type="text" id="kelas1" name="kelas1"
                     class="kelas-input"
                     placeholder="Select a Friday or Saturday below"
                     readonly required>
                 <span class="kelas-chevron"></span>
 
-                <div class="calendar-wrapper" id="calendarWrapper">
+                <div class="calendar-wrapper" id="calendarWrapper1">
                     <div class="calendar-header">
-                        <button type="button" id="prevMonth" aria-label="Previous month">&lsaquo;</button>
-                        <span id="calendarMonthLabel"></span>
-                        <button type="button" id="nextMonth" aria-label="Next month">&rsaquo;</button>
+                        <button type="button" id="prevMonth1" aria-label="Previous month">&lsaquo;</button>
+                        <span id="calendarMonthLabel1"></span>
+                        <button type="button" id="nextMonth1" aria-label="Next month">&rsaquo;</button>
                     </div>
                     <div class="calendar-weekdays">
                         <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
                     </div>
-                    <div class="calendar-grid" id="calendarGrid"></div>
+                    <div class="calendar-grid" id="calendarGrid1"></div>
+                </div>
+            </div>
+
+            <div class="row" id="kelasRow2">
+                <label for="kelas2">Please choose date for Python</label>
+                <input type="text" id="kelas2" name="kelas2"
+                    class="kelas-input"
+                    placeholder="Select a Friday or Saturday below"
+                    readonly required>
+                <span class="kelas-chevron"></span>
+
+                <div class="calendar-wrapper" id="calendarWrapper2">
+                    <div class="calendar-header">
+                        <button type="button" id="prevMonth2" aria-label="Previous month">&lsaquo;</button>
+                        <span id="calendarMonthLabel2"></span>
+                        <button type="button" id="nextMonth2" aria-label="Next month">&rsaquo;</button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid2"></div>
                 </div>
             </div>
 
@@ -66,16 +87,15 @@
         <div class="popup" id="popup">
         <div class="popup-content">
           <h3>
-          Thank you for joining SSZ Training! 🎉
+            Thank you for joining SSZ Training! 🎉
           </h3>
           <img src="../photo/qr-bank.jpg">
           <h3>
-            Payment method: QR DuitNow <br>
-            Total Payable: RM39
+             Payment method: QR DuitNow <br>
+            Total Payable: RM79
           </h3>
           <p>
             <i>
-                  
                 Once payment is confirmed, you received a invitation link to your class through your email!
                 This would take up to 24 hours.
             </i>
@@ -86,6 +106,6 @@
         </div>
       </div>
 
-    <script src="../script/course-script/sql-script.js"></script>
+    <script src="../script/combo-script/excel-python-combo.js"></script>
 </body>
 </html>

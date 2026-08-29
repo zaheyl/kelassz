@@ -31,7 +31,8 @@
     --font-body: "Calibri", "Segoe UI", sans-serif;
     --font-mono: "Calibri", "Segoe UI", sans-serif;
 
-    --nav-height: 76px;
+    --nav-height: 80px;
+    --nav-link-height: 110px;
 
     --radius-lg: 20px;
     --radius-md: 14px;
@@ -76,6 +77,7 @@ img {
 #title-header-3,
 #eyebrow-1,
 #our-programs,
+#our-promotions,
 #the-team {
     scroll-margin-top: var(--nav-height);
 }
@@ -225,6 +227,18 @@ header.scrolled {
     gap: 6px;
 }
 
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-icon {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
 .nav-logo span {
     font-family: var(--font-mono);
     font-weight: 500;
@@ -237,7 +251,7 @@ header.scrolled {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 36px;
+    gap: 18px;
 }
 
 .nav-links a {
@@ -287,49 +301,113 @@ header.scrolled {
     color: var(--color-white);
 }
 
+.nav-cta {
+    background: var(--color-ink);
+    color: var(--color-white);
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-cta:hover {
+    background: var(--color-amber-dark);
+    color: var(--color-white);
+}
+
+.nav-cta::after {
+    display: none;
+}
+
+.nav-cta-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 @media (max-width: 650px) {
+    #home,
+    #title-header-2,
+    #title-header-3,
+    #eyebrow-1,
+    #our-programs,
+    #our-promotions,
+    #the-team {
+        scroll-margin-top: var(--nav-link-height);
+    }
+
     .nav-container {
-        padding: 0 18px;
-        height: 62px;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+        padding: 14px 18px 0;
     }
 
     :root {
-        --nav-height: 62px;
+        --nav-height: 108px; /* accounts for the new two-row layout */
     }
 
+    /* Logo pinned to top-left */
     .nav-logo {
-        font-size: 17px;
+        position: absolute;
+        top: 14px;
+        left: 18px;
+        font-size: 16px;
+        margin-bottom: 0;
     }
 
     .nav-logo span {
         display: none;
     }
 
-    .nav-links {
-        gap: 16px;
+    .nav-icon {
+        width: 28px;
+        height: 28px;
     }
 
-    .nav-links a {
-        font-size: 13px;
-    }
-
-    .nav-links a.nav-cta {
-        padding: 7px 12px;
-    }
-}
-
-@media (max-width: 420px) {
-    .nav-container {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 10px 14px;
+    /* CTA group pinned to top-right */
+    .nav-cta-group {
+        position: absolute;
+        top: 12px;
+        right: 18px;
         gap: 8px;
     }
 
+    .nav-cta-group .nav-cta {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    /* The 4 remaining links form a full-width second row, pushed below the pinned row */
     .nav-links {
-        gap: 12px;
+        width: calc(100% + 36px);
+        margin: 0 -18px;
+        margin-top: 46px; /* clears the absolutely-positioned logo/CTA row */
+        justify-content: space-around;
+        gap: 0;
+        background: rgba(0, 0, 0, 0.03);
+        border-top: 1px solid var(--color-border);
+        padding: 10px 0;
         flex-wrap: wrap;
-        justify-content: center;
+    }
+
+    .nav-links > a {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 400px) {
+    .nav-cta-group {
+        flex-direction: column;
+        gap: 4px;
+        right: 12px;
+    }
+
+    .nav-logo {
+        left: 12px;
     }
 }
 
@@ -1040,6 +1118,181 @@ body.modal-open {
 
     .course-content button.enroll {
         width: 100%;
+    }
+}
+
+/* ================= COMBO ================= */
+.combo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.combo-item {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 70%;
+    gap: 22px;
+    padding: 18px;
+    margin: 0;
+
+    background: var(--color-ink);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.combo-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+}
+
+.combo-image-wrapper {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    flex: 0 0 280px;
+}
+
+.combo-image {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    display: block;
+    cursor: pointer;
+}
+
+.combo-image-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(16, 35, 63, 0.72);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: var(--radius-md);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.combo-image-wrapper:hover .combo-image-overlay {
+    opacity: 1;
+}
+
+.combo-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 2px;
+}
+
+.combo-content h3 {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--color-white);
+}
+
+.combo-content p.combo-text {
+    margin: 0 0 14px;
+}
+
+.combo-content p.combo-text em {
+    font-style: normal;
+    font-size: 13.5px;
+    line-height: 2;
+    color: var(--color-white);
+}
+
+.combo-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+
+.combo-meta h4.combo-text {
+    margin: 0;
+    font-weight: 600;
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 13px;
+}
+
+.combo-meta h4.combo-text:first-of-type {
+    background: var(--color-amber);
+    color: var(--color-white);
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+}
+
+.combo-content button.enroll {
+    border: none;
+    height: 42px;
+    width: 100%;
+    max-width: 240px;
+    color: var(--color-ink);
+    background-color: var(--color-white);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.combo-content button.enroll:hover {
+    color: var(--color-white);
+    background-color: var(--color-amber-dark);
+}
+
+.combo-content button.enroll:active {
+    background-color: var(--color-navy);
+}
+
+.combo-content p.dot {
+    color: var(--color-white);
+}
+
+@media (max-width: 650px) {
+    .combo-item {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .combo-image-wrapper {
+        flex: none;
+        width: 100%;
+    }
+
+    .combo-image {
+        aspect-ratio: 1.6 / 1;
+    }
+
+    .combo-content button.enroll {
+        max-width: 100%;
     }
 }
 

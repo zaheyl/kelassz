@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById('prevMonth');
     const nextBtn = document.getElementById('nextMonth');
     const kelasInput = document.getElementById('kelas');
+    const kelasRow = document.getElementById('kelasRow');
+    const calendarWrapper = document.getElementById('calendarWrapper');
 
     const monthNames = ["January","February","March","April","May","June",
                          "July","August","September","October","November","December"];
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "",
             ]);
 
-            //friday only
+            //saturday only
             const isFriOrSat = (weekday === 5);
             const isBlocked = BLOCKED_DATES.has(dateStr);
             const isExtra = EXTRA_DATES.has(dateStr);
@@ -92,7 +94,68 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     renderCalendar(viewYear, viewMonth);
+
+    function openCalendar(){
+        calendarWrapper.classList.add('open');
+        kelasRow.classList.add('open');
+    }
+
+    function closeCalendar(){
+        calendarWrapper.classList.remove('open');
+        kelasRow.classList.remove('open');
+    }
+
+    function toggleCalendar(){
+        if(calendarWrapper.classList.contains('open')){
+            closeCalendar();
+        } else {
+            openCalendar();
+        }
+    }
+
+    kelasInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleCalendar();
+    });
+
+    // Close when clicking anywhere outside the row
+    document.addEventListener('click', (e) => {
+        if(!kelasRow.contains(e.target)){
+            closeCalendar();
+        }
+    });
+
+    // Prevent clicks inside the calendar itself from bubbling up and closing it
+    calendarWrapper.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        viewMonth--;
+        if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+        renderCalendar(viewYear, viewMonth);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        viewMonth++;
+        if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+        renderCalendar(viewYear, viewMonth);
+    });
+
+    renderCalendar(viewYear, viewMonth);
+
+    function selectDate(date, dateStr, cell) {
+    document.querySelectorAll('.calendar-day.selected').forEach(el => el.classList.remove('selected'));
+    cell.classList.add('selected');
+
+    kelasInput.value = dateStr;
+
+    closeCalendar(); // auto-close after picking a date
+}
+
 });
+
+
 
 function join(){
     const btn = document.getElementById("joinBtn");
@@ -150,66 +213,58 @@ function join(){
     btn.innerHTML = "Loading QR Payment... Please Wait";
     btn.disabled = true;
 
+    const sheetNames = ["Power BI"];
+    const endpoint = "https://script.google.com/macros/s/AKfycbyrZgL8m6Lwr8IzMj5t55bU7Dq1dT12FYZJ6MEpOKP5Cqs49i6dnFzlaTXtgST0Vyf5/exec";
 
-    const data={
-        name:name,
-        phone:phone,
-        email:email,
-        classChoice:kelas,
-        sheetName: "Capcut"
-    };
+    const requests = sheetNames.map(sheetName => {
+        const data = {
+            name: name,
+            phone: phone,
+            email: email,
+            classChoice: kelas,
+            sheetName: sheetName
+        };
 
-
-    fetch("https://script.google.com/macros/s/AKfycbwn6aBHRKGA8TrYGAtEDyNHEb_Jt-h9z3GrBKonXKRAkOh6U9c2T6YrGycWxGmo3W5s/exec",{
-
-        method:"POST",
-
-        body:JSON.stringify(data),
-
-        headers:{
-            "Content-Type":"text/plain"
-        }
-
-    })
-
-
-    .then(response=>response.json())
-
-
-    .then(result=>{
-        console.log(result);
-        if(result.status==="success"){
-
-            document.getElementById("popup").style.display="flex";
-            document.body.style.overflow = "hidden";
-
-            document.getElementById("name").value="";
-            document.getElementById("phone").value="";
-            document.getElementById("email").value="";
-            document.getElementById("kelas").selectedIndex=0;
-
-        }
-
-        // Reset button
-        btn.innerHTML="Join Us";
-        btn.disabled=false;
-
-    })
-
-
-    .catch(error=>{
-
-        alert("Something went wrong.");
-
-        // Reset button
-        btn.innerHTML="Join Us";
-        btn.disabled=false;
-
+        return fetch(endpoint, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: { "Content-Type": "text/plain" }
+        }).then(response => response.json());
     });
 
+    Promise.all(requests)
+        .then(results => {
+            console.log(results);
+
+            const allSuccess = results.every(result => result.status === "success");
+
+            if(allSuccess){
+                document.getElementById("popup").style.display = "flex";
+                document.body.style.overflow = "hidden";
+
+                document.getElementById("name").value = "";
+                document.getElementById("phone").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("kelas").value = "";
+            } else {
+                alert("Something went wrong saving your registration. Please contact us.");
+            }
+
+            // Reset button
+            btn.innerHTML = "Join Us";
+            btn.disabled = false;
+        })
+        .catch(error => {
+            alert("Something went wrong.");
+
+            // Reset button
+            btn.innerHTML = "Join Us";
+            btn.disabled = false;
+        });
 }
 
 function closePopup(){ 
     document.getElementById("popup").style.display="none";
     document.body.style.overflow = "auto";
- }
+    window.close();
+}

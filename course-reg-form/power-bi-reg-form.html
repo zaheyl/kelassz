@@ -36,14 +36,15 @@
                 <input type="email" id="email" placeholder="training@gmail.com" required>
             </div>
 
-            <div class="row">
+            <div class="row" id="kelasRow">
                 <label for="kelas">Choose Class</label>
                 <input type="text" id="kelas" name="kelas"
                     class="kelas-input"
                     placeholder="Select a Friday or Saturday below"
                     readonly required>
+                <span class="kelas-chevron"></span>
 
-                <div class="calendar-wrapper">
+                <div class="calendar-wrapper" id="calendarWrapper">
                     <div class="calendar-header">
                         <button type="button" id="prevMonth" aria-label="Previous month">&lsaquo;</button>
                         <span id="calendarMonthLabel"></span>
@@ -69,11 +70,12 @@
           </h3>
           <img src="../photo/qr-bank.jpg">
           <h3>
-          You're only one step away! 
+            Payment method: QR DuitNow <br>
+            Total Payable: RM39
           </h3>
           <p>
             <i>
-                Please make payment through this QR to confirm your registration. 
+                  
                 Once payment is confirmed, you received a invitation link to your class through your email!
                 This would take up to 24 hours.
             </i>
@@ -84,6 +86,6 @@
         </div>
       </div>
 
-    <script src="../script/power-bi-script.js"></script>
+    <script src="../script/course-script/power-bi-script.js"></script>
 </body>
 </html>

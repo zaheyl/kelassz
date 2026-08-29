@@ -40,7 +40,7 @@ body{
 
 h2{
     text-align:center;
-    margin-bottom:25px;
+    margin-bottom:10px;
 }
 
 .row{
@@ -49,7 +49,7 @@ h2{
 
 label{
     display:block;
-    margin-bottom:6px;
+
     font-weight:bold;
 }
 
@@ -118,14 +118,58 @@ button:disabled{
 .kelas-input{
     cursor:default;
     background:#fafafa;
-    margin-bottom:12px;
+}
+
+.kelas-input{
+    cursor:pointer;
+    background:#fafafa;
+    position:relative;
+}
+
+.row{
+    margin-bottom:18px;
+    position:relative;
+}
+
+/* Chevron indicator on the input, rotates when open */
+.kelas-chevron{
+    position:absolute;
+    right:14px;
+    top:38px;
+    width:10px;
+    height:10px;
+    border-right:2px solid #999;
+    border-bottom:2px solid #999;
+    transform:rotate(45deg);
+    transition:transform 0.3s ease;
+    pointer-events:none;
+}
+
+.row.open .kelas-chevron{
+    transform:rotate(-135deg);
 }
 
 .calendar-wrapper{
     border:1px solid #ccc;
     border-radius:6px;
-    padding:12px;
+    padding:0 12px;
     background:#fff;
+
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    border-width:0;
+    margin-top:0;
+
+    transition:max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease, border-width 0.3s ease, margin-top 0.3s ease;
+}
+
+.calendar-wrapper.open{
+    max-height:400px;
+    opacity:1;
+    padding:12px;
+    border-width:1px;
+    margin-top:4px;
 }
 
 .calendar-header{
@@ -226,14 +270,20 @@ button:disabled{
 
     .container{
         width:100%;
-        padding:20px;
+        padding:15px;
     }
     .popup-content {
         width: 360px;
     }
     .popup-content img {
-        width: 300px;
+        width: 200px;
         
+    }
+    .popup-content h3 {
+        font-size: medium;
+    }
+    .popup-content p {
+        font-size: small;
     }
     .calendar-day{
     font-size:12px;
