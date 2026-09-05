@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_top">
+    <title>Join Excel Class now!</title>
+    <link rel="stylesheet" href="../style/reg-form.css">
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+
+        <div class="class-image">
+            <img src="../photo/class/excel-2.png">
+        </div>
+
+
+        <div class="container">
+
+            <h2>Register Now!</h2>
+
+            <div class="row">
+                <label>Name</label>
+                <input id="name" placeholder="Muhammad Ali bin Abu" required>
+            </div>
+
+            <div class="row">
+                <label>Phone Number</label>
+                <input type="tel" id="phone" placeholder="0132461004" required>
+            </div>
+
+            <div class="row">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="training@gmail.com" required>
+            </div>
+
+            <div class="row" id="kelasRow">
+                <label for="kelas">Choose Class</label>
+                <input type="text" id="kelas" name="kelas"
+                    class="kelas-input"
+                    placeholder="Select a Friday or Saturday below"
+                    readonly required>
+                <span class="kelas-chevron"></span>
+
+                <div class="calendar-wrapper" id="calendarWrapper">
+                    <div class="calendar-header">
+                        <button type="button" id="prevMonth" aria-label="Previous month">&lsaquo;</button>
+                        <span id="calendarMonthLabel"></span>
+                        <button type="button" id="nextMonth" aria-label="Next month">&rsaquo;</button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
+            </div>
+
+            <button id="joinBtn" onclick="join()">Join Us</button>
+
+        </div>
+
+    </div>
+
+        <div class="popup" id="popup">
+        <div class="popup-content">
+          <h3>
+          Thank you for joining SSZ Training! 🎉
+          </h3>
+          <img src="../photo/qr-bank.jpg">
+          <h3>
+            Payment method: QR DuitNow <br>
+            Total Payable: RM49
+          </h3>
+          <p>
+            <i>
+                  
+                Once payment is confirmed, you received a invitation link to your class through your email!
+                This would take up to 24 hours.
+            </i>
+          </p>
+          <button id="popup" onclick="closePopup()">
+          Close
+          </button>
+        </div>
+      </div>
+
+    <script src="../script/course-script/excel-2-script.js"></script>
+</body>
+</html>

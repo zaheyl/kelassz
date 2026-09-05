@@ -215,7 +215,7 @@ function join(){
         { sheetName: "SQL", classChoice: kelas2 }
     ];
 
-    const endpoint = "https://script.google.com/macros/s/AKfycbyrZgL8m6Lwr8IzMj5t55bU7Dq1dT12FYZJ6MEpOKP5Cqs49i6dnFzlaTXtgST0Vyf5/exec";
+    const endpoint = "https://script.google.com/macros/s/AKfycbxgqlWfU2u-1Xa1HmkKGsq1uelXlElNDwFOCLIWCbVZf8FkvI6_J9BMGDnxGAyZP9Bu/exec";
 
     const requests = submissions.map(({ sheetName, classChoice }) => {
         const data = {

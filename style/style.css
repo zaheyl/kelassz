@@ -42,7 +42,7 @@
     --shadow-md: 0 10px 30px rgba(16, 35, 63, 0.08);
     --shadow-lg: 0 24px 50px rgba(16, 35, 63, 0.16);
 
-    --container-max: 1200px;
+    --container-max: 1300px;
 }
 
 html {
@@ -69,7 +69,7 @@ img {
 .page-container {
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 20px;
 }
 
 #home,
@@ -756,8 +756,8 @@ body.modal-open {
 .stack-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    width: 100%;
+    gap: 10px;
+    width: 95%;
     margin: 0 auto;
 }
 
@@ -766,7 +766,7 @@ body.modal-open {
     flex-direction: column;
     align-items: stretch;
     gap: 18px;
-    padding: 18px;
+    padding: 15px;
     margin: 0;
 
     background: var(--color-white);
@@ -883,7 +883,7 @@ body.modal-open {
 }
 
 .course-meta h4.course-text:first-of-type {
-    background: var(--color-amber);
+    background: var(--color-pink-dark);
     color: var(--color-white);
     padding: 4px 10px;
     border-radius: 999px;
@@ -1125,10 +1125,9 @@ body.modal-open {
 
 /* ================= COMBO ================= */
 .combo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 22px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     width: 100%;
     margin: 0 auto;
 }
@@ -1137,13 +1136,13 @@ body.modal-open {
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    width: 70%;
-    gap: 22px;
-    padding: 18px;
+    width: 100%;
+    gap: 18px;
+    padding: 15px;
     margin: 0;
 
-    background: var(--color-ink);
-    border: 1px solid var(--color-border);
+    background: linear-gradient(160deg, #1a1e26 0%, var(--color-ink) 60%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
 
@@ -1155,24 +1154,25 @@ body.modal-open {
 .combo-item:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
-    border-color: transparent;
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
 .combo-image-wrapper {
     position: relative;
     display: block;
-    cursor: pointer;
-    flex: 0 0 280px;
+    flex: 0 0 250px;
+    align-self: flex-start;
+    border-radius: var(--radius-md);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 .combo-image {
     width: 100%;
-    height: 100%;
+    height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius-md);
     display: block;
-    cursor: pointer;
 }
 
 .combo-image-overlay {
@@ -1200,15 +1200,16 @@ body.modal-open {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     padding-top: 2px;
 }
 
 .combo-content h3 {
-    margin: 0 0 8px;
+    margin: 0 0 10px;
     font-family: var(--font-display);
-    font-size: 21px;
+    font-size: 22px;
     font-weight: 600;
+    line-height: 1.25;
     color: var(--color-white);
 }
 
@@ -1219,18 +1220,18 @@ body.modal-open {
 .combo-content p.combo-text em {
     font-style: normal;
     font-size: 13.5px;
-    line-height: 2;
-    color: var(--color-white);
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.82);
 }
 
 .combo-meta {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
     font-size: 14px;
     font-weight: 500;
-    margin-bottom: 14px;
+    margin: 4px 0 16px;
 }
 
 .combo-meta h4.combo-text {
@@ -1238,11 +1239,12 @@ body.modal-open {
     font-weight: 600;
     color: var(--color-white);
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 12.5px;
+    white-space: nowrap;
 }
 
 .combo-meta h4.combo-text:first-of-type {
-    background: var(--color-amber);
+    background: var(--color-pink-dark);
     color: var(--color-white);
     padding: 4px 10px;
     border-radius: 999px;
@@ -1275,10 +1277,15 @@ body.modal-open {
 }
 
 .combo-content p.dot {
-    color: var(--color-white);
+    margin: 0;
+    color: rgba(255, 255, 255, 0.4);
 }
 
 @media (max-width: 650px) {
+    .combo-container {
+        grid-template-columns: 1fr;
+    }
+
     .combo-item {
         flex-direction: column;
         width: 100%;
@@ -1287,6 +1294,7 @@ body.modal-open {
     .combo-image-wrapper {
         flex: none;
         width: 100%;
+        align-self: stretch;
     }
 
     .combo-image {

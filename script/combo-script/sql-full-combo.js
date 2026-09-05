@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inputId: 'kelas1', rowId: 'kelasRow1', wrapperId: 'calendarWrapper1',
         gridId: 'calendarGrid1', monthLabelId: 'calendarMonthLabel1',
         prevBtnId: 'prevMonth1', nextBtnId: 'nextMonth1',
-        availableDays: [5],           // SQL — Friday
+        availableDays: [5],           // SQL BEGINNER - FRIDAY
         blockedDates: [],             // e.g. ["2026-09-04"]
         extraDates: []                // e.g. ["2026-09-16"]
     });
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inputId: 'kelas2', rowId: 'kelasRow2', wrapperId: 'calendarWrapper2',
         gridId: 'calendarGrid2', monthLabelId: 'calendarMonthLabel2',
         prevBtnId: 'prevMonth2', nextBtnId: 'nextMonth2',
-        availableDays: [6],           // Python — Saturday
+        availableDays: [6],           // SQL ADV - SATURDAY
         blockedDates: [],
         extraDates: []
     });
@@ -153,8 +153,8 @@ function join(){
     const name = document.getElementById("name").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const email = document.getElementById("email").value.trim();
-    const kelas1 = document.getElementById("kelas1").value; // SQL date
-    const kelas2 = document.getElementById("kelas2").value; // Python date
+    const kelas1 = document.getElementById("kelas1").value;
+    const kelas2 = document.getElementById("kelas2").value; 
 
     if(!name || !phone || !email || !kelas1 || !kelas2){
 
@@ -212,7 +212,7 @@ function join(){
     // CHANGE THIS ROW FOR THE SHEET REFLECTED
     const submissions = [
         { sheetName: "SQL", classChoice: kelas1 },
-        { sheetName: "Python", classChoice: kelas2 }
+        { sheetName: "SQL Level 2", classChoice: kelas2 }
     ];
 
     const endpoint = "https://script.google.com/macros/s/AKfycbxgqlWfU2u-1Xa1HmkKGsq1uelXlElNDwFOCLIWCbVZf8FkvI6_J9BMGDnxGAyZP9Bu/exec";

@@ -54,9 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
             ]);
 
             //SET THE WORKING DATE
-            //FRIDAY
+            //SATURDAY
             //
-            const isFriOrSat = (weekday === 5);
+            const isFriOrSat = (weekday === 6);
             const isBlocked = BLOCKED_DATES.has(dateStr);
             const isExtra = EXTRA_DATES.has(dateStr);
             const isPast = cellDate < today;
@@ -215,7 +215,7 @@ function join(){
     btn.innerHTML = "Loading QR Payment... Please Wait";
     btn.disabled = true;
 
-    const sheetNames = ["Excel"];
+    const sheetNames = ["Excel Level 2"];
     const endpoint = "https://script.google.com/macros/s/AKfycbxgqlWfU2u-1Xa1HmkKGsq1uelXlElNDwFOCLIWCbVZf8FkvI6_J9BMGDnxGAyZP9Bu/exec";
 
     const requests = sheetNames.map(sheetName => {
