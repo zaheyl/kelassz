@@ -216,7 +216,7 @@ function join(){
     btn.disabled = true;
 
     const sheetNames = ["Power BI"];
-    const endpoint = "https://script.google.com/macros/s/AKfycbxgqlWfU2u-1Xa1HmkKGsq1uelXlElNDwFOCLIWCbVZf8FkvI6_J9BMGDnxGAyZP9Bu/exec";
+    const endpoint = "https://script.google.com/macros/s/AKfycbzZriUwL9mmmycHfkM6GV3ZdsK-2zON4XngccTlxR2scdm7hy3yjU6YeZqf3vX3PD6L/exec";
 
     const requests = sheetNames.map(sheetName => {
         const data = {

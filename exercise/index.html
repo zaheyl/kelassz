@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Exercises — SSZ Training</title>
+    <meta name="description" content="Practice what you've learned in SSZ Training's Power BI, Excel, SQL, Python and web development classes.">
+
+    <link rel="icon" type="image/png" href="photo/ssz-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --blue: rgba(26, 77, 128, 0.55);
+            --red: #b20000;
+            --pink: #ff95b6;
+
+            --border: rgba(0, 0, 0, 0.1);
+
+            --font-display: "Calibri", "Segoe UI", sans-serif;
+            --font-body: "Calibri", "Segoe UI", sans-serif;
+            --font-mono: "Calibri", "Segoe UI", sans-serif;
+
+            --nav-height: 80px;
+            --nav-link-height: 110px;
+
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 8px;
+
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 24px 50px rgba(0, 0, 0, 0.16);
+
+            --container-max: 1300px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            color: var(--black);
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .page-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ================= SECTION HEADING ================= */
+
+        .section-heading {
+            text-align: center;
+            padding-top: 70px;
+            padding-bottom: 34px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 14px;
+            padding-top: 20px;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+            width: 24px;
+            height: 2px;
+            background: var(--pink);
+            border-radius: 2px;
+        }
+
+        .section-heading h1 {
+            margin: 0;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 44px;
+            letter-spacing: -0.01em;
+            color: var(--black);
+        }
+
+        @media (max-width: 650px) {
+
+            .page-container {
+                padding: 0 20px;
+            }
+
+            .section-heading {
+                padding-top: 46px;
+                padding-bottom: 22px;
+            }
+
+            .section-heading h1 {
+                font-size: 30px;
+            }
+        }
+
+        /* ================= NAV ================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 9999;
+            border-bottom: 1px solid transparent;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 40px;
+            height: var(--nav-height);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.01em;
+            color: var(--black);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-icon {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .nav-logo span {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            color: var(--black);
+            font-size: 15px;
+            font-weight: 500;
+            padding: 6px 0;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 100%;
+            bottom: 0;
+            height: 2px;
+            background: var(--pink);
+            border-radius: 2px;
+            transition: right 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--black);
+        }
+
+        .nav-links a.nav-cta {
+            background: var(--black);
+            color: var(--white);
+            padding: 9px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+        }
+
+        .nav-links a.nav-cta::after {
+            display: none;
+        }
+
+        .nav-links a.nav-cta:hover {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .nav-cta {
+            background: var(--black);
+            color: var(--white);
+            padding: 9px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 15px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .nav-cta::after {
+            display: none;
+        }
+
+        .nav-cta-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        @media (max-width: 650px) {
+
+            #home,
+            #title-header-2,
+            #title-header-3,
+            #eyebrow-1,
+            #our-programs,
+            #our-promotions,
+            #the-team {
+                scroll-margin-top: var(--nav-link-height);
+            }
+
+            .nav-container {
+                position: relative;
+                flex-direction: column;
+                justify-content: center;
+                height: auto;
+                padding: 14px 18px 0;
+            }
+
+            :root {
+                --nav-height: 108px;
+            }
+
+            .nav-logo {
+                position: absolute;
+                top: 14px;
+                left: 18px;
+                font-size: 16px;
+                margin-bottom: 0;
+            }
+
+            .nav-logo span {
+                display: none;
+            }
+
+            .nav-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .nav-cta-group {
+                position: absolute;
+                top: 12px;
+                right: 18px;
+                gap: 8px;
+            }
+
+            .nav-cta-group .nav-cta {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+
+            .nav-links {
+                width: calc(100% + 36px);
+                margin: 0 -18px;
+                margin-top: 46px;
+                justify-content: space-around;
+                gap: 0;
+                background: rgba(0, 0, 0, 0.03);
+                border-top: 1px solid var(--border);
+                padding: 10px 0;
+                flex-wrap: wrap;
+            }
+
+            .nav-links > a {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 400px) {
+
+            .nav-cta-group {
+                flex-direction: column;
+                gap: 4px;
+                right: 12px;
+            }
+
+            .nav-logo {
+                left: 12px;
+            }
+        }
+
+        /* ================= HERO ================= */
+
+        .practice-hero {
+            background: var(--black);
+            padding: 90px 20px;
+            text-align: center;
+        }
+
+        .practice-hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 18px;
+        }
+
+        .practice-hero h1 {
+            margin: 0 auto 16px;
+            max-width: 700px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            line-height: 1.2;
+            color: var(--white);
+        }
+
+        .practice-hero p {
+            margin: 0 auto;
+            max-width: 480px;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 650px) {
+
+            .practice-hero {
+                padding: 60px 20px;
+            }
+
+            .practice-hero h1 {
+                font-size: 1.7rem;
+            }
+        }
+
+        /* ================= PRACTICE GRID ================= */
+
+        .practice-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .practice-card {
+            flex: 0 1 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 24px 22px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--pink);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .practice-card:hover {
+            box-shadow: var(--shadow-md);
+            border-top-color: var(--red);
+            transform: translateY(-3px);
+        }
+
+        .practice-card-soon {
+            border-top-color: var(--border);
+            background: rgba(0, 0, 0, 0.015);
+            cursor: default;
+        }
+
+        .practice-card-soon:hover {
+            transform: none;
+            box-shadow: none;
+            border-top-color: var(--border);
+        }
+
+        .practice-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--red);
+        }
+
+        .practice-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .practice-card-soon .practice-icon {
+            color: rgba(0, 0, 0, 0.35);
+        }
+
+        .practice-card h3 {
+            margin: 0;
+            font-family: var(--font-display);
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .practice-card-soon h3 {
+            color: rgba(0, 0, 0, 0.55);
+        }
+
+        .practice-card p {
+            margin: 0;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: rgba(0, 0, 0, 0.65);
+            flex: 1;
+        }
+
+        .practice-card-soon p {
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        .practice-link {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        @media (max-width: 650px) {
+
+            .practice-card {
+                flex: 1 1 100%;
+                max-width: 360px;
+            }
+        }
+
+        /* ================= MODAL ================= */
+
+        .exmodal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .exmodal-content {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 32px 28px 28px;
+        }
+
+        .exmodal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.06);
+            color: var(--black);
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .exmodal-close:hover {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .exmodal-panel h3 {
+            margin: 0 0 8px;
+            font-family: var(--font-display);
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--black);
+            padding-right: 24px;
+        }
+
+        .exmodal-panel > p {
+            margin: 0 0 22px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .exmodal-btn-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .exmodal-btn {
+            border: none;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 14.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .exmodal-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .exmodal-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        @keyframes exSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        .exmodal-btn-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-right: 8px;
+            vertical-align: middle;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: exSpin 0.6s linear infinite;
+        }
+
+        .exmodal-btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .exmodal-btn-primary:hover {
+            background: var(--red);
+        }
+
+        .exmodal-btn-ghost {
+            background: var(--white);
+            color: var(--black);
+            border: 1.5px solid var(--border);
+        }
+
+        .exmodal-btn-ghost:hover {
+            border-color: var(--black);
+        }
+
+        .exmodal-full {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .exmodal-qr {
+            display: block;
+            width: 100%;
+            max-width: 220px;
+            margin: 0 auto 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .exmodal-field {
+            margin-bottom: 14px;
+        }
+
+        .exmodal-field label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .exmodal-field input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--black);
+            background: var(--white);
+        }
+
+        .exmodal-field input:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+
+        .exmodal-field input[readonly] {
+            background: rgba(0, 0, 0, 0.03);
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .exmodal-note {
+            margin: 0 0 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: rgba(0, 0, 0, 0.55);
+        }
+
+        .exmodal-error {
+            margin: 8px 0 16px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--red);
+        }
+
+        /* ================= CONTACT ================= */
+
+        .contact-wrap {
+            max-width: 1100px;
+            margin: 0 auto 80px;
+        }
+
+        .contact-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+            background: var(--black);
+            color: var(--white);
+            padding: 44px 48px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-cta-text h2 {
+            margin: 0 0 12px;
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--white);
+        }
+
+        .contact-cta-text p {
+            margin: 0;
+            max-width: 420px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .contact-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            background: var(--pink);
+            color: var(--black);
+            font-weight: 600;
+            font-size: 14.5px;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 999px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .contact-cta-btn:hover {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .contact-footer {
+            margin-top: 24px;
+            background: var(--black);
+            color: var(--white);
+            border-radius: var(--radius-lg);
+            border-top: 3px solid var(--pink);
+            padding: 44px 48px 26px;
+        }
+
+        .contact-footer-inner {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            gap: 32px;
+        }
+
+        .contact-footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+
+        .contact-footer-logo img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        .contact-footer-logo em {
+            font-style: normal;
+            color: var(--pink);
+        }
+
+        .contact-footer-brand p {
+            margin: 0 0 10px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.65);
+            max-width: 260px;
+        }
+
+        .contact-footer-note {
+            font-family: var(--font-mono);
+            font-size: 12px !important;
+            color: var(--pink) !important;
+        }
+
+        .contact-footer-col h4 {
+            margin: 0 0 16px;
+            font-family: var(--font-display);
+            font-size: 14.5px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .contact-footer-team .team-mini-grid {
+            display: flex;
+            gap: 24px;
+        }
+
+        .contact-footer-team .team-mini-col {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-footer-team .team-mini {
+            margin-bottom: 12px;
+        }
+
+        .contact-footer-team .team-mini:last-child {
+            margin-bottom: 0;
+        }
+
+        .team-mini-name {
+            margin: 0 0 2px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .team-mini-name span {
+            font-weight: 400;
+            color: var(--pink);
+            font-size: 12px;
+        }
+
+        .team-mini-desc {
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .contact-footer-office p {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 0 0 12px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-footer-office svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+            color: var(--pink);
+        }
+
+        .contact-footer-office a {
+            display: inline;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: underline;
+        }
+
+        .contact-footer-office a:hover {
+            color: var(--pink);
+        }
+
+        @media (max-width: 900px) {
+
+            .contact-footer-inner {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .contact-footer-brand {
+                grid-column: span 2;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .contact-cta {
+                padding: 30px 24px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .contact-cta-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .contact-footer {
+                padding: 32px 22px 22px;
+            }
+
+            .contact-footer-inner {
+                grid-template-columns: 1fr;
+                gap: 26px;
+            }
+
+            .contact-footer-brand {
+                grid-column: span 1;
+            }
+        }
+
+        /* ================= FOOTER ================= */
+
+        .site-footer {
+            margin-top: 60px;
+            padding: 28px 0 34px;
+            background: var(--black);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .site-footer .footer-inner {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .site-footer p {
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            letter-spacing: 0.04em;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        @media (max-width: 650px) {
+
+            .site-footer {
+                margin-top: 40px;
+                padding: 22px 0 26px;
+            }
+
+            .site-footer .footer-inner {
+                padding: 0 20px;
+            }
+
+            .site-footer p {
+                font-size: 11px;
+            }
+        }
+
+        /* ================= HIDDEN FORM ================= */
+
+        #registrationFrame {
+            display: none;
+        }
+
+        #registrationForm {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav-container">
+
+            <a href="index.html" class="nav-logo">
+                <img src="../photo/ssz-icon.png"
+                     alt="SSZ Training Logo"
+                     class="nav-icon">
+                SSZ <span>Training</span>
+            </a>
+
+            <div class="nav-links">
+
+                <div class="nav-cta-group">
+
+                    <a href="../index.html" class="nav-cta">
+                        Back To Learning
+                    </a>
+
+                    <a href="index.html#the-team" class="nav-cta">
+                        Contact Us
+                    </a>
+
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="content-wrapper">
+
+        <!-- HERO -->
+
+        <div class="practice-hero">
+
+            <div class="practice-hero-eyebrow">
+                Practice Files
+            </div>
+
+            <h1>
+                Let's practice what you've learned.
+            </h1>
+
+            <p>
+                Pick a subject below and work through the exercises at your own pace.
+            </p>
+
+        </div>
+
+
+        <div class="page-container">
+
+            <!-- PRACTICE LIST -->
+
+            <div class="section-heading">
+
+                <span class="eyebrow">
+                    Choose A Subject
+                </span>
+
+                <h1>
+                    What do you want to practice?
+                </h1>
+
+            </div>
+
+
+            <div class="practice-grid">
+
+                <!-- EXCEL -->
+
+                <a href="excel/index.html"
+                   class="practice-card"
+                   data-subject="Excel"
+                   data-target="excel/index.html">
+
+                    <span class="practice-icon" aria-hidden="true">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <rect x="3"
+                                  y="3"
+                                  width="18"
+                                  height="18"
+                                  rx="2"/>
+
+                            <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+
+                        </svg>
+
+                    </span>
+
+                    <h3>
+                        Excel
+                    </h3>
+
+                    <p>
+                        Practice formulas, Pivot Tables, data cleaning and VLOOKUP/XLOOKUP.
+                    </p>
+
+                    <span class="practice-link">
+                        View exercises &raquo;
+                    </span>
+
+                </a>
+
+
+                <!-- COMING SOON -->
+
+                <div class="practice-card practice-card-soon">
+
+                    <span class="practice-icon" aria-hidden="true">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <circle cx="12"
+                                    cy="12"
+                                    r="9"/>
+
+                            <path d="M12 7v5l3 3"/>
+
+                        </svg>
+
+                    </span>
+
+                    <h3>
+                        More practice coming soon!
+                    </h3>
+
+                    <p>
+                        We're adding exercises for Power BI, SQL, Python and more — check back soon.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= ACCESS MODAL ================= -->
+
+    <div id="exModal" class="exmodal">
+
+        <div class="exmodal-content">
+
+            <button type="button"
+                    class="exmodal-close"
+                    id="exClose"
+                    aria-label="Close">
+                &times;
+            </button>
+
+
+            <!-- CHOICE -->
+
+            <div class="exmodal-panel"
+                 data-panel="choice">
+
+                <h3 id="exChoiceTitle">
+                    Excel Exercise
+                </h3>
+
+                <p>
+                    Register to get access, or log in if you're already registered.
+                </p>
+
+                <div class="exmodal-btn-row">
+
+                    <button type="button"
+                            class="exmodal-btn exmodal-btn-primary"
+                            data-action="show-register">
+
+                        Register Now
+
+                    </button>
+
+                    <button type="button"
+                            class="exmodal-btn exmodal-btn-ghost"
+                            data-action="show-login">
+
+                        Login
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- REGISTER -->
+
+            <div class="exmodal-panel"
+                 data-panel="register"
+                 hidden>
+
+                <h3>
+                    Register —
+                    <span id="exRegisterSubject">
+                        Excel
+                    </span>
+                </h3>
+
+
+                <img class="exmodal-qr"
+                     src="../photo/qr-bank.jpg"
+                     alt="Payment QR code">
+
+
+                <div class="exmodal-field">
+
+                    <label for="exName">
+                        Name
+                    </label>
+
+                    <input type="text"
+                           id="exName"
+                           placeholder="Your full name">
+
+                </div>
+
+
+                <div class="exmodal-field">
+
+                    <label for="exPhone">
+                        Phone Number
+                    </label>
+
+                    <input type="tel"
+                           id="exPhone"
+                           placeholder="e.g. 0123456789">
+
+                </div>
+
+
+                <div class="exmodal-field">
+
+                    <label for="exEmail">
+                        Email
+                    </label>
+
+                    <input type="email"
+                           id="exEmail"
+                           placeholder="you@email.com">
+
+                </div>
+
+
+                <p class="exmodal-error"
+                   id="exRegisterError"
+                   hidden>
+                </p>
+
+
+                <button type="button"
+                        class="exmodal-btn exmodal-btn-primary exmodal-full"
+                        data-action="submit-register">
+
+                    Submit Registration
+
+                </button>
+
+
+                <button type="button"
+                        class="exmodal-btn exmodal-btn-ghost exmodal-full"
+                        data-action="back-to-choice">
+
+                    Back
+
+                </button>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <div class="exmodal-panel"
+                 data-panel="login"
+                 hidden>
+
+                <h3>
+                    Login —
+                    <span id="exLoginSubject">
+                        Excel
+                    </span>
+                </h3>
+
+                <p class="exmodal-note">
+                    Already registered? Enter your access password to continue.
+                </p>
+
+
+                <div class="exmodal-field">
+
+                    <label for="exPassword">
+                        PASSWORD
+                    </label>
+
+                    <input type="password"
+                           id="exPassword"
+                           placeholder="Enter password">
+
+                </div>
+
+
+                <p class="exmodal-error"
+                   id="exLoginError"
+                   hidden>
+
+                    Incorrect password — please register to get access.
+
+                </p>
+
+
+                <button type="button"
+                        class="exmodal-btn exmodal-btn-primary exmodal-full"
+                        data-action="submit-login">
+
+                    Enter
+
+                </button>
+
+
+                <button type="button"
+                        class="exmodal-btn exmodal-btn-ghost exmodal-full"
+                        data-action="back-to-choice">
+
+                    Back
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= HIDDEN REGISTRATION FORM ================= -->
+
+    <iframe name="registrationFrame"
+            id="registrationFrame">
+    </iframe>
+
+
+    <form id="registrationForm"
+          target="registrationFrame"
+          method="POST"
+          action="https://script.google.com/macros/s/AKfycbwuOLk8uuO2zqHKUytytkAsed5CbBfyQB3J8eoflgO2KA2v3o7k3mc-9hIYmjr2mjm3ig/exec">
+
+        <input type="hidden"
+               name="sheetName"
+               id="regSheetName">
+
+        <input type="hidden"
+               name="name"
+               id="regName">
+
+        <input type="hidden"
+               name="phone"
+               id="regPhone">
+
+        <input type="hidden"
+               name="email"
+               id="regEmail">
+
+        <input type="hidden"
+               name="classChoice"
+               id="regClassChoice">
+
+    </form>
+
+
+    <!-- ================= CONTACT ================= -->
+
+    <div class="section-heading">
+
+        <span class="eyebrow"
+              id="the-team">
+
+            Get In Touch
+
+        </span>
+
+        <h1 id="title-header-3">
+            Still have questions?
+        </h1>
+
+    </div>
+
+
+    <div id="ctn-5"
+         class="contact-wrap">
+
+        <div class="contact-cta">
+
+            <div class="contact-cta-text">
+
+                <h2>
+                    How can we help<br>
+                    with your learning journey?
+                </h2>
+
+                <p>
+                    Need more info or a quick answer about a class?
+                    We're just one chat away!
+                </p>
+
+            </div>
+
+
+            <a href="https://wa.link/2t4xce"
+               target="_blank"
+               class="contact-cta-btn">
+
+                Chat us now
+
+                <svg width="16"
+                     height="16"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2.5"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <line x1="7"
+                          y1="17"
+                          x2="17"
+                          y2="7">
+                    </line>
+
+                    <polyline points="7 7 17 7 17 17">
+                    </polyline>
+
+                </svg>
+
+            </a>
+
+        </div>
+
+
+        <div class="contact-footer">
+
+            <div class="contact-footer-inner">
+
+
+                <!-- BRAND -->
+
+                <div class="contact-footer-brand">
+
+                    <a href="#home"
+                       class="contact-footer-logo">
+
+                        <img src="../photo/ssz-icon.png"
+                             alt="SSZ Training">
+
+                        <span>
+                            SSZ
+                            <em>Training</em>
+                        </span>
+
+                    </a>
+
+                    <p>
+                        Practical, affordable tech skills training
+                        for students and fresh grads across Malaysia.
+                    </p>
+
+                    <p class="contact-footer-note">
+                        Founded by Universiti Putra Malaysia (UPM) alumni.
+                    </p>
+
+                </div>
+
+
+                <!-- TEAM -->
+
+                <div class="contact-footer-col contact-footer-team">
+
+                    <h4>
+                        The Team
+                    </h4>
+
+
+                    <div class="team-mini-grid">
+
+                        <div class="team-mini-col">
+
+                            <div class="team-mini">
+
+                                <p class="team-mini-name">
+                                    Shaiful
+                                    <span>— Business Developer</span>
+                                </p>
+
+                                <p class="team-mini-desc">
+                                    Builds partnerships and growth strategy.
+                                </p>
+
+                            </div>
+
+
+                            <div class="team-mini">
+
+                                <p class="team-mini-name">
+                                    Safar
+                                    <span>— Marketing &amp; Sales</span>
+                                </p>
+
+                                <p class="team-mini-desc">
+                                    Runs market research and campaigns.
+                                </p>
+
+                            </div>
+
+
+                            <div class="team-mini">
+
+                                <p class="team-mini-name">
+                                    Zahil
+                                    <span>— Software Developer</span>
+                                </p>
+
+                                <p class="team-mini-desc">
+                                    Builds and maintains our platform.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="team-mini-col">
+
+                            <div class="team-mini">
+
+                                <p class="team-mini-name">
+                                    Yusril
+                                    <span>— Business Executive</span>
+                                </p>
+
+                                <p class="team-mini-desc">
+                                    Keeps daily operations running smoothly.
+                                </p>
+
+                            </div>
+
+
+                            <div class="team-mini">
+
+                                <p class="team-mini-name">
+                                    Ali
+                                    <span>— Business Executive</span>
+                                </p>
+
+                                <p class="team-mini-desc">
+                                    Supports planning and student experience.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OFFICE -->
+
+                <div class="contact-footer-col contact-footer-office">
+
+                    <h4>
+                        Our base
+                    </h4>
+
+
+                    <p>
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2">
+
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z">
+                            </path>
+
+                            <circle cx="12"
+                                    cy="10"
+                                    r="3">
+                            </circle>
+
+                        </svg>
+
+                        Serdang, 43000, Selangor, Malaysia
+
+                    </p>
+
+
+                    <p>
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2">
+
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
+                            </path>
+
+                        </svg>
+
+                        WhatsApp Hotline:
+                        <a href="https://wa.link/2t4xce"
+                           target="_blank">
+
+                            601156974116
+
+                        </a>
+
+                    </p>
+
+
+                    <p>
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2">
+
+                            <rect x="2"
+                                  y="4"
+                                  width="20"
+                                  height="16"
+                                  rx="2">
+                            </rect>
+
+                            <path d="m2 7 10 6 10-6">
+                            </path>
+
+                        </svg>
+
+                        ssztraining1@gmail.com
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="site-footer">
+
+        <div class="footer-inner">
+
+            <p>
+                &copy;
+                <span id="copyright-year">
+                    2026
+                </span>
+                SSZ Training & Consultancy.
+                All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ================= BASIC ================= */
+
+        document.getElementById('copyright-year').textContent =
+            new Date().getFullYear();
+
+
+        const header =
+            document.querySelector('header');
+
+
+        window.addEventListener('scroll', () => {
+
+            header.classList.toggle(
+                'scrolled',
+                window.scrollY > 0
+            );
+
+        });
+
+        /* ================= BUTTON LOADING STATE ================= */
+
+        function setButtonLoading(btn, loadingText) {
+
+            if (!btn.dataset.originalHtml) {
+                btn.dataset.originalHtml = btn.innerHTML;
+            }
+
+            btn.disabled = true;
+
+            btn.innerHTML =
+                '<span class="exmodal-btn-spinner"></span>' +
+                loadingText;
+
+        }
+
+        function resetButtonLoading(btn) {
+
+            btn.disabled = false;
+
+            if (btn.dataset.originalHtml) {
+                btn.innerHTML = btn.dataset.originalHtml;
+            }
+
+        }
+
+
+        /* ================= EXERCISE API ================= */
+
+        const EXERCISE_API =
+            "https://script.google.com/macros/s/AKfycbwuOLk8uuO2zqHKUytytkAsed5CbBfyQB3J8eoflgO2KA2v3o7k3mc-9hIYmjr2mjm3ig/exec";
+
+        /* ================= MODAL ELEMENTS ================= */
+
+        const exModal =
+            document.getElementById('exModal');
+
+        const exClose =
+            document.getElementById('exClose');
+
+        const exChoiceTitle =
+            document.getElementById('exChoiceTitle');
+
+        const exRegisterSubject =
+            document.getElementById('exRegisterSubject');
+
+        const exLoginSubject =
+            document.getElementById('exLoginSubject');
+
+        const exClassName =
+            document.getElementById('exClassName');
+
+        const exPassword =
+            document.getElementById('exPassword');
+
+        const exLoginError =
+            document.getElementById('exLoginError');
+
+        const exRegisterError =
+            document.getElementById('exRegisterError');
+
+
+        const exPanels =
+            exModal.querySelectorAll('.exmodal-panel');
+
+
+        let currentTarget = null;
+
+
+        /* ================= PANEL ================= */
+
+        function showPanel(name) {
+
+            exPanels.forEach(panel => {
+
+                panel.hidden =
+                    panel.dataset.panel !== name;
+
+            });
+
+        }
+
+
+        /* ================= OPEN MODAL ================= */
+
+        function openExModal(subject, target) {
+
+            currentTarget = target;
+
+            exChoiceTitle.textContent =
+                `${subject} Exercise`;
+
+            exRegisterSubject.textContent =
+                subject;
+
+            exLoginSubject.textContent =
+                subject;
+
+
+            // Reset fields
+
+            document.getElementById('exName').value = '';
+
+            document.getElementById('exPhone').value = '';
+
+            document.getElementById('exEmail').value = '';
+
+            exPassword.value = '';
+
+            exLoginError.hidden = true;
+
+            exRegisterError.hidden = true;
+
+            exRegisterError.textContent = '';
+
+            exRegisterError.style.color =
+                'var(--red)';
+
+
+            showPanel('choice');
+
+
+            exModal.style.display =
+                'flex';
+
+            document.body.classList.add(
+                'modal-open'
+            );
+
+        }
+
+
+        /* ================= CLOSE MODAL ================= */
+
+        function closeExModal() {
+
+            exModal.style.display =
+                'none';
+
+            document.body.classList.remove(
+                'modal-open'
+            );
+
+            currentTarget = null;
+
+        }
+
+
+        /* ================= PRACTICE CARD ================= */
+
+        document
+            .querySelectorAll('.practice-card[data-subject]')
+            .forEach(card => {
+
+                card.addEventListener('click', (e) => {
+
+                    e.preventDefault();
+
+                    const subject =
+                        card.dataset.subject;
+
+                    const target =
+                        card.dataset.target;
+
+                    openExModal(
+                        subject,
+                        target
+                    );
+
+                });
+
+            });
+
+
+        /* ================= CLOSE BUTTON ================= */
+
+        exClose.addEventListener(
+            'click',
+            closeExModal
+        );
+
+
+        /* ================= OUTSIDE CLICK ================= */
+
+        exModal.addEventListener(
+            'click',
+            (e) => {
+
+                if (e.target === exModal) {
+
+                    closeExModal();
+
+                }
+
+            }
+        );
+
+
+        /* ================= BUTTON ACTIONS ================= */
+
+        exModal.addEventListener(
+            'click',
+            (e) => {
+
+                const btn =
+                    e.target.closest('[data-action]');
+
+                if (!btn) return;
+
+
+                const action =
+                    btn.dataset.action;
+
+
+                /* ================= REGISTER ================= */
+
+                if (action === 'show-register') {
+
+                    exRegisterError.hidden =
+                        true;
+
+                    exRegisterError.textContent =
+                        '';
+
+                    showPanel('register');
+
+                }
+
+
+                /* ================= LOGIN ================= */
+
+                if (action === 'show-login') {
+
+                    exPassword.value =
+                        '';
+
+                    exLoginError.hidden =
+                        true;
+
+                    showPanel('login');
+
+                }
+
+
+                /* ================= BACK ================= */
+
+                if (action === 'back-to-choice') {
+
+                    showPanel('choice');
+
+                }
+
+
+                /* ================= SUBMIT REGISTRATION ================= */
+
+                if (action === 'submit-register') {
+
+                    const name =
+                        document
+                            .getElementById('exName')
+                            .value
+                            .trim();
+
+
+                    const phone =
+                        document
+                            .getElementById('exPhone')
+                            .value
+                            .trim();
+
+
+                    const email =
+                        document
+                            .getElementById('exEmail')
+                            .value
+                            .trim();
+
+
+                    const classChoice = "Excel";
+
+
+                    /* VALIDATION */
+
+                    if (
+                        !name ||
+                        !phone ||
+                        !email
+                    ) {
+
+                        exRegisterError.textContent =
+                            "Please complete all fields.";
+
+                        exRegisterError.style.color =
+                            'var(--red)';
+
+                        exRegisterError.hidden =
+                            false;
+
+                        return;
+
+                    }
+
+
+                    /* EMAIL VALIDATION */
+
+                    const emailPattern =
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+                    if (!emailPattern.test(email)) {
+
+                        exRegisterError.textContent =
+                            "Please enter a valid email address.";
+
+                        exRegisterError.style.color =
+                            'var(--red)';
+
+                        exRegisterError.hidden =
+                            false;
+
+                        return;
+
+                    }
+
+
+                    /* PHONE VALIDATION */
+
+                    if (phone.length < 9) {
+
+                        exRegisterError.textContent =
+                            "Please enter a valid phone number.";
+
+                        exRegisterError.style.color =
+                            'var(--red)';
+
+                        exRegisterError.hidden =
+                            false;
+
+                        return;
+
+                    }
+
+
+                    /* DISABLE BUTTON + SPINNER */
+
+                    setButtonLoading(btn, "Loading...");
+
+
+                    /*
+                     * Fill hidden form
+                     */
+
+                    document.getElementById(
+                        'regSheetName'
+                    ).value =
+                        'Exercise_Excel';
+
+
+                    document.getElementById(
+                        'regName'
+                    ).value =
+                        name;
+
+
+                    document.getElementById(
+                        'regPhone'
+                    ).value =
+                        phone;
+
+
+                    document.getElementById(
+                        'regEmail'
+                    ).value =
+                        email;
+
+
+                    document.getElementById(
+                        'regClassChoice'
+                    ).value =
+                        classChoice;
+
+
+                    /*
+                     * Submit to Apps Script
+                     */
+
+                    document.getElementById(
+                        'registrationForm'
+                    ).submit();
+
+
+                    /*
+                     * Apps Script form submission
+                     * happens in the background.
+                     *
+                     * Show confirmation after
+                     * a short delay.
+                     */
+
+                    setTimeout(() => {
+
+                        exRegisterError.textContent =
+                            "Your registration has been received. Please complete the payment and we will email your passcode in 24 hours time. Thank you!";
+
+                        exRegisterError.style.color =
+                            "green";
+
+                        exRegisterError.hidden =
+                            false;
+
+                        btn.innerHTML =
+                            "Registration Submitted";
+
+                    }, 1200);
+
+                }
+
+
+                /* ================= SUBMIT LOGIN ================= */
+
+                if (action === 'submit-login') {
+
+                    const password =
+                        exPassword.value.trim();
+
+
+                    if (!password) {
+
+                        exLoginError.textContent =
+                            "Please enter your password.";
+
+                        exLoginError.hidden =
+                            false;
+
+                        return;
+
+                    }
+
+
+                    exLoginError.hidden =
+                        true;
+
+                    setButtonLoading(btn, "Loading...");
+
+
+                    const callbackName =
+                        "sszLoginCallback_" +
+                        Date.now();
+
+
+                    window[callbackName] =
+                        function(response) {
+
+                            delete window[
+                                callbackName
+                            ];
+
+
+                            if (
+                                response.success &&
+                                response.token
+                            ) {
+
+                                sessionStorage.setItem(
+                                    "ssz_excel_token",
+                                    response.token
+                                );
+
+
+                                if (currentTarget) {
+
+                                    window.location.href =
+                                        currentTarget;
+
+                                }
+
+                                return;
+
+                            }
+
+
+                            resetButtonLoading(btn);
+
+                            exLoginError.textContent =
+                                "Incorrect password — please try again.";
+
+                            exLoginError.hidden =
+                                false;
+
+                        };
+
+
+                    const script =
+                        document.createElement(
+                            "script"
+                        );
+
+
+                    script.src =
+                        EXERCISE_API +
+                        "?password=" +
+                        encodeURIComponent(
+                            password
+                        ) +
+                        "&callback=" +
+                        encodeURIComponent(
+                            callbackName
+                        );
+
+
+                    script.onerror =
+                        function() {
+
+                            delete window[
+                                callbackName
+                            ];
+
+
+                            resetButtonLoading(btn);
+
+                            exLoginError.textContent =
+                                "Unable to connect. Please try again.";
+
+                            exLoginError.hidden =
+                                false;
+
+                        };
+
+
+                    document.body.appendChild(
+                        script
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>

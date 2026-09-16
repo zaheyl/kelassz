@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Excel Function Training — SSZ Training and Consultancy</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --blue: rgba(26, 77, 128, 0.55);
+      --red: #b20000;
+      --pink: #ff95b6;
+
+      --border: rgba(0, 0, 0, 0.1);
+
+      --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+      --font-body: "Inter", "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", "Consolas", monospace;
+
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 24px 50px rgba(0, 0, 0, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* ---------- simple hero, matching exercise.html ---------- */
+    .practice-hero {
+      background: var(--black);
+      padding: 90px 20px 40px;
+      text-align: center;
+    }
+
+    .practice-hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 18px;
+    }
+
+    .practice-hero h1 {
+      margin: 0 auto 16px;
+      max-width: 720px;
+      font-weight: 700;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.2;
+      color: var(--white);
+    }
+
+    .practice-hero p.subtitle {
+      margin: 0 auto 34px;
+      max-width: 560px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    /* ---------- formula bar showcase ---------- */
+    .formula-bar {
+      display: flex;
+      align-items: stretch;
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      max-width: 640px;
+      margin: 0 auto;
+      border-left: 4px solid var(--red);
+    }
+
+    .formula-bar .name-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      min-width: 52px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--black);
+      background: rgba(255, 149, 182, 0.18);
+      border-right: 1px solid var(--border);
+    }
+
+    .formula-bar .fx {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.5);
+      padding: 0 14px;
+      border-right: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    .formula-bar .fx-text {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      padding: 13px 18px;
+      color: var(--black);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: var(--white);
+    }
+
+    /* ---------- tab bar ---------- */
+    nav.tabbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav.tabbar .tabbar-inner {
+      max-width: 1180px;
+      margin: auto;
+      display: flex;
+      gap: 4px;
+      padding: 0 20px;
+    }
+
+    .tab {
+      background: transparent;
+      border: none;
+      color: rgba(0, 0, 0, 0.55);
+      padding: 16px 16px 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      font-family: var(--font-body);
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .tab:hover {
+      color: var(--black);
+    }
+
+    .tab.active {
+      color: var(--black);
+      border-bottom-color: var(--red);
+    }
+
+    .tab .count {
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 20px;
+      padding: 1px 8px;
+      font-size: 11px;
+      margin-left: 5px;
+      font-weight: 600;
+    }
+
+    .tab.active .count {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    /* ---------- grid / cards ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+      padding: 40px 20px 60px;
+      max-width: 1180px;
+      margin: auto;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--pink);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--black);
+      color: var(--white);
+      padding: 5px 11px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .levels-badge {
+      float: right;
+      background: rgba(255, 149, 182, 0.2);
+      color: var(--red);
+      padding: 5px 11px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .card h3 {
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-size: 18px;
+      color: var(--black);
+      clear: both;
+    }
+
+    .task {
+      color: rgba(0, 0, 0, 0.6);
+      line-height: 1.55;
+      min-height: 45px;
+      font-size: 14px;
+    }
+
+    .formula {
+      margin-top: 16px;
+      background: var(--black);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--pink);
+      overflow: auto;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    button.dl {
+      margin-top: 16px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 11px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13.5px;
+      font-family: var(--font-body);
+      width: 100%;
+      transition: background-color 0.15s ease, transform 0.15s ease;
+    }
+
+    button.dl:hover {
+      background: var(--red);
+      transform: translateY(-1px);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: rgba(0, 0, 0, 0.5);
+      padding: 40px 0;
+    }
+
+    footer.site-foot {
+      background: var(--black);
+      color: rgba(255, 255, 255, 0.65);
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 13.5px;
+      font-family: var(--font-mono);
+    }
+
+    @media (max-width: 640px) {
+      .practice-hero h1 { font-size: 1.7rem; }
+      .formula-bar { max-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="practice-hero">
+    <div class="practice-hero-eyebrow">Excel Practice</div>
+    <h1>Excel Function Training</h1>
+    <p class="subtitle">50 Modules &bull; 8 Functions &bull; 3 Difficulty Levels per Module &bull; Excel Download</p>
+    <div class="formula-bar">
+      <div class="name-box">fx</div>
+      <div class="fx">=</div>
+      <div class="fx-text" id="fxCycle">SUMIF(A2:A5,"Laptop",B2:B5)</div>
+    </div>
+  </div>
+
+  <nav class="tabbar">
+    <div class="tabbar-inner" id="tabbar">
+      <button class="tab active" data-group="ALL">All <span class="count">50</span></button>
+      <button class="tab" data-group="SUMIF">SUMIF <span class="count">6</span></button>
+      <button class="tab" data-group="SUMIFS">SUMIFS <span class="count">6</span></button>
+      <button class="tab" data-group="COUNTIF">COUNTIF <span class="count">6</span></button>
+      <button class="tab" data-group="COUNTIFS">COUNTIFS <span class="count">6</span></button>
+      <button class="tab" data-group="VLOOKUP">VLOOKUP <span class="count">7</span></button>
+      <button class="tab" data-group="XLOOKUP">XLOOKUP <span class="count">7</span></button>
+      <button class="tab" data-group="INDEX-MATCH">INDEX-MATCH <span class="count">6</span></button>
+      <button class="tab" data-group="PIVOT">PivotTable <span class="count">6</span></button>
+    </div>
+  </nav>
+
+  <div class="grid" id="grid"></div>
+
+  <footer class="site-foot">SSZ Training &amp; Consultancy</footer>
+
+  <script>
+    const EXERCISE_API =
+        "https://script.google.com/macros/s/AKfycbwuOLk8uuO2zqHKUytytkAsed5CbBfyQB3J8eoflgO2KA2v3o7k3mc-9hIYmjr2mjm3ig/exec";
+
+    const token =
+        sessionStorage.getItem("ssz_excel_token");
+
+    // No token = no access
+    if (!token) {
+
+        window.location.replace("../index.html");
+
+    } else {
+
+        const callbackName =
+            "sszVerifyCallback_" + Date.now();
+
+        window[callbackName] = function(response) {
+
+            delete window[callbackName];
+
+            if (!response.success) {
+
+                sessionStorage.removeItem(
+                    "ssz_excel_token"
+                );
+
+                window.location.replace("../index.html");
+            }
+        };
+
+        const script =
+            document.createElement("script");
+
+        script.src =
+            EXERCISE_API +
+            "?token=" +
+            encodeURIComponent(token) +
+            "&callback=" +
+            encodeURIComponent(callbackName);
+
+        script.onerror = function() {
+
+            sessionStorage.removeItem(
+                "ssz_excel_token"
+            );
+
+            window.location.replace("../index.html");
+        };
+
+        document.body.appendChild(script);
+    }
+
+    /* =========================================
+       LEVEL ORDER (used to build sheets in order)
+    ========================================= */
+    const LEVELS = ["Beginner", "Intermediate", "Advanced"];
+
+    /* =========================================
+       TOPICS DATABASE — 50 modules across
+       SUMIF, SUMIFS, COUNTIF, COUNTIFS, VLOOKUP,
+       XLOOKUP, INDEX-MATCH and PivotTable.
+    ========================================= */
+    const TOPICS = [{"id": 1, "group": "SUMIF", "title": "SUMIF: Product Sales", "intro": "Calculate the total Sales based on a single category criterion, in the context of product sales.", "levels": {"Beginner": {"task": "Calculate the total Sales for Product \"Laptop\".", "headers": ["Product", "Sales"], "rows": [["Mouse", 4664], ["Monitor", 2331], ["Webcam", 4119], ["Webcam", 3765], ["Monitor", 1800], ["Printer", 1893], ["Laptop", 4635], ["Keyboard", 1292], ["Webcam", 2575], ["Keyboard", 2781], ["Keyboard", 2570], ["Mouse", 2053]], "formula": "=SUMIF(A2:A13,\"Laptop\",B2:B13)", "result": "RM4,635"}, "Intermediate": {"task": "Calculate the total Sales for Product \"Mouse\" (larger dataset).", "headers": ["Product", "Sales"], "rows": [["Laptop", 2566], ["Webcam", 1148], ["Mouse", 3084], ["Laptop", 4504], ["Webcam", 2269], ["Webcam", 1032], ["Monitor", 3178], ["Monitor", 4666], ["Mouse", 2479], ["Webcam", 1891], ["Keyboard", 4072], ["Keyboard", 1726], ["Monitor", 4460], ["Mouse", 4889], ["Keyboard", 1897]], "formula": "=SUMIF(A2:A16,\"Mouse\",B2:B16)", "result": "RM10,452"}, "Advanced": {"task": "Use a wildcard (*) to calculate the total Sales for Product starting with the letter 'L'.", "headers": ["Product", "Sales"], "rows": [["Printer", 3819], ["Keyboard", 912], ["Monitor", 3738], ["Printer", 4368], ["Printer", 2257], ["Mouse", 1899], ["Monitor", 3617], ["Keyboard", 2035], ["Webcam", 2918], ["Laptop", 1291], ["Webcam", 1437], ["Keyboard", 3276], ["Webcam", 1486], ["Printer", 3149], ["Printer", 3770]], "formula": "=SUMIF(A2:A16,\"L*\",B2:B16)", "result": "RM1,291"}}}, {"id": 2, "group": "SUMIF", "title": "SUMIF: Department Expenses", "intro": "Calculate the total Expense based on a single category criterion, in the context of department expenses.", "levels": {"Beginner": {"task": "Calculate the total Expense for Department \"Marketing\".", "headers": ["Department", "Expense"], "rows": [["Operations", 698], ["Operations", 1034], ["IT", 399], ["Legal", 1331], ["HR", 1532], ["HR", 890], ["IT", 1718], ["HR", 973], ["IT", 444], ["Finance", 695], ["HR", 481], ["IT", 1876]], "formula": "=SUMIF(A2:A13,\"Marketing\",B2:B13)", "result": "RM0"}, "Intermediate": {"task": "Calculate the total Expense for Department \"HR\" (larger dataset).", "headers": ["Department", "Expense"], "rows": [["Marketing", 1762], ["Finance", 1160], ["Marketing", 1897], ["Finance", 968], ["Legal", 1721], ["Legal", 1262], ["Operations", 1843], ["Finance", 1223], ["IT", 1445], ["Operations", 1271], ["HR", 1460], ["IT", 427], ["Operations", 770], ["HR", 1723], ["HR", 328]], "formula": "=SUMIF(A2:A16,\"HR\",B2:B16)", "result": "RM3,511"}, "Advanced": {"task": "Use a wildcard (*) to calculate the total Expense for Department starting with the letter 'M'.", "headers": ["Department", "Expense"], "rows": [["IT", 1582], ["IT", 1409], ["IT", 1634], ["HR", 1668], ["Operations", 821], ["Marketing", 798], ["Operations", 568], ["Marketing", 1964], ["IT", 1432], ["Legal", 1594], ["Finance", 370], ["Legal", 1663], ["Legal", 658], ["Finance", 1974], ["Operations", 1963]], "formula": "=SUMIF(A2:A16,\"M*\",B2:B16)", "result": "RM2,762"}}}, {"id": 3, "group": "SUMIF", "title": "SUMIF: Regional Sales", "intro": "Calculate the total Sales based on a single category criterion, in the context of regional sales.", "levels": {"Beginner": {"task": "Calculate the total Sales for Region \"Selangor\".", "headers": ["Region", "Sales"], "rows": [["Selangor", 4270], ["Sabah", 2967], ["Selangor", 3770], ["Sarawak", 4207], ["Sabah", 2247], ["Johor", 2699], ["Sabah", 3257], ["Sabah", 3881], ["KL", 4466], ["Sabah", 3724], ["Sabah", 3628], ["Selangor", 3044]], "formula": "=SUMIF(A2:A13,\"Selangor\",B2:B13)", "result": "RM11,084"}, "Intermediate": {"task": "Calculate the total Sales for Region \"Penang\" (larger dataset).", "headers": ["Region", "Sales"], "rows": [["Johor", 4141], ["Johor", 3177], ["Selangor", 2302], ["Sarawak", 3130], ["KL", 3252], ["Johor", 3348], ["KL", 3661], ["Penang", 2325], ["Selangor", 3524], ["Sarawak", 4003], ["Sarawak", 3642], ["Selangor", 3147], ["Penang", 3450], ["Selangor", 3243], ["Johor", 4429]], "formula": "=SUMIF(A2:A16,\"Penang\",B2:B16)", "result": "RM5,775"}, "Advanced": {"task": "Use a wildcard (*) to calculate the total Sales for Region starting with the letter 'S'.", "headers": ["Region", "Sales"], "rows": [["Sabah", 3707], ["Sabah", 3167], ["Johor", 2274], ["KL", 3048], ["Johor", 2310], ["Sabah", 3117], ["Penang", 4130], ["KL", 4204], ["Sarawak", 3739], ["KL", 4118], ["Selangor", 3887], ["Selangor", 3551], ["KL", 4281], ["Sabah", 1810], ["Penang", 3045]], "formula": "=SUMIF(A2:A16,\"S*\",B2:B16)", "result": "RM22,978"}}}, {"id": 4, "group": "SUMIF", "title": "SUMIF: Salesperson Sales", "intro": "Calculate the total Sales based on a single category criterion, in the context of salesperson sales.", "levels": {"Beginner": {"task": "Calculate the total Sales for Salesperson \"Ali\".", "headers": ["Salesperson", "Sales"], "rows": [["Wei Ling", 2668], ["Wei Ling", 3652], ["Wei Ling", 1680], ["Wei Ling", 1119], ["Sarah", 1299], ["Wei Ling", 2365], ["Farah", 2184], ["Wei Ling", 1286], ["Farah", 1136], ["Siti", 1711], ["Sarah", 901], ["Ali", 1722]], "formula": "=SUMIF(A2:A13,\"Ali\",B2:B13)", "result": "RM1,722"}, "Intermediate": {"task": "Calculate the total Sales for Salesperson \"Siti\" (larger dataset).", "headers": ["Salesperson", "Sales"], "rows": [["Ali", 973], ["Farah", 3259], ["Siti", 918], ["Sarah", 1871], ["Sarah", 1769], ["Wei Ling", 890], ["Siti", 2209], ["Wei Ling", 1192], ["Wei Ling", 1339], ["Ali", 1217], ["Sarah", 2235], ["Sarah", 1870], ["Sarah", 2366], ["Farah", 1628], ["Farah", 1230]], "formula": "=SUMIF(A2:A16,\"Siti\",B2:B16)", "result": "RM3,127"}, "Advanced": {"task": "Use a wildcard (*) to calculate the total Sales for Salesperson starting with the letter 'A'.", "headers": ["Salesperson", "Sales"], "rows": [["Ali", 1783], ["Wei Ling", 1598], ["Ali", 3119], ["Sarah", 1859], ["Sarah", 2914], ["Farah", 1445], ["Farah", 2736], ["Sarah", 1161], ["Kumar", 2964], ["Sarah", 3609], ["Ali", 3232], ["Ali", 3646], ["Farah", 1365], ["Farah", 1987], ["Ali", 3340]], "formula": "=SUMIF(A2:A16,\"A*\",B2:B16)", "result": "RM15,120"}}}, {"id": 5, "group": "SUMIF", "title": "SUMIF: Warehouse Stock", "intro": "Calculate the total StockQty based on a single category criterion, in the context of warehouse stock.", "levels": {"Beginner": {"task": "Calculate the total StockQty for Warehouse \"Warehouse A\".", "headers": ["Warehouse", "StockQty"], "rows": [["Warehouse A", 496], ["Warehouse B", 424], ["Warehouse B", 250], ["Warehouse C", 53], ["Warehouse B", 463], ["Warehouse A", 135], ["Warehouse A", 125], ["Warehouse A", 89], ["Warehouse C", 238], ["Warehouse A", 491], ["Warehouse B", 347], ["Warehouse C", 250]], "formula": "=SUMIF(A2:A13,\"Warehouse A\",B2:B13)", "result": "RM1,336"}, "Intermediate": {"task": "Calculate the total StockQty for Warehouse \"Warehouse B\" (larger dataset).", "headers": ["Warehouse", "StockQty"], "rows": [["Warehouse D", 490], ["Warehouse A", 348], ["Warehouse B", 117], ["Warehouse D", 296], ["Warehouse C", 104], ["Warehouse B", 217], ["Warehouse D", 87], ["Warehouse D", 84], ["Warehouse D", 395], ["Warehouse C", 472], ["Warehouse B", 151], ["Warehouse B", 200], ["Warehouse B", 154], ["Warehouse B", 205], ["Warehouse D", 243]], "formula": "=SUMIF(A2:A16,\"Warehouse B\",B2:B16)", "result": "RM1,044"}, "Advanced": {"task": "Use a wildcard (*) to calculate the total StockQty for Warehouse names ending with the letter 'B'.", "headers": ["Warehouse", "StockQty"], "rows": [["Warehouse B", 156], ["Warehouse D", 307], ["Warehouse D", 78], ["Warehouse B", 456], ["Warehouse C", 175], ["Warehouse B", 437], ["Warehouse A", 76], ["Warehouse C", 185], ["Warehouse A", 203], ["Warehouse D", 121], ["Warehouse B", 245], ["Warehouse D", 339], ["Warehouse C", 358], ["Warehouse B", 208], ["Warehouse D", 214]], "formula": "=SUMIF(A2:A16,\"*B\",B2:B16)", "result": "1,502 units"}}}, {"id": 6, "group": "SUMIF", "title": "SUMIF: Restaurant Sales", "intro": "Calculate the total Sales based on a single category criterion, in the context of restaurant sales.", "levels": {"Beginner": {"task": "Calculate the total Sales for MenuCategory \"Food\".", "headers": ["MenuCategory", "Sales"], "rows": [["Dessert", 322], ["Food", 739], ["Dessert", 699], ["Beverages", 813], ["Beverages", 402], ["Food", 911], ["Dessert", 446], ["Snacks", 891], ["Snacks", 1117], ["Beverages", 474], ["Dessert", 1176], ["Dessert", 225]], "formula": "=SUMIF(A2:A13,\"Food\",B2:B13)", "result": "RM1,650"}, "Intermediate": {"task": "Calculate the total Sales for MenuCategory \"Beverages\" (larger dataset).", "headers": ["MenuCategory", "Sales"], "rows": [["Snacks", 1086], ["Food", 1198], ["Snacks", 1059], ["Beverages", 1161], ["Beverages", 302], ["Beverages", 567], ["Beverages", 515], ["Dessert", 112], ["Dessert", 762], ["Dessert", 786], ["Food", 313], ["Food", 699], ["Beverages", 724], ["Food", 1190], ["Beverages", 715]], "formula": "=SUMIF(A2:A16,\"Beverages\",B2:B16)", "result": "RM3,984"}, "Advanced": {"task": "Use a wildcard (*) to calculate the total Sales for MenuCategory starting with the letter 'B'.", "headers": ["MenuCategory", "Sales"], "rows": [["Beverages", 900], ["Dessert", 1164], ["Beverages", 444], ["Beverages", 1063], ["Dessert", 492], ["Beverages", 221], ["Snacks", 1110], ["Beverages", 632], ["Beverages", 647], ["Food", 402], ["Beverages", 170], ["Dessert", 1104], ["Dessert", 611], ["Snacks", 1117], ["Beverages", 234]], "formula": "=SUMIF(A2:A16,\"B*\",B2:B16)", "result": "RM4,311"}}}, {"id": 7, "group": "SUMIFS", "title": "SUMIFS: Regional Sales & Product", "intro": "Calculate the total Sales based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Calculate the total Sales for Region \"KL\" AND Product \"Laptop\".", "headers": ["Region", "Product", "Sales"], "rows": [["Penang", "Keyboard", 1539], ["KL", "Keyboard", 2503], ["Johor", "Mouse", 2231], ["Penang", "Mouse", 2333], ["Selangor", "Keyboard", 2263], ["Selangor", "Keyboard", 683], ["Selangor", "Keyboard", 525], ["Johor", "Mouse", 1437], ["Johor", "Laptop", 920], ["KL", "Laptop", 1835], ["KL", "Keyboard", 808], ["Johor", "Keyboard", 2687], ["KL", "Laptop", 750], ["KL", "Laptop", 1022], ["Penang", "Laptop", 1691], ["Penang", "Mouse", 2488]], "formula": "=SUMIFS(C2:C17,A2:A17,\"KL\",B2:B17,\"Laptop\")", "result": "RM3,607"}, "Intermediate": {"task": "Calculate the total Sales for Region \"KL\" AND Sales above 1750.", "headers": ["Region", "Product", "Sales"], "rows": [["Penang", "Keyboard", 1539], ["KL", "Keyboard", 2503], ["Johor", "Mouse", 2231], ["Penang", "Mouse", 2333], ["Selangor", "Keyboard", 2263], ["Selangor", "Keyboard", 683], ["Selangor", "Keyboard", 525], ["Johor", "Mouse", 1437], ["Johor", "Laptop", 920], ["KL", "Laptop", 1835], ["KL", "Keyboard", 808], ["Johor", "Keyboard", 2687], ["KL", "Laptop", 750], ["KL", "Laptop", 1022], ["Penang", "Laptop", 1691], ["Penang", "Mouse", 2488]], "formula": "=SUMIFS(C2:C17,A2:A17,\"KL\",C2:C17,\">1750\")", "result": "RM4,338"}, "Advanced": {"task": "Calculate the total Sales for Region \"KL\" AND value between 1750 and 3000 (inclusive).", "headers": ["Region", "Product", "Sales"], "rows": [["Penang", "Keyboard", 1539], ["KL", "Keyboard", 2503], ["Johor", "Mouse", 2231], ["Penang", "Mouse", 2333], ["Selangor", "Keyboard", 2263], ["Selangor", "Keyboard", 683], ["Selangor", "Keyboard", 525], ["Johor", "Mouse", 1437], ["Johor", "Laptop", 920], ["KL", "Laptop", 1835], ["KL", "Keyboard", 808], ["Johor", "Keyboard", 2687], ["KL", "Laptop", 750], ["KL", "Laptop", 1022], ["Penang", "Laptop", 1691], ["Penang", "Mouse", 2488]], "formula": "=SUMIFS(C2:C17,A2:A17,\"KL\",C2:C17,\">=\"&1750,C2:C17,\"<=\"&3000)", "result": "RM4,338"}}}, {"id": 8, "group": "SUMIFS", "title": "SUMIFS: Department Expenses & Month", "intro": "Calculate the total Expense based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Calculate the total Expense for Department \"Marketing\" AND Month \"January\".", "headers": ["Department", "Month", "Expense"], "rows": [["IT", "January", 1175], ["Finance", "March", 1103], ["IT", "February", 683], ["Finance", "March", 1198], ["HR", "January", 1762], ["Marketing", "February", 1686], ["Marketing", "March", 1747], ["Marketing", "March", 1310], ["Marketing", "February", 319], ["Marketing", "January", 891], ["HR", "March", 1123], ["HR", "February", 1030], ["IT", "March", 846], ["Marketing", "February", 614], ["Finance", "January", 1566], ["Marketing", "February", 806]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Marketing\",B2:B17,\"January\")", "result": "RM891"}, "Intermediate": {"task": "Calculate the total Expense for Department \"Marketing\" AND Expense above 1050.", "headers": ["Department", "Month", "Expense"], "rows": [["IT", "January", 1175], ["Finance", "March", 1103], ["IT", "February", 683], ["Finance", "March", 1198], ["HR", "January", 1762], ["Marketing", "February", 1686], ["Marketing", "March", 1747], ["Marketing", "March", 1310], ["Marketing", "February", 319], ["Marketing", "January", 891], ["HR", "March", 1123], ["HR", "February", 1030], ["IT", "March", 846], ["Marketing", "February", 614], ["Finance", "January", 1566], ["Marketing", "February", 806]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Marketing\",C2:C17,\">1050\")", "result": "RM4,743"}, "Advanced": {"task": "Calculate the total Expense for Department \"Marketing\" AND value between 1050 and 1800 (inclusive).", "headers": ["Department", "Month", "Expense"], "rows": [["IT", "January", 1175], ["Finance", "March", 1103], ["IT", "February", 683], ["Finance", "March", 1198], ["HR", "January", 1762], ["Marketing", "February", 1686], ["Marketing", "March", 1747], ["Marketing", "March", 1310], ["Marketing", "February", 319], ["Marketing", "January", 891], ["HR", "March", 1123], ["HR", "February", 1030], ["IT", "March", 846], ["Marketing", "February", 614], ["Finance", "January", 1566], ["Marketing", "February", 806]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Marketing\",C2:C17,\">=\"&1050,C2:C17,\"<=\"&1800)", "result": "RM4,743"}}}, {"id": 9, "group": "SUMIFS", "title": "SUMIFS: Salesperson Sales & Status", "intro": "Calculate the total Sales based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Calculate the total Sales for Salesperson \"Ali\" AND Status \"Completed\".", "headers": ["Salesperson", "Status", "Sales"], "rows": [["Farah", "Completed", 3330], ["Farah", "Pending", 1939], ["Farah", "Pending", 3010], ["Farah", "Completed", 724], ["Farah", "Pending", 1388], ["Siti", "Pending", 2689], ["Ali", "Completed", 3151], ["Farah", "Completed", 1319], ["Kumar", "Pending", 1784], ["Kumar", "Completed", 3166], ["Ali", "Pending", 1855], ["Kumar", "Completed", 1924], ["Siti", "Completed", 2433], ["Siti", "Pending", 1650], ["Siti", "Pending", 1624], ["Siti", "Pending", 911]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Ali\",B2:B17,\"Completed\")", "result": "RM3,151"}, "Intermediate": {"task": "Calculate the total Sales for Salesperson \"Ali\" AND Sales above 2100.", "headers": ["Salesperson", "Status", "Sales"], "rows": [["Farah", "Completed", 3330], ["Farah", "Pending", 1939], ["Farah", "Pending", 3010], ["Farah", "Completed", 724], ["Farah", "Pending", 1388], ["Siti", "Pending", 2689], ["Ali", "Completed", 3151], ["Farah", "Completed", 1319], ["Kumar", "Pending", 1784], ["Kumar", "Completed", 3166], ["Ali", "Pending", 1855], ["Kumar", "Completed", 1924], ["Siti", "Completed", 2433], ["Siti", "Pending", 1650], ["Siti", "Pending", 1624], ["Siti", "Pending", 911]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Ali\",C2:C17,\">2100\")", "result": "RM3,151"}, "Advanced": {"task": "Calculate the total Sales for Salesperson \"Ali\" AND value between 2100 and 3500 (inclusive).", "headers": ["Salesperson", "Status", "Sales"], "rows": [["Farah", "Completed", 3330], ["Farah", "Pending", 1939], ["Farah", "Pending", 3010], ["Farah", "Completed", 724], ["Farah", "Pending", 1388], ["Siti", "Pending", 2689], ["Ali", "Completed", 3151], ["Farah", "Completed", 1319], ["Kumar", "Pending", 1784], ["Kumar", "Completed", 3166], ["Ali", "Pending", 1855], ["Kumar", "Completed", 1924], ["Siti", "Completed", 2433], ["Siti", "Pending", 1650], ["Siti", "Pending", 1624], ["Siti", "Pending", 911]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Ali\",C2:C17,\">=\"&2100,C2:C17,\"<=\"&3500)", "result": "RM3,151"}}}, {"id": 10, "group": "SUMIFS", "title": "SUMIFS: Ad Spend by Channel & Campaign", "intro": "Calculate the total Spend based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Calculate the total Spend for Channel \"Facebook\" AND Campaign \"Raya\".", "headers": ["Channel", "Campaign", "Spend"], "rows": [["Facebook", "New Year", 900], ["Facebook", "Raya", 748], ["TikTok", "New Year", 1177], ["Facebook", "New Year", 1333], ["Google", "New Year", 950], ["Google", "Raya", 437], ["TikTok", "Merdeka", 518], ["Facebook", "Raya", 1138], ["Facebook", "Raya", 1451], ["TikTok", "New Year", 1095], ["Google", "Raya", 1161], ["TikTok", "Merdeka", 653], ["Facebook", "New Year", 520], ["TikTok", "New Year", 915], ["Google", "Raya", 918], ["TikTok", "Merdeka", 1425]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Facebook\",B2:B17,\"Raya\")", "result": "RM3,337"}, "Intermediate": {"task": "Calculate the total Spend for Channel \"Facebook\" AND Spend above 850.", "headers": ["Channel", "Campaign", "Spend"], "rows": [["Facebook", "New Year", 900], ["Facebook", "Raya", 748], ["TikTok", "New Year", 1177], ["Facebook", "New Year", 1333], ["Google", "New Year", 950], ["Google", "Raya", 437], ["TikTok", "Merdeka", 518], ["Facebook", "Raya", 1138], ["Facebook", "Raya", 1451], ["TikTok", "New Year", 1095], ["Google", "Raya", 1161], ["TikTok", "Merdeka", 653], ["Facebook", "New Year", 520], ["TikTok", "New Year", 915], ["Google", "Raya", 918], ["TikTok", "Merdeka", 1425]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Facebook\",C2:C17,\">850\")", "result": "RM4,822"}, "Advanced": {"task": "Calculate the total Spend for Channel \"Facebook\" AND value between 850 and 1500 (inclusive).", "headers": ["Channel", "Campaign", "Spend"], "rows": [["Facebook", "New Year", 900], ["Facebook", "Raya", 748], ["TikTok", "New Year", 1177], ["Facebook", "New Year", 1333], ["Google", "New Year", 950], ["Google", "Raya", 437], ["TikTok", "Merdeka", 518], ["Facebook", "Raya", 1138], ["Facebook", "Raya", 1451], ["TikTok", "New Year", 1095], ["Google", "Raya", 1161], ["TikTok", "Merdeka", 653], ["Facebook", "New Year", 520], ["TikTok", "New Year", 915], ["Google", "Raya", 918], ["TikTok", "Merdeka", 1425]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Facebook\",C2:C17,\">=\"&850,C2:C17,\"<=\"&1500)", "result": "RM4,822"}}}, {"id": 11, "group": "SUMIFS", "title": "SUMIFS: Student Marks by Subject & Class", "intro": "Calculate the total Marks based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Calculate the total Marks for Subject \"Mathematics\" AND Class \"5A\".", "headers": ["Subject", "Class", "Marks"], "rows": [["Mathematics", "5B", 97], ["Mathematics", "5C", 45], ["Language", "5C", 46], ["Science", "5A", 65], ["Mathematics", "5A", 96], ["Language", "5C", 93], ["Science", "5A", 74], ["Mathematics", "5A", 82], ["Language", "5C", 82], ["Mathematics", "5A", 49], ["Language", "5C", 48], ["Science", "5B", 87], ["Science", "5C", 42], ["Science", "5B", 99], ["Language", "5C", 53], ["Mathematics", "5A", 57]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Mathematics\",B2:B17,\"5A\")", "result": "284 marks"}, "Intermediate": {"task": "Calculate the total Marks for Subject \"Mathematics\" AND Marks above 70.", "headers": ["Subject", "Class", "Marks"], "rows": [["Mathematics", "5B", 97], ["Mathematics", "5C", 45], ["Language", "5C", 46], ["Science", "5A", 65], ["Mathematics", "5A", 96], ["Language", "5C", 93], ["Science", "5A", 74], ["Mathematics", "5A", 82], ["Language", "5C", 82], ["Mathematics", "5A", 49], ["Language", "5C", 48], ["Science", "5B", 87], ["Science", "5C", 42], ["Science", "5B", 99], ["Language", "5C", 53], ["Mathematics", "5A", 57]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Mathematics\",C2:C17,\">70\")", "result": "275 marks"}, "Advanced": {"task": "Calculate the total Marks for Subject \"Mathematics\" AND value between 70 and 100 (inclusive).", "headers": ["Subject", "Class", "Marks"], "rows": [["Mathematics", "5B", 97], ["Mathematics", "5C", 45], ["Language", "5C", 46], ["Science", "5A", 65], ["Mathematics", "5A", 96], ["Language", "5C", 93], ["Science", "5A", 74], ["Mathematics", "5A", 82], ["Language", "5C", 82], ["Mathematics", "5A", 49], ["Language", "5C", 48], ["Science", "5B", 87], ["Science", "5C", 42], ["Science", "5B", 99], ["Language", "5C", 53], ["Mathematics", "5A", 57]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Mathematics\",C2:C17,\">=\"&70,C2:C17,\"<=\"&100)", "result": "275 marks"}}}, {"id": 12, "group": "SUMIFS", "title": "SUMIFS: Restaurant Sales by Category & Shift", "intro": "Calculate the total Sales based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Calculate the total Sales for MenuCategory \"Food\" AND Shift \"Morning\".", "headers": ["MenuCategory", "Shift", "Sales"], "rows": [["Food", "Morning", 1090], ["Food", "Night", 353], ["Snacks", "Afternoon", 767], ["Food", "Night", 559], ["Snacks", "Afternoon", 180], ["Beverages", "Night", 1067], ["Snacks", "Afternoon", 741], ["Beverages", "Morning", 1137], ["Snacks", "Night", 808], ["Beverages", "Night", 183], ["Snacks", "Afternoon", 268], ["Food", "Afternoon", 310], ["Snacks", "Afternoon", 686], ["Snacks", "Night", 1143], ["Snacks", "Night", 613], ["Beverages", "Afternoon", 699]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Food\",B2:B17,\"Morning\")", "result": "RM1,090"}, "Intermediate": {"task": "Calculate the total Sales for MenuCategory \"Food\" AND Sales above 675.", "headers": ["MenuCategory", "Shift", "Sales"], "rows": [["Food", "Morning", 1090], ["Food", "Night", 353], ["Snacks", "Afternoon", 767], ["Food", "Night", 559], ["Snacks", "Afternoon", 180], ["Beverages", "Night", 1067], ["Snacks", "Afternoon", 741], ["Beverages", "Morning", 1137], ["Snacks", "Night", 808], ["Beverages", "Night", 183], ["Snacks", "Afternoon", 268], ["Food", "Afternoon", 310], ["Snacks", "Afternoon", 686], ["Snacks", "Night", 1143], ["Snacks", "Night", 613], ["Beverages", "Afternoon", 699]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Food\",C2:C17,\">675\")", "result": "RM1,090"}, "Advanced": {"task": "Calculate the total Sales for MenuCategory \"Food\" AND value between 675 and 1200 (inclusive).", "headers": ["MenuCategory", "Shift", "Sales"], "rows": [["Food", "Morning", 1090], ["Food", "Night", 353], ["Snacks", "Afternoon", 767], ["Food", "Night", 559], ["Snacks", "Afternoon", 180], ["Beverages", "Night", 1067], ["Snacks", "Afternoon", 741], ["Beverages", "Morning", 1137], ["Snacks", "Night", 808], ["Beverages", "Night", 183], ["Snacks", "Afternoon", 268], ["Food", "Afternoon", 310], ["Snacks", "Afternoon", 686], ["Snacks", "Night", 1143], ["Snacks", "Night", 613], ["Beverages", "Afternoon", 699]], "formula": "=SUMIFS(C2:C17,A2:A17,\"Food\",C2:C17,\">=\"&675,C2:C17,\"<=\"&1200)", "result": "RM1,090"}}}, {"id": 13, "group": "COUNTIF", "title": "COUNTIF: Salesperson Sales", "intro": "Count the NUMBER of records that meet a single criterion, in the context of salesperson sales.", "levels": {"Beginner": {"task": "Count the number of records where Salesperson is \"Siti\".", "headers": ["Salesperson", "Sales"], "rows": [["Farah", 2957], ["Sarah", 2719], ["Kumar", 3403], ["Wei Ling", 2339], ["Siti", 1242], ["Kumar", 3138], ["Wei Ling", 1174], ["Ali", 1629], ["Kumar", 1749], ["Farah", 2007], ["Ali", 1083], ["Kumar", 2635], ["Sarah", 2059], ["Kumar", 1347]], "formula": "=COUNTIF(A2:A15,\"Siti\")", "result": "1 record"}, "Intermediate": {"task": "Count the number of records where Sales is above 2300.", "headers": ["Salesperson", "Sales"], "rows": [["Kumar", 2209], ["Wei Ling", 2600], ["Siti", 3270], ["Ali", 2399], ["Farah", 2617], ["Farah", 1048], ["Wei Ling", 1089], ["Sarah", 3501], ["Ali", 3605], ["Farah", 3361], ["Kumar", 2196], ["Ali", 1486], ["Ali", 1284], ["Siti", 3752], ["Siti", 976], ["Farah", 3076]], "formula": "=COUNTIF(B2:B17,\">2300\")", "result": "9 records"}, "Advanced": {"task": "Use a wildcard to count the number of records where Salesperson starts with the letter 'S'.", "headers": ["Salesperson", "Sales"], "rows": [["Siti", 1585], ["Farah", 3666], ["Siti", 2974], ["Sarah", 2126], ["Ali", 3285], ["Sarah", 1162], ["Sarah", 1448], ["Siti", 2170], ["Wei Ling", 1981], ["Siti", 3346], ["Sarah", 2003], ["Kumar", 3773], ["Kumar", 3686], ["Farah", 1777], ["Ali", 2955], ["Ali", 1048]], "formula": "=COUNTIF(A2:A17,\"S*\")", "result": "8 records"}}}, {"id": 14, "group": "COUNTIF", "title": "COUNTIF: Support Ticket Resolution Time (hours)", "intro": "Count the NUMBER of records that meet a single criterion, in the context of support ticket resolution time (hours).", "levels": {"Beginner": {"task": "Count the number of records where Priority is \"Low\".", "headers": ["Priority", "ResolutionHours"], "rows": [["High", 41], ["High", 16], ["High", 22], ["High", 11], ["High", 23], ["Urgent", 47], ["Urgent", 1], ["High", 30], ["Low", 24], ["Medium", 9], ["Urgent", 44], ["Low", 30], ["Medium", 13], ["Urgent", 24]], "formula": "=COUNTIF(A2:A15,\"Low\")", "result": "2 records"}, "Intermediate": {"task": "Count the number of records where ResolutionHours is above 24.", "headers": ["Priority", "ResolutionHours"], "rows": [["Medium", 44], ["Low", 7], ["Urgent", 47], ["Urgent", 32], ["Low", 3], ["High", 30], ["High", 43], ["Medium", 16], ["Urgent", 21], ["High", 26], ["Medium", 16], ["Urgent", 42], ["Low", 47], ["Urgent", 16], ["Low", 3], ["Low", 26]], "formula": "=COUNTIF(B2:B17,\">24\")", "result": "9 records"}, "Advanced": {"task": "Use a wildcard to count the number of records where Priority starts with the letter 'L'.", "headers": ["Priority", "ResolutionHours"], "rows": [["High", 32], ["Low", 8], ["Medium", 35], ["Medium", 31], ["Low", 19], ["Medium", 39], ["Low", 10], ["Urgent", 3], ["High", 28], ["High", 22], ["High", 20], ["Low", 45], ["High", 11], ["Low", 36], ["Urgent", 29], ["Medium", 26]], "formula": "=COUNTIF(A2:A17,\"L*\")", "result": "5 records"}}}, {"id": 15, "group": "COUNTIF", "title": "COUNTIF: Exam Marks", "intro": "Count the NUMBER of records that meet a single criterion, in the context of exam marks.", "levels": {"Beginner": {"task": "Count the number of records where Subject is \"Mathematics\".", "headers": ["Subject", "Marks"], "rows": [["ICT", 63], ["Science", 80], ["Language", 86], ["Science", 96], ["History", 95], ["Mathematics", 94], ["History", 72], ["Mathematics", 55], ["Language", 52], ["Mathematics", 82], ["Language", 89], ["ICT", 54], ["Science", 76], ["Mathematics", 80]], "formula": "=COUNTIF(A2:A15,\"Mathematics\")", "result": "4 records"}, "Intermediate": {"task": "Count the number of records where Marks is above 70.", "headers": ["Subject", "Marks"], "rows": [["History", 51], ["Language", 73], ["Language", 69], ["ICT", 70], ["History", 90], ["Mathematics", 74], ["ICT", 42], ["Language", 68], ["ICT", 68], ["Science", 87], ["Language", 100], ["Science", 72], ["Science", 48], ["Science", 72], ["Mathematics", 71], ["Science", 81]], "formula": "=COUNTIF(B2:B17,\">70\")", "result": "9 records"}, "Advanced": {"task": "Use a wildcard to count the number of records where Subject starts with the letter 'M'.", "headers": ["Subject", "Marks"], "rows": [["Mathematics", 48], ["Mathematics", 97], ["Language", 93], ["Science", 85], ["Language", 92], ["History", 97], ["ICT", 66], ["Mathematics", 57], ["Science", 87], ["ICT", 51], ["History", 49], ["Mathematics", 67], ["History", 67], ["Mathematics", 92], ["Mathematics", 76], ["ICT", 81]], "formula": "=COUNTIF(A2:A17,\"M*\")", "result": "6 records"}}}, {"id": 16, "group": "COUNTIF", "title": "COUNTIF: Website Traffic (visitors)", "intro": "Count the NUMBER of records that meet a single criterion, in the context of website traffic (visitors).", "levels": {"Beginner": {"task": "Count the number of records where Channel is \"Organic\".", "headers": ["Channel", "Visitors"], "rows": [["Social", 205], ["Email", 789], ["Social", 436], ["Email", 190], ["Organic", 92], ["Paid Ads", 766], ["Organic", 79], ["Organic", 812], ["Referral", 809], ["Paid Ads", 480], ["Organic", 139], ["Referral", 432], ["Paid Ads", 661], ["Paid Ads", 534]], "formula": "=COUNTIF(A2:A15,\"Organic\")", "result": "4 records"}, "Intermediate": {"task": "Count the number of records where Visitors is above 475.", "headers": ["Channel", "Visitors"], "rows": [["Social", 614], ["Referral", 382], ["Paid Ads", 58], ["Referral", 723], ["Referral", 831], ["Organic", 806], ["Organic", 517], ["Organic", 593], ["Paid Ads", 724], ["Social", 468], ["Social", 804], ["Email", 143], ["Social", 230], ["Paid Ads", 153], ["Referral", 62], ["Organic", 118]], "formula": "=COUNTIF(B2:B17,\">475\")", "result": "8 records"}, "Advanced": {"task": "Use a wildcard to count the number of records where Channel starts with the letter 'O'.", "headers": ["Channel", "Visitors"], "rows": [["Organic", 375], ["Social", 539], ["Social", 477], ["Organic", 400], ["Organic", 64], ["Referral", 453], ["Social", 791], ["Referral", 397], ["Paid Ads", 215], ["Email", 842], ["Email", 197], ["Referral", 318], ["Social", 226], ["Social", 467], ["Organic", 172], ["Referral", 359]], "formula": "=COUNTIF(A2:A17,\"O*\")", "result": "4 records"}}}, {"id": 17, "group": "COUNTIF", "title": "COUNTIF: Vehicle Maintenance Cost", "intro": "Count the NUMBER of records that meet a single criterion, in the context of vehicle maintenance cost.", "levels": {"Beginner": {"task": "Count the number of records where VehicleType is \"Van\".", "headers": ["VehicleType", "Cost"], "rows": [["Car", 1369], ["Motorcycle", 225], ["Truck", 303], ["Truck", 576], ["Motorcycle", 1227], ["Motorcycle", 416], ["Motorcycle", 267], ["Truck", 1033], ["Motorcycle", 1252], ["Truck", 580], ["Van", 1051], ["Van", 316], ["Car", 787], ["Van", 539]], "formula": "=COUNTIF(A2:A15,\"Van\")", "result": "3 records"}, "Intermediate": {"task": "Count the number of records where Cost is above 850.", "headers": ["VehicleType", "Cost"], "rows": [["Van", 615], ["Car", 951], ["Motorcycle", 1007], ["Car", 803], ["Truck", 438], ["Motorcycle", 1219], ["Motorcycle", 818], ["Motorcycle", 1002], ["Van", 298], ["Car", 615], ["Car", 1060], ["Car", 882], ["Van", 1179], ["Van", 1293], ["Motorcycle", 271], ["Truck", 1242]], "formula": "=COUNTIF(B2:B17,\">850\")", "result": "9 records"}, "Advanced": {"task": "Use a wildcard to count the number of records where VehicleType starts with the letter 'V'.", "headers": ["VehicleType", "Cost"], "rows": [["Motorcycle", 1360], ["Motorcycle", 985], ["Car", 532], ["Motorcycle", 1096], ["Motorcycle", 562], ["Truck", 938], ["Van", 381], ["Truck", 451], ["Car", 936], ["Truck", 623], ["Motorcycle", 1047], ["Motorcycle", 1436], ["Car", 1236], ["Van", 1383], ["Car", 964], ["Motorcycle", 936]], "formula": "=COUNTIF(A2:A17,\"V*\")", "result": "2 records"}}}, {"id": 18, "group": "COUNTIF", "title": "COUNTIF: Marketing Expenses", "intro": "Count the NUMBER of records that meet a single criterion, in the context of marketing expenses.", "levels": {"Beginner": {"task": "Count the number of records where Channel is \"Google\".", "headers": ["Channel", "Spend"], "rows": [["Google", 363], ["TikTok", 387], ["TikTok", 818], ["Billboard", 400], ["Radio", 646], ["TikTok", 161], ["Billboard", 725], ["Billboard", 707], ["Radio", 764], ["Facebook", 864], ["TikTok", 664], ["Billboard", 355], ["Facebook", 120], ["TikTok", 387]], "formula": "=COUNTIF(A2:A15,\"Google\")", "result": "1 record"}, "Intermediate": {"task": "Count the number of records where Spend is above 500.", "headers": ["Channel", "Spend"], "rows": [["Google", 688], ["Billboard", 659], ["Billboard", 202], ["Facebook", 470], ["Google", 581], ["Radio", 255], ["Radio", 546], ["Facebook", 158], ["Billboard", 170], ["Facebook", 703], ["Billboard", 586], ["Google", 422], ["Radio", 522], ["Billboard", 824], ["TikTok", 676], ["Google", 826]], "formula": "=COUNTIF(B2:B17,\">500\")", "result": "10 records"}, "Advanced": {"task": "Use a wildcard to count the number of records where Channel starts with the letter 'G'.", "headers": ["Channel", "Spend"], "rows": [["TikTok", 108], ["TikTok", 415], ["Billboard", 590], ["TikTok", 327], ["Radio", 836], ["Facebook", 517], ["Facebook", 190], ["Billboard", 870], ["TikTok", 428], ["Google", 668], ["Billboard", 658], ["Radio", 598], ["TikTok", 505], ["Radio", 452], ["Facebook", 543], ["TikTok", 192]], "formula": "=COUNTIF(A2:A17,\"G*\")", "result": "1 record"}}}, {"id": 19, "group": "COUNTIFS", "title": "COUNTIFS: Regional Sales & Product", "intro": "Count the number of records based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Count the number of records for Region \"KL\" AND Product \"Laptop\".", "headers": ["Region", "Product", "Sales"], "rows": [["Johor", "Keyboard", 197], ["Johor", "Mouse", 1690], ["Penang", "Keyboard", 166], ["Johor", "Laptop", 1356], ["Selangor", "Laptop", 1202], ["Selangor", "Keyboard", 805], ["Johor", "Laptop", 810], ["Penang", "Mouse", 810], ["KL", "Laptop", 443], ["Johor", "Keyboard", 551], ["KL", "Keyboard", 105], ["Selangor", "Keyboard", 1915], ["Selangor", "Laptop", 1347], ["Selangor", "Laptop", 1983], ["Selangor", "Keyboard", 650], ["Johor", "Keyboard", 1686]], "formula": "=COUNTIFS(A2:A17,\"KL\",B2:B17,\"Laptop\")", "result": "1 record"}, "Intermediate": {"task": "Count the number of records for Region \"KL\" AND Sales above 1050.", "headers": ["Region", "Product", "Sales"], "rows": [["Johor", "Keyboard", 197], ["Johor", "Mouse", 1690], ["Penang", "Keyboard", 166], ["Johor", "Laptop", 1356], ["Selangor", "Laptop", 1202], ["Selangor", "Keyboard", 805], ["Johor", "Laptop", 810], ["Penang", "Mouse", 810], ["KL", "Laptop", 443], ["Johor", "Keyboard", 551], ["KL", "Keyboard", 105], ["Selangor", "Keyboard", 1915], ["Selangor", "Laptop", 1347], ["Selangor", "Laptop", 1983], ["Selangor", "Keyboard", 650], ["Johor", "Keyboard", 1686]], "formula": "=COUNTIFS(A2:A17,\"KL\",C2:C17,\">1050\")", "result": "0 records"}, "Advanced": {"task": "Count the number of records for Region \"KL\" AND value between 1050 and 2000 (inclusive).", "headers": ["Region", "Product", "Sales"], "rows": [["Johor", "Keyboard", 197], ["Johor", "Mouse", 1690], ["Penang", "Keyboard", 166], ["Johor", "Laptop", 1356], ["Selangor", "Laptop", 1202], ["Selangor", "Keyboard", 805], ["Johor", "Laptop", 810], ["Penang", "Mouse", 810], ["KL", "Laptop", 443], ["Johor", "Keyboard", 551], ["KL", "Keyboard", 105], ["Selangor", "Keyboard", 1915], ["Selangor", "Laptop", 1347], ["Selangor", "Laptop", 1983], ["Selangor", "Keyboard", 650], ["Johor", "Keyboard", 1686]], "formula": "=COUNTIFS(A2:A17,\"KL\",C2:C17,\">=\"&1050,C2:C17,\"<=\"&2000)", "result": "0 records"}}}, {"id": 20, "group": "COUNTIFS", "title": "COUNTIFS: Salesperson Sales & Status", "intro": "Count the number of records based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Count the number of records for Salesperson \"Ali\" AND Status \"Completed\".", "headers": ["Salesperson", "Status", "Sales"], "rows": [["Ali", "Completed", 827], ["Ali", "Pending", 292], ["Farah", "Completed", 372], ["Kumar", "Completed", 1759], ["Farah", "Completed", 1402], ["Kumar", "Pending", 308], ["Siti", "Pending", 1993], ["Kumar", "Pending", 1017], ["Kumar", "Pending", 925], ["Kumar", "Pending", 1788], ["Siti", "Completed", 952], ["Siti", "Completed", 300], ["Farah", "Completed", 233], ["Siti", "Pending", 245], ["Ali", "Completed", 1392], ["Siti", "Completed", 1184]], "formula": "=COUNTIFS(A2:A17,\"Ali\",B2:B17,\"Completed\")", "result": "2 records"}, "Intermediate": {"task": "Count the number of records for Salesperson \"Ali\" AND Sales above 1050.", "headers": ["Salesperson", "Status", "Sales"], "rows": [["Ali", "Completed", 827], ["Ali", "Pending", 292], ["Farah", "Completed", 372], ["Kumar", "Completed", 1759], ["Farah", "Completed", 1402], ["Kumar", "Pending", 308], ["Siti", "Pending", 1993], ["Kumar", "Pending", 1017], ["Kumar", "Pending", 925], ["Kumar", "Pending", 1788], ["Siti", "Completed", 952], ["Siti", "Completed", 300], ["Farah", "Completed", 233], ["Siti", "Pending", 245], ["Ali", "Completed", 1392], ["Siti", "Completed", 1184]], "formula": "=COUNTIFS(A2:A17,\"Ali\",C2:C17,\">1050\")", "result": "1 record"}, "Advanced": {"task": "Count the number of records for Salesperson \"Ali\" AND value between 1050 and 2000 (inclusive).", "headers": ["Salesperson", "Status", "Sales"], "rows": [["Ali", "Completed", 827], ["Ali", "Pending", 292], ["Farah", "Completed", 372], ["Kumar", "Completed", 1759], ["Farah", "Completed", 1402], ["Kumar", "Pending", 308], ["Siti", "Pending", 1993], ["Kumar", "Pending", 1017], ["Kumar", "Pending", 925], ["Kumar", "Pending", 1788], ["Siti", "Completed", 952], ["Siti", "Completed", 300], ["Farah", "Completed", 233], ["Siti", "Pending", 245], ["Ali", "Completed", 1392], ["Siti", "Completed", 1184]], "formula": "=COUNTIFS(A2:A17,\"Ali\",C2:C17,\">=\"&1050,C2:C17,\"<=\"&2000)", "result": "1 record"}}}, {"id": 21, "group": "COUNTIFS", "title": "COUNTIFS: Support Tickets by Priority & Agent", "intro": "Count the number of records based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Count the number of records for Priority \"Low\" AND Agent \"Aina\".", "headers": ["Priority", "Agent", "ResolutionHours"], "rows": [["Medium", "Mei", 809], ["High", "Danish", 478], ["High", "Mei", 1637], ["Urgent", "Danish", 1894], ["Low", "Mei", 1720], ["Urgent", "Mei", 1143], ["Medium", "Mei", 1156], ["Low", "Danish", 750], ["Low", "Danish", 1693], ["Low", "Danish", 1762], ["Low", "Mei", 595], ["High", "Mei", 1003], ["Low", "Mei", 863], ["Low", "Mei", 1070], ["Low", "Aina", 970], ["High", "Danish", 994]], "formula": "=COUNTIFS(A2:A17,\"Low\",B2:B17,\"Aina\")", "result": "1 record"}, "Intermediate": {"task": "Count the number of records for Priority \"Low\" AND ResolutionHours above 1050.", "headers": ["Priority", "Agent", "ResolutionHours"], "rows": [["Medium", "Mei", 809], ["High", "Danish", 478], ["High", "Mei", 1637], ["Urgent", "Danish", 1894], ["Low", "Mei", 1720], ["Urgent", "Mei", 1143], ["Medium", "Mei", 1156], ["Low", "Danish", 750], ["Low", "Danish", 1693], ["Low", "Danish", 1762], ["Low", "Mei", 595], ["High", "Mei", 1003], ["Low", "Mei", 863], ["Low", "Mei", 1070], ["Low", "Aina", 970], ["High", "Danish", 994]], "formula": "=COUNTIFS(A2:A17,\"Low\",C2:C17,\">1050\")", "result": "4 records"}, "Advanced": {"task": "Count the number of records for Priority \"Low\" AND value between 1050 and 2000 (inclusive).", "headers": ["Priority", "Agent", "ResolutionHours"], "rows": [["Medium", "Mei", 809], ["High", "Danish", 478], ["High", "Mei", 1637], ["Urgent", "Danish", 1894], ["Low", "Mei", 1720], ["Urgent", "Mei", 1143], ["Medium", "Mei", 1156], ["Low", "Danish", 750], ["Low", "Danish", 1693], ["Low", "Danish", 1762], ["Low", "Mei", 595], ["High", "Mei", 1003], ["Low", "Mei", 863], ["Low", "Mei", 1070], ["Low", "Aina", 970], ["High", "Danish", 994]], "formula": "=COUNTIFS(A2:A17,\"Low\",C2:C17,\">=\"&1050,C2:C17,\"<=\"&2000)", "result": "4 records"}}}, {"id": 22, "group": "COUNTIFS", "title": "COUNTIFS: Ad Spend by Channel & Campaign", "intro": "Count the number of records based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Count the number of records for Channel \"Facebook\" AND Campaign \"Raya\".", "headers": ["Channel", "Campaign", "Spend"], "rows": [["Facebook", "Raya", 1100], ["TikTok", "Merdeka", 325], ["Facebook", "New Year", 414], ["Facebook", "Raya", 1333], ["TikTok", "Raya", 1222], ["Facebook", "New Year", 222], ["Facebook", "New Year", 392], ["Google", "Raya", 100], ["Google", "New Year", 1286], ["Facebook", "Merdeka", 1055], ["TikTok", "New Year", 1915], ["Google", "New Year", 1009], ["Google", "Raya", 801], ["Google", "New Year", 1649], ["Facebook", "Merdeka", 198], ["TikTok", "Merdeka", 1151]], "formula": "=COUNTIFS(A2:A17,\"Facebook\",B2:B17,\"Raya\")", "result": "2 records"}, "Intermediate": {"task": "Count the number of records for Channel \"Facebook\" AND Spend above 1050.", "headers": ["Channel", "Campaign", "Spend"], "rows": [["Facebook", "Raya", 1100], ["TikTok", "Merdeka", 325], ["Facebook", "New Year", 414], ["Facebook", "Raya", 1333], ["TikTok", "Raya", 1222], ["Facebook", "New Year", 222], ["Facebook", "New Year", 392], ["Google", "Raya", 100], ["Google", "New Year", 1286], ["Facebook", "Merdeka", 1055], ["TikTok", "New Year", 1915], ["Google", "New Year", 1009], ["Google", "Raya", 801], ["Google", "New Year", 1649], ["Facebook", "Merdeka", 198], ["TikTok", "Merdeka", 1151]], "formula": "=COUNTIFS(A2:A17,\"Facebook\",C2:C17,\">1050\")", "result": "3 records"}, "Advanced": {"task": "Count the number of records for Channel \"Facebook\" AND value between 1050 and 2000 (inclusive).", "headers": ["Channel", "Campaign", "Spend"], "rows": [["Facebook", "Raya", 1100], ["TikTok", "Merdeka", 325], ["Facebook", "New Year", 414], ["Facebook", "Raya", 1333], ["TikTok", "Raya", 1222], ["Facebook", "New Year", 222], ["Facebook", "New Year", 392], ["Google", "Raya", 100], ["Google", "New Year", 1286], ["Facebook", "Merdeka", 1055], ["TikTok", "New Year", 1915], ["Google", "New Year", 1009], ["Google", "Raya", 801], ["Google", "New Year", 1649], ["Facebook", "Merdeka", 198], ["TikTok", "Merdeka", 1151]], "formula": "=COUNTIFS(A2:A17,\"Facebook\",C2:C17,\">=\"&1050,C2:C17,\"<=\"&2000)", "result": "3 records"}}}, {"id": 23, "group": "COUNTIFS", "title": "COUNTIFS: Student Marks by Subject & Class", "intro": "Count the number of records based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Count the number of records for Subject \"Mathematics\" AND Class \"5A\".", "headers": ["Subject", "Class", "Marks"], "rows": [["Science", "5C", 1042], ["Mathematics", "5B", 1810], ["Mathematics", "5A", 590], ["Mathematics", "5B", 1811], ["Mathematics", "5C", 799], ["Science", "5A", 1482], ["Language", "5A", 1650], ["Language", "5B", 1279], ["Language", "5A", 1923], ["Mathematics", "5C", 1231], ["Language", "5B", 178], ["Mathematics", "5A", 1279], ["Science", "5B", 856], ["Language", "5C", 1377], ["Language", "5A", 1698], ["Language", "5C", 1495]], "formula": "=COUNTIFS(A2:A17,\"Mathematics\",B2:B17,\"5A\")", "result": "2 records"}, "Intermediate": {"task": "Count the number of records for Subject \"Mathematics\" AND Marks above 1050.", "headers": ["Subject", "Class", "Marks"], "rows": [["Science", "5C", 1042], ["Mathematics", "5B", 1810], ["Mathematics", "5A", 590], ["Mathematics", "5B", 1811], ["Mathematics", "5C", 799], ["Science", "5A", 1482], ["Language", "5A", 1650], ["Language", "5B", 1279], ["Language", "5A", 1923], ["Mathematics", "5C", 1231], ["Language", "5B", 178], ["Mathematics", "5A", 1279], ["Science", "5B", 856], ["Language", "5C", 1377], ["Language", "5A", 1698], ["Language", "5C", 1495]], "formula": "=COUNTIFS(A2:A17,\"Mathematics\",C2:C17,\">1050\")", "result": "4 records"}, "Advanced": {"task": "Count the number of records for Subject \"Mathematics\" AND value between 1050 and 2000 (inclusive).", "headers": ["Subject", "Class", "Marks"], "rows": [["Science", "5C", 1042], ["Mathematics", "5B", 1810], ["Mathematics", "5A", 590], ["Mathematics", "5B", 1811], ["Mathematics", "5C", 799], ["Science", "5A", 1482], ["Language", "5A", 1650], ["Language", "5B", 1279], ["Language", "5A", 1923], ["Mathematics", "5C", 1231], ["Language", "5B", 178], ["Mathematics", "5A", 1279], ["Science", "5B", 856], ["Language", "5C", 1377], ["Language", "5A", 1698], ["Language", "5C", 1495]], "formula": "=COUNTIFS(A2:A17,\"Mathematics\",C2:C17,\">=\"&1050,C2:C17,\"<=\"&2000)", "result": "4 records"}}}, {"id": 24, "group": "COUNTIFS", "title": "COUNTIFS: Department Expenses & Month", "intro": "Count the number of records based on MORE THAN ONE criterion at once.", "levels": {"Beginner": {"task": "Count the number of records for Department \"Marketing\" AND Month \"January\".", "headers": ["Department", "Month", "Expense"], "rows": [["IT", "January", 1840], ["Marketing", "March", 675], ["Marketing", "February", 1052], ["Finance", "March", 1534], ["IT", "February", 661], ["Marketing", "February", 1117], ["IT", "March", 801], ["IT", "February", 1945], ["HR", "January", 491], ["Finance", "January", 1480], ["HR", "January", 1791], ["HR", "February", 1724], ["HR", "February", 822], ["Marketing", "February", 837], ["HR", "February", 1182], ["Marketing", "March", 345]], "formula": "=COUNTIFS(A2:A17,\"Marketing\",B2:B17,\"January\")", "result": "0 records"}, "Intermediate": {"task": "Count the number of records for Department \"Marketing\" AND Expense above 1050.", "headers": ["Department", "Month", "Expense"], "rows": [["IT", "January", 1840], ["Marketing", "March", 675], ["Marketing", "February", 1052], ["Finance", "March", 1534], ["IT", "February", 661], ["Marketing", "February", 1117], ["IT", "March", 801], ["IT", "February", 1945], ["HR", "January", 491], ["Finance", "January", 1480], ["HR", "January", 1791], ["HR", "February", 1724], ["HR", "February", 822], ["Marketing", "February", 837], ["HR", "February", 1182], ["Marketing", "March", 345]], "formula": "=COUNTIFS(A2:A17,\"Marketing\",C2:C17,\">1050\")", "result": "2 records"}, "Advanced": {"task": "Count the number of records for Department \"Marketing\" AND value between 1050 and 2000 (inclusive).", "headers": ["Department", "Month", "Expense"], "rows": [["IT", "January", 1840], ["Marketing", "March", 675], ["Marketing", "February", 1052], ["Finance", "March", 1534], ["IT", "February", 661], ["Marketing", "February", 1117], ["IT", "March", 801], ["IT", "February", 1945], ["HR", "January", 491], ["Finance", "January", 1480], ["HR", "January", 1791], ["HR", "February", 1724], ["HR", "February", 822], ["Marketing", "February", 837], ["HR", "February", 1182], ["Marketing", "March", 345]], "formula": "=COUNTIFS(A2:A17,\"Marketing\",C2:C17,\">=\"&1050,C2:C17,\"<=\"&2000)", "result": "2 records"}}}, {"id": 25, "group": "VLOOKUP", "title": "VLOOKUP: Employee List", "intro": "Look up information in the employee list based on EmployeeID using VLOOKUP.", "levels": {"Beginner": {"task": "Use VLOOKUP to find Name for EmployeeID \"E103\" (refer to cell F2).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E103"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,2,FALSE)", "result": "Kumar Raj"}, "Intermediate": {"task": "Use VLOOKUP to find Salary for EmployeeID \"E106\" (column 4, refer to cell F2).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E106"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,4,FALSE)", "result": "4400"}, "Advanced": {"task": "Use VLOOKUP with IFERROR so that if EmployeeID \"E999\" is not in the table, it displays \"Not Found\" instead of #N/A.", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E999"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=IFERROR(VLOOKUP(F2,A2:D9,2,FALSE),\"Not Found\")", "result": "Not Found"}}}, {"id": 26, "group": "VLOOKUP", "title": "VLOOKUP: Product Price List", "intro": "Look up information in the product price list based on ProductCode using VLOOKUP.", "levels": {"Beginner": {"task": "Use VLOOKUP to find ProductName for ProductCode \"P003\" (refer to cell F2).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P003"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,2,FALSE)", "result": "Mechanical Keyboard"}, "Intermediate": {"task": "Use VLOOKUP to find Price for ProductCode \"P006\" (column 4, refer to cell F2).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P006"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,4,FALSE)", "result": "90"}, "Advanced": {"task": "Use VLOOKUP with IFERROR so that if ProductCode \"P999\" is not in the table, it displays \"Not Found\" instead of #N/A.", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P999"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=IFERROR(VLOOKUP(F2,A2:D9,2,FALSE),\"Not Found\")", "result": "Not Found"}}}, {"id": 27, "group": "VLOOKUP", "title": "VLOOKUP: Student List", "intro": "Look up information in the student list based on StudentID using VLOOKUP.", "levels": {"Beginner": {"task": "Use VLOOKUP to find Name for StudentID \"S203\" (refer to cell F2).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S203"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,2,FALSE)", "result": "Kumaran"}, "Intermediate": {"task": "Use VLOOKUP to find Marks for StudentID \"S206\" (column 4, refer to cell F2).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S206"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,4,FALSE)", "result": "88"}, "Advanced": {"task": "Use VLOOKUP with IFERROR so that if StudentID \"S999\" is not in the table, it displays \"Not Found\" instead of #N/A.", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S999"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=IFERROR(VLOOKUP(F2,A2:D9,2,FALSE),\"Not Found\")", "result": "Not Found"}}}, {"id": 28, "group": "VLOOKUP", "title": "VLOOKUP: Supplier List", "intro": "Look up information in the supplier list based on SupplierCode using VLOOKUP.", "levels": {"Beginner": {"task": "Use VLOOKUP to find SupplierName for SupplierCode \"SP03\" (refer to cell F2).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP03"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,2,FALSE)", "result": "Delta Resources"}, "Intermediate": {"task": "Use VLOOKUP to find LeadTimeDays for SupplierCode \"SP06\" (column 4, refer to cell F2).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP06"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,4,FALSE)", "result": "35"}, "Advanced": {"task": "Use VLOOKUP with IFERROR so that if SupplierCode \"SP99\" is not in the table, it displays \"Not Found\" instead of #N/A.", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP99"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=IFERROR(VLOOKUP(F2,A2:D9,2,FALSE),\"Not Found\")", "result": "Not Found"}}}, {"id": 29, "group": "VLOOKUP", "title": "VLOOKUP: Employee List", "intro": "Look up information in the employee list based on EmployeeID using VLOOKUP.", "levels": {"Beginner": {"task": "Use VLOOKUP to find Name for EmployeeID \"E103\" (refer to cell F2).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E103"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,2,FALSE)", "result": "Kumar Raj"}, "Intermediate": {"task": "Use VLOOKUP to find Salary for EmployeeID \"E106\" (column 4, refer to cell F2).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E106"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,4,FALSE)", "result": "4400"}, "Advanced": {"task": "Use VLOOKUP with IFERROR so that if EmployeeID \"E999\" is not in the table, it displays \"Not Found\" instead of #N/A.", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E999"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=IFERROR(VLOOKUP(F2,A2:D9,2,FALSE),\"Not Found\")", "result": "Not Found"}}}, {"id": 30, "group": "VLOOKUP", "title": "VLOOKUP: Product Price List", "intro": "Look up information in the product price list based on ProductCode using VLOOKUP.", "levels": {"Beginner": {"task": "Use VLOOKUP to find ProductName for ProductCode \"P003\" (refer to cell F2).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P003"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,2,FALSE)", "result": "Mechanical Keyboard"}, "Intermediate": {"task": "Use VLOOKUP to find Price for ProductCode \"P006\" (column 4, refer to cell F2).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P006"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,4,FALSE)", "result": "90"}, "Advanced": {"task": "Use VLOOKUP with IFERROR so that if ProductCode \"P999\" is not in the table, it displays \"Not Found\" instead of #N/A.", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P999"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=IFERROR(VLOOKUP(F2,A2:D9,2,FALSE),\"Not Found\")", "result": "Not Found"}}}, {"id": 31, "group": "VLOOKUP", "title": "VLOOKUP: Student List", "intro": "Look up information in the student list based on StudentID using VLOOKUP.", "levels": {"Beginner": {"task": "Use VLOOKUP to find Name for StudentID \"S203\" (refer to cell F2).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S203"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,2,FALSE)", "result": "Kumaran"}, "Intermediate": {"task": "Use VLOOKUP to find Marks for StudentID \"S206\" (column 4, refer to cell F2).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S206"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=VLOOKUP(F2,A2:D9,4,FALSE)", "result": "88"}, "Advanced": {"task": "Use VLOOKUP with IFERROR so that if StudentID \"S999\" is not in the table, it displays \"Not Found\" instead of #N/A.", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S999"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=IFERROR(VLOOKUP(F2,A2:D9,2,FALSE),\"Not Found\")", "result": "Not Found"}}}, {"id": 32, "group": "XLOOKUP", "title": "XLOOKUP: Product Price List", "intro": "Look up information in the product price list using XLOOKUP — more flexible than VLOOKUP.", "levels": {"Beginner": {"task": "Use XLOOKUP to find ProductName for ProductCode \"P002\" (refer to cell F2).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P002"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9)", "result": "Wireless Mouse"}, "Intermediate": {"task": "Use XLOOKUP to find Category for ProductCode \"P007\" (returns column 3 without needing a column index number).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P007"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,C2:C9)", "result": "Accessories"}, "Advanced": {"task": "Use XLOOKUP's if_not_found parameter so that if ProductCode \"P999\" is missing, it displays \"Not Found\" — without needing IFERROR.", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P999"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9,\"Not Found\")", "result": "Not Found"}}}, {"id": 33, "group": "XLOOKUP", "title": "XLOOKUP: Student List", "intro": "Look up information in the student list using XLOOKUP — more flexible than VLOOKUP.", "levels": {"Beginner": {"task": "Use XLOOKUP to find Name for StudentID \"S202\" (refer to cell F2).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S202"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9)", "result": "Nurul Iman"}, "Intermediate": {"task": "Use XLOOKUP to find Class for StudentID \"S207\" (returns column 3 without needing a column index number).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S207"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,C2:C9)", "result": "5C"}, "Advanced": {"task": "Use XLOOKUP's if_not_found parameter so that if StudentID \"S999\" is missing, it displays \"Not Found\" — without needing IFERROR.", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S999"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9,\"Not Found\")", "result": "Not Found"}}}, {"id": 34, "group": "XLOOKUP", "title": "XLOOKUP: Supplier List", "intro": "Look up information in the supplier list using XLOOKUP — more flexible than VLOOKUP.", "levels": {"Beginner": {"task": "Use XLOOKUP to find SupplierName for SupplierCode \"SP02\" (refer to cell F2).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP02"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9)", "result": "Bintang Supplies"}, "Intermediate": {"task": "Use XLOOKUP to find State for SupplierCode \"SP07\" (returns column 3 without needing a column index number).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP07"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,C2:C9)", "result": "Melaka"}, "Advanced": {"task": "Use XLOOKUP's if_not_found parameter so that if SupplierCode \"SP99\" is missing, it displays \"Not Found\" — without needing IFERROR.", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP99"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9,\"Not Found\")", "result": "Not Found"}}}, {"id": 35, "group": "XLOOKUP", "title": "XLOOKUP: Employee List", "intro": "Look up information in the employee list using XLOOKUP — more flexible than VLOOKUP.", "levels": {"Beginner": {"task": "Use XLOOKUP to find Name for EmployeeID \"E102\" (refer to cell F2).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E102"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9)", "result": "Nurul Aina"}, "Intermediate": {"task": "Use XLOOKUP to find Department for EmployeeID \"E107\" (returns column 3 without needing a column index number).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E107"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,C2:C9)", "result": "Marketing"}, "Advanced": {"task": "Use XLOOKUP's if_not_found parameter so that if EmployeeID \"E999\" is missing, it displays \"Not Found\" — without needing IFERROR.", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E999"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9,\"Not Found\")", "result": "Not Found"}}}, {"id": 36, "group": "XLOOKUP", "title": "XLOOKUP: Product Price List", "intro": "Look up information in the product price list using XLOOKUP — more flexible than VLOOKUP.", "levels": {"Beginner": {"task": "Use XLOOKUP to find ProductName for ProductCode \"P002\" (refer to cell F2).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P002"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9)", "result": "Wireless Mouse"}, "Intermediate": {"task": "Use XLOOKUP to find Category for ProductCode \"P007\" (returns column 3 without needing a column index number).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P007"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,C2:C9)", "result": "Accessories"}, "Advanced": {"task": "Use XLOOKUP's if_not_found parameter so that if ProductCode \"P999\" is missing, it displays \"Not Found\" — without needing IFERROR.", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P999"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9,\"Not Found\")", "result": "Not Found"}}}, {"id": 37, "group": "XLOOKUP", "title": "XLOOKUP: Student List", "intro": "Look up information in the student list using XLOOKUP — more flexible than VLOOKUP.", "levels": {"Beginner": {"task": "Use XLOOKUP to find Name for StudentID \"S202\" (refer to cell F2).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S202"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9)", "result": "Nurul Iman"}, "Intermediate": {"task": "Use XLOOKUP to find Class for StudentID \"S207\" (returns column 3 without needing a column index number).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S207"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,C2:C9)", "result": "5C"}, "Advanced": {"task": "Use XLOOKUP's if_not_found parameter so that if StudentID \"S999\" is missing, it displays \"Not Found\" — without needing IFERROR.", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S999"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9,\"Not Found\")", "result": "Not Found"}}}, {"id": 38, "group": "XLOOKUP", "title": "XLOOKUP: Supplier List", "intro": "Look up information in the supplier list using XLOOKUP — more flexible than VLOOKUP.", "levels": {"Beginner": {"task": "Use XLOOKUP to find SupplierName for SupplierCode \"SP02\" (refer to cell F2).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP02"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9)", "result": "Bintang Supplies"}, "Intermediate": {"task": "Use XLOOKUP to find State for SupplierCode \"SP07\" (returns column 3 without needing a column index number).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP07"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,C2:C9)", "result": "Melaka"}, "Advanced": {"task": "Use XLOOKUP's if_not_found parameter so that if SupplierCode \"SP99\" is missing, it displays \"Not Found\" — without needing IFERROR.", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP99"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=XLOOKUP(F2,A2:A9,B2:B9,\"Not Found\")", "result": "Not Found"}}}, {"id": 39, "group": "INDEX-MATCH", "title": "INDEX-MATCH: Employee List", "intro": "A combination of INDEX + MATCH for a more flexible two-way lookup than VLOOKUP.", "levels": {"Beginner": {"task": "Use INDEX+MATCH to find Name for EmployeeID \"E104\" (refer to cell F2).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E104"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=INDEX(B2:B9,MATCH(F2,A2:A9,0))", "result": "Siti Zainab"}, "Intermediate": {"task": "Use INDEX+MATCH to find Salary for EmployeeID \"E105\" (rightmost column).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E105"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=INDEX(D2:D9,MATCH(F2,A2:A9,0))", "result": "4000"}, "Advanced": {"task": "Use two-way INDEX+MATCH: find the value for EmployeeID \"E105\" AND column \"Salary\" simultaneously (row + column match).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E105"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=INDEX(A2:D9,MATCH(F2,A2:A9,0),MATCH(\"Salary\",A1:D1,0))", "result": "4000"}}}, {"id": 40, "group": "INDEX-MATCH", "title": "INDEX-MATCH: Product Price List", "intro": "A combination of INDEX + MATCH for a more flexible two-way lookup than VLOOKUP.", "levels": {"Beginner": {"task": "Use INDEX+MATCH to find ProductName for ProductCode \"P004\" (refer to cell F2).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P004"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=INDEX(B2:B9,MATCH(F2,A2:A9,0))", "result": "4K Monitor"}, "Intermediate": {"task": "Use INDEX+MATCH to find Price for ProductCode \"P005\" (rightmost column).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P005"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=INDEX(D2:D9,MATCH(F2,A2:A9,0))", "result": "650"}, "Advanced": {"task": "Use two-way INDEX+MATCH: find the value for ProductCode \"P005\" AND column \"Price\" simultaneously (row + column match).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P005"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=INDEX(A2:D9,MATCH(F2,A2:A9,0),MATCH(\"Price\",A1:D1,0))", "result": "650"}}}, {"id": 41, "group": "INDEX-MATCH", "title": "INDEX-MATCH: Student List", "intro": "A combination of INDEX + MATCH for a more flexible two-way lookup than VLOOKUP.", "levels": {"Beginner": {"task": "Use INDEX+MATCH to find Name for StudentID \"S204\" (refer to cell F2).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S204"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=INDEX(B2:B9,MATCH(F2,A2:A9,0))", "result": "Aisyah Batrisyia"}, "Intermediate": {"task": "Use INDEX+MATCH to find Marks for StudentID \"S205\" (rightmost column).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S205"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=INDEX(D2:D9,MATCH(F2,A2:A9,0))", "result": "72"}, "Advanced": {"task": "Use two-way INDEX+MATCH: find the value for StudentID \"S205\" AND column \"Marks\" simultaneously (row + column match).", "headers": ["StudentID", "Name", "Class", "Marks", "", "Lookup"], "rows": [["S201", "Ali Hassan", "5A", 78, "", "S205"], ["S202", "Nurul Iman", "5B", 85, "", ""], ["S203", "Kumaran", "5A", 64, "", ""], ["S204", "Aisyah Batrisyia", "5C", 91, "", ""], ["S205", "Farid Zaman", "5B", 72, "", ""], ["S206", "Chong Wei", "5A", 88, "", ""], ["S207", "Siti Hajar", "5C", 69, "", ""], ["S208", "Rajesh Kumar", "5B", 95, "", ""]], "formula": "=INDEX(A2:D9,MATCH(F2,A2:A9,0),MATCH(\"Marks\",A1:D1,0))", "result": "72"}}}, {"id": 42, "group": "INDEX-MATCH", "title": "INDEX-MATCH: Supplier List", "intro": "A combination of INDEX + MATCH for a more flexible two-way lookup than VLOOKUP.", "levels": {"Beginner": {"task": "Use INDEX+MATCH to find SupplierName for SupplierCode \"SP04\" (refer to cell F2).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP04"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=INDEX(B2:B9,MATCH(F2,A2:A9,0))", "result": "Central Distributors"}, "Intermediate": {"task": "Use INDEX+MATCH to find LeadTimeDays for SupplierCode \"SP05\" (rightmost column).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP05"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=INDEX(D2:D9,MATCH(F2,A2:A9,0))", "result": "25"}, "Advanced": {"task": "Use two-way INDEX+MATCH: find the value for SupplierCode \"SP05\" AND column \"LeadTimeDays\" simultaneously (row + column match).", "headers": ["SupplierCode", "SupplierName", "State", "LeadTimeDays", "", "Lookup"], "rows": [["SP01", "Maju Trading", "Selangor", 30, "", "SP05"], ["SP02", "Bintang Supplies", "Johor", 45, "", ""], ["SP03", "Delta Resources", "Penang", 20, "", ""], ["SP04", "Central Distributors", "KL", 60, "", ""], ["SP05", "Utara Enterprise", "Kedah", 25, "", ""], ["SP06", "Timur Jaya", "Kelantan", 35, "", ""], ["SP07", "Selatan Niaga", "Melaka", 50, "", ""], ["SP08", "Borneo Supplies", "Sabah", 40, "", ""]], "formula": "=INDEX(A2:D9,MATCH(F2,A2:A9,0),MATCH(\"LeadTimeDays\",A1:D1,0))", "result": "25"}}}, {"id": 43, "group": "INDEX-MATCH", "title": "INDEX-MATCH: Employee List", "intro": "A combination of INDEX + MATCH for a more flexible two-way lookup than VLOOKUP.", "levels": {"Beginner": {"task": "Use INDEX+MATCH to find Name for EmployeeID \"E104\" (refer to cell F2).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E104"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=INDEX(B2:B9,MATCH(F2,A2:A9,0))", "result": "Siti Zainab"}, "Intermediate": {"task": "Use INDEX+MATCH to find Salary for EmployeeID \"E105\" (rightmost column).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E105"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=INDEX(D2:D9,MATCH(F2,A2:A9,0))", "result": "4000"}, "Advanced": {"task": "Use two-way INDEX+MATCH: find the value for EmployeeID \"E105\" AND column \"Salary\" simultaneously (row + column match).", "headers": ["EmployeeID", "Name", "Department", "Salary", "", "Lookup"], "rows": [["E101", "Ahmad Faiz", "Finance", 4200, "", "E105"], ["E102", "Nurul Aina", "Marketing", 3800, "", ""], ["E103", "Kumar Raj", "IT", 4600, "", ""], ["E104", "Siti Zainab", "HR", 3500, "", ""], ["E105", "Wei Ling", "Operations", 4000, "", ""], ["E106", "Farah Adam", "IT", 4400, "", ""], ["E107", "Danish Iman", "Marketing", 3600, "", ""], ["E108", "Mei Chen", "Finance", 4100, "", ""]], "formula": "=INDEX(A2:D9,MATCH(F2,A2:A9,0),MATCH(\"Salary\",A1:D1,0))", "result": "4000"}}}, {"id": 44, "group": "INDEX-MATCH", "title": "INDEX-MATCH: Product Price List", "intro": "A combination of INDEX + MATCH for a more flexible two-way lookup than VLOOKUP.", "levels": {"Beginner": {"task": "Use INDEX+MATCH to find ProductName for ProductCode \"P004\" (refer to cell F2).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P004"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=INDEX(B2:B9,MATCH(F2,A2:A9,0))", "result": "4K Monitor"}, "Intermediate": {"task": "Use INDEX+MATCH to find Price for ProductCode \"P005\" (rightmost column).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P005"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=INDEX(D2:D9,MATCH(F2,A2:A9,0))", "result": "650"}, "Advanced": {"task": "Use two-way INDEX+MATCH: find the value for ProductCode \"P005\" AND column \"Price\" simultaneously (row + column match).", "headers": ["ProductCode", "ProductName", "Category", "Price", "", "Lookup"], "rows": [["P001", "Laptop Pro 14in", "Electronics", 4200, "", "P005"], ["P002", "Wireless Mouse", "Accessories", 45, "", ""], ["P003", "Mechanical Keyboard", "Accessories", 180, "", ""], ["P004", "4K Monitor", "Electronics", 950, "", ""], ["P005", "Laser Printer", "Office Supplies", 650, "", ""], ["P006", "USB-C Hub", "Accessories", 90, "", ""], ["P007", "Webcam HD", "Accessories", 120, "", ""], ["P008", "Office Chair", "Furniture", 380, "", ""]], "formula": "=INDEX(A2:D9,MATCH(F2,A2:A9,0),MATCH(\"Price\",A1:D1,0))", "result": "650"}}}, {"id": 45, "group": "PIVOT", "title": "PivotTable: Sales by Region & Product", "intro": "Build a PivotTable to summarize raw data for sales by region & product without manual formulas.", "levels": {"Beginner": {"task": "Build a PivotTable: drag Region to Rows, and Sales to Values (Sum of Sales).", "headers": ["Region", "Product", "Sales"], "rows": [["Penang", "Laptop", 2034], ["KL", "Laptop", 1499], ["Penang", "Mouse", 715], ["KL", "Mouse", 1425], ["Penang", "Mouse", 2674], ["Selangor", "Mouse", 1471], ["Penang", "Laptop", 2369], ["Penang", "Mouse", 2885], ["Selangor", "Laptop", 2658], ["Penang", "Laptop", 820], ["Penang", "Mouse", 1244], ["KL", "Laptop", 1001], ["KL", "Mouse", 1988], ["Selangor", "Mouse", 2652], ["Penang", "Laptop", 2382], ["Penang", "Laptop", 1859], ["Selangor", "Mouse", 619], ["Selangor", "Laptop", 2982], ["KL", "Laptop", 2229], ["Penang", "Laptop", 584]], "formula": "PivotTable Fields → Rows: Region | Values: Sum of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Region", "Sum of Sales"], ["KL", 8142], ["Selangor", 10382], ["Penang", 17566]]}, "Intermediate": {"task": "Build a PivotTable: drag Region to Rows, Product to Columns, and Sales to Values (cross-tab).", "headers": ["Region", "Product", "Sales"], "rows": [["Penang", "Laptop", 2034], ["KL", "Laptop", 1499], ["Penang", "Mouse", 715], ["KL", "Mouse", 1425], ["Penang", "Mouse", 2674], ["Selangor", "Mouse", 1471], ["Penang", "Laptop", 2369], ["Penang", "Mouse", 2885], ["Selangor", "Laptop", 2658], ["Penang", "Laptop", 820], ["Penang", "Mouse", 1244], ["KL", "Laptop", 1001], ["KL", "Mouse", 1988], ["Selangor", "Mouse", 2652], ["Penang", "Laptop", 2382], ["Penang", "Laptop", 1859], ["Selangor", "Mouse", 619], ["Selangor", "Laptop", 2982], ["KL", "Laptop", 2229], ["Penang", "Laptop", 584]], "formula": "PivotTable Fields → Rows: Region | Columns: Product | Values: Sum of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Region", "Laptop", "Mouse"], ["KL", 4729, 3413], ["Selangor", 5640, 4742], ["Penang", 10048, 7518]]}, "Advanced": {"task": "Build a PivotTable: drag Region to Rows, and place TWO value fields — Sum of Sales AND Count of Sales — in Values.", "headers": ["Region", "Product", "Sales"], "rows": [["Penang", "Laptop", 2034], ["KL", "Laptop", 1499], ["Penang", "Mouse", 715], ["KL", "Mouse", 1425], ["Penang", "Mouse", 2674], ["Selangor", "Mouse", 1471], ["Penang", "Laptop", 2369], ["Penang", "Mouse", 2885], ["Selangor", "Laptop", 2658], ["Penang", "Laptop", 820], ["Penang", "Mouse", 1244], ["KL", "Laptop", 1001], ["KL", "Mouse", 1988], ["Selangor", "Mouse", 2652], ["Penang", "Laptop", 2382], ["Penang", "Laptop", 1859], ["Selangor", "Mouse", 619], ["Selangor", "Laptop", 2982], ["KL", "Laptop", 2229], ["Penang", "Laptop", 584]], "formula": "PivotTable Fields → Rows: Region | Values: Sum of Sales, Count of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Region", "Sum of Sales", "Count"], ["KL", 8142, 5], ["Selangor", 10382, 5], ["Penang", 17566, 10]]}}}, {"id": 46, "group": "PIVOT", "title": "PivotTable: Expenses by Department & Month", "intro": "Build a PivotTable to summarize raw data for expenses by department & month without manual formulas.", "levels": {"Beginner": {"task": "Build a PivotTable: drag Department to Rows, and Expense to Values (Sum of Expense).", "headers": ["Department", "Month", "Expense"], "rows": [["HR", "February", 534], ["Finance", "January", 1090], ["HR", "February", 1759], ["Finance", "February", 1608], ["HR", "February", 1687], ["HR", "February", 1637], ["Finance", "January", 1331], ["Marketing", "February", 1069], ["Finance", "January", 1754], ["HR", "January", 1664], ["Marketing", "February", 1420], ["HR", "February", 1759], ["HR", "February", 1798], ["HR", "January", 310], ["HR", "January", 1597], ["HR", "January", 518], ["HR", "February", 463], ["Finance", "February", 1752], ["Finance", "February", 935], ["Finance", "February", 1322]], "formula": "PivotTable Fields → Rows: Department | Values: Sum of Expense", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Department", "Sum of Expense"], ["Marketing", 2489], ["HR", 13726], ["Finance", 9792]]}, "Intermediate": {"task": "Build a PivotTable: drag Department to Rows, Month to Columns, and Expense to Values (cross-tab).", "headers": ["Department", "Month", "Expense"], "rows": [["HR", "February", 534], ["Finance", "January", 1090], ["HR", "February", 1759], ["Finance", "February", 1608], ["HR", "February", 1687], ["HR", "February", 1637], ["Finance", "January", 1331], ["Marketing", "February", 1069], ["Finance", "January", 1754], ["HR", "January", 1664], ["Marketing", "February", 1420], ["HR", "February", 1759], ["HR", "February", 1798], ["HR", "January", 310], ["HR", "January", 1597], ["HR", "January", 518], ["HR", "February", 463], ["Finance", "February", 1752], ["Finance", "February", 935], ["Finance", "February", 1322]], "formula": "PivotTable Fields → Rows: Department | Columns: Month | Values: Sum of Expense", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Department", "January", "February"], ["Marketing", 0, 2489], ["HR", 4089, 9637], ["Finance", 4175, 5617]]}, "Advanced": {"task": "Build a PivotTable: drag Department to Rows, and place TWO value fields — Sum of Expense AND Count of Expense — in Values.", "headers": ["Department", "Month", "Expense"], "rows": [["HR", "February", 534], ["Finance", "January", 1090], ["HR", "February", 1759], ["Finance", "February", 1608], ["HR", "February", 1687], ["HR", "February", 1637], ["Finance", "January", 1331], ["Marketing", "February", 1069], ["Finance", "January", 1754], ["HR", "January", 1664], ["Marketing", "February", 1420], ["HR", "February", 1759], ["HR", "February", 1798], ["HR", "January", 310], ["HR", "January", 1597], ["HR", "January", 518], ["HR", "February", 463], ["Finance", "February", 1752], ["Finance", "February", 935], ["Finance", "February", 1322]], "formula": "PivotTable Fields → Rows: Department | Values: Sum of Expense, Count of Expense", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Department", "Sum of Expense", "Count"], ["Marketing", 2489, 2], ["HR", 13726, 11], ["Finance", 9792, 7]]}}}, {"id": 47, "group": "PIVOT", "title": "PivotTable: Restaurant Sales by Category & Shift", "intro": "Build a PivotTable to summarize raw data for restaurant sales by category & shift without manual formulas.", "levels": {"Beginner": {"task": "Build a PivotTable: drag MenuCategory to Rows, and Sales to Values (Sum of Sales).", "headers": ["MenuCategory", "Shift", "Sales"], "rows": [["Beverages", "Afternoon", 592], ["Food", "Morning", 796], ["Snacks", "Morning", 632], ["Food", "Afternoon", 877], ["Beverages", "Afternoon", 375], ["Snacks", "Morning", 275], ["Snacks", "Afternoon", 842], ["Beverages", "Afternoon", 446], ["Food", "Afternoon", 413], ["Food", "Morning", 157], ["Beverages", "Afternoon", 260], ["Snacks", "Afternoon", 530], ["Beverages", "Morning", 689], ["Food", "Afternoon", 757], ["Food", "Afternoon", 503], ["Beverages", "Morning", 166], ["Snacks", "Afternoon", 122], ["Snacks", "Morning", 335], ["Snacks", "Morning", 577], ["Beverages", "Morning", 873]], "formula": "PivotTable Fields → Rows: MenuCategory | Values: Sum of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["MenuCategory", "Sum of Sales"], ["Food", 3503], ["Beverages", 3401], ["Snacks", 3313]]}, "Intermediate": {"task": "Build a PivotTable: drag MenuCategory to Rows, Shift to Columns, and Sales to Values (cross-tab).", "headers": ["MenuCategory", "Shift", "Sales"], "rows": [["Beverages", "Afternoon", 592], ["Food", "Morning", 796], ["Snacks", "Morning", 632], ["Food", "Afternoon", 877], ["Beverages", "Afternoon", 375], ["Snacks", "Morning", 275], ["Snacks", "Afternoon", 842], ["Beverages", "Afternoon", 446], ["Food", "Afternoon", 413], ["Food", "Morning", 157], ["Beverages", "Afternoon", 260], ["Snacks", "Afternoon", 530], ["Beverages", "Morning", 689], ["Food", "Afternoon", 757], ["Food", "Afternoon", 503], ["Beverages", "Morning", 166], ["Snacks", "Afternoon", 122], ["Snacks", "Morning", 335], ["Snacks", "Morning", 577], ["Beverages", "Morning", 873]], "formula": "PivotTable Fields → Rows: MenuCategory | Columns: Shift | Values: Sum of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["MenuCategory", "Morning", "Afternoon"], ["Food", 953, 2550], ["Beverages", 1728, 1673], ["Snacks", 1819, 1494]]}, "Advanced": {"task": "Build a PivotTable: drag MenuCategory to Rows, and place TWO value fields — Sum of Sales AND Count of Sales — in Values.", "headers": ["MenuCategory", "Shift", "Sales"], "rows": [["Beverages", "Afternoon", 592], ["Food", "Morning", 796], ["Snacks", "Morning", 632], ["Food", "Afternoon", 877], ["Beverages", "Afternoon", 375], ["Snacks", "Morning", 275], ["Snacks", "Afternoon", 842], ["Beverages", "Afternoon", 446], ["Food", "Afternoon", 413], ["Food", "Morning", 157], ["Beverages", "Afternoon", 260], ["Snacks", "Afternoon", 530], ["Beverages", "Morning", 689], ["Food", "Afternoon", 757], ["Food", "Afternoon", 503], ["Beverages", "Morning", 166], ["Snacks", "Afternoon", 122], ["Snacks", "Morning", 335], ["Snacks", "Morning", 577], ["Beverages", "Morning", 873]], "formula": "PivotTable Fields → Rows: MenuCategory | Values: Sum of Sales, Count of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["MenuCategory", "Sum of Sales", "Count"], ["Food", 3503, 6], ["Beverages", 3401, 7], ["Snacks", 3313, 7]]}}}, {"id": 48, "group": "PIVOT", "title": "PivotTable: Website Traffic by Channel & Device", "intro": "Build a PivotTable to summarize raw data for website traffic by channel & device without manual formulas.", "levels": {"Beginner": {"task": "Build a PivotTable: drag Channel to Rows, and Visitors to Values (Sum of Visitors).", "headers": ["Channel", "Device", "Visitors"], "rows": [["Organic", "Mobile", 347], ["Social", "Mobile", 248], ["Organic", "Desktop", 455], ["Organic", "Mobile", 308], ["Social", "Desktop", 163], ["Organic", "Desktop", 555], ["Social", "Desktop", 113], ["Social", "Mobile", 452], ["Social", "Mobile", 600], ["Paid Ads", "Desktop", 273], ["Organic", "Desktop", 271], ["Social", "Desktop", 387], ["Organic", "Mobile", 87], ["Social", "Desktop", 306], ["Social", "Desktop", 481], ["Organic", "Desktop", 212], ["Organic", "Mobile", 424], ["Organic", "Desktop", 597], ["Organic", "Mobile", 120], ["Paid Ads", "Mobile", 530]], "formula": "PivotTable Fields → Rows: Channel | Values: Sum of Visitors", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Channel", "Sum of Visitors"], ["Organic", 3376], ["Social", 2750], ["Paid Ads", 803]]}, "Intermediate": {"task": "Build a PivotTable: drag Channel to Rows, Device to Columns, and Visitors to Values (cross-tab).", "headers": ["Channel", "Device", "Visitors"], "rows": [["Organic", "Mobile", 347], ["Social", "Mobile", 248], ["Organic", "Desktop", 455], ["Organic", "Mobile", 308], ["Social", "Desktop", 163], ["Organic", "Desktop", 555], ["Social", "Desktop", 113], ["Social", "Mobile", 452], ["Social", "Mobile", 600], ["Paid Ads", "Desktop", 273], ["Organic", "Desktop", 271], ["Social", "Desktop", 387], ["Organic", "Mobile", 87], ["Social", "Desktop", 306], ["Social", "Desktop", 481], ["Organic", "Desktop", 212], ["Organic", "Mobile", 424], ["Organic", "Desktop", 597], ["Organic", "Mobile", 120], ["Paid Ads", "Mobile", 530]], "formula": "PivotTable Fields → Rows: Channel | Columns: Device | Values: Sum of Visitors", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Channel", "Mobile", "Desktop"], ["Organic", 1286, 2090], ["Social", 1300, 1450], ["Paid Ads", 530, 273]]}, "Advanced": {"task": "Build a PivotTable: drag Channel to Rows, and place TWO value fields — Sum of Visitors AND Count of Visitors — in Values.", "headers": ["Channel", "Device", "Visitors"], "rows": [["Organic", "Mobile", 347], ["Social", "Mobile", 248], ["Organic", "Desktop", 455], ["Organic", "Mobile", 308], ["Social", "Desktop", 163], ["Organic", "Desktop", 555], ["Social", "Desktop", 113], ["Social", "Mobile", 452], ["Social", "Mobile", 600], ["Paid Ads", "Desktop", 273], ["Organic", "Desktop", 271], ["Social", "Desktop", 387], ["Organic", "Mobile", 87], ["Social", "Desktop", 306], ["Social", "Desktop", 481], ["Organic", "Desktop", 212], ["Organic", "Mobile", 424], ["Organic", "Desktop", 597], ["Organic", "Mobile", 120], ["Paid Ads", "Mobile", 530]], "formula": "PivotTable Fields → Rows: Channel | Values: Sum of Visitors, Count of Visitors", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Channel", "Sum of Visitors", "Count"], ["Organic", 3376, 10], ["Social", 2750, 8], ["Paid Ads", 803, 2]]}}}, {"id": 49, "group": "PIVOT", "title": "PivotTable: Salesperson Sales by Region", "intro": "Build a PivotTable to summarize raw data for salesperson sales by region without manual formulas.", "levels": {"Beginner": {"task": "Build a PivotTable: drag Region to Rows, and Sales to Values (Sum of Sales).", "headers": ["Region", "Salesperson", "Sales"], "rows": [["Johor", "Siti", 2896], ["Selangor", "Ali", 2473], ["Selangor", "Ali", 2815], ["KL", "Siti", 898], ["Selangor", "Ali", 2095], ["Selangor", "Siti", 2792], ["Selangor", "Ali", 1953], ["Selangor", "Ali", 1584], ["Johor", "Ali", 1109], ["Johor", "Ali", 1012], ["KL", "Ali", 3269], ["KL", "Siti", 843], ["Johor", "Ali", 3154], ["Selangor", "Siti", 2054], ["KL", "Ali", 1869], ["Johor", "Siti", 2440], ["Selangor", "Siti", 2914], ["Johor", "Siti", 1410], ["Selangor", "Siti", 2186], ["KL", "Siti", 3454]], "formula": "PivotTable Fields → Rows: Region | Values: Sum of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Region", "Sum of Sales"], ["KL", 10333], ["Selangor", 20866], ["Johor", 12021]]}, "Intermediate": {"task": "Build a PivotTable: drag Region to Rows, Salesperson to Columns, and Sales to Values (cross-tab).", "headers": ["Region", "Salesperson", "Sales"], "rows": [["Johor", "Siti", 2896], ["Selangor", "Ali", 2473], ["Selangor", "Ali", 2815], ["KL", "Siti", 898], ["Selangor", "Ali", 2095], ["Selangor", "Siti", 2792], ["Selangor", "Ali", 1953], ["Selangor", "Ali", 1584], ["Johor", "Ali", 1109], ["Johor", "Ali", 1012], ["KL", "Ali", 3269], ["KL", "Siti", 843], ["Johor", "Ali", 3154], ["Selangor", "Siti", 2054], ["KL", "Ali", 1869], ["Johor", "Siti", 2440], ["Selangor", "Siti", 2914], ["Johor", "Siti", 1410], ["Selangor", "Siti", 2186], ["KL", "Siti", 3454]], "formula": "PivotTable Fields → Rows: Region | Columns: Salesperson | Values: Sum of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Region", "Ali", "Siti"], ["KL", 5138, 5195], ["Selangor", 10920, 9946], ["Johor", 5275, 6746]]}, "Advanced": {"task": "Build a PivotTable: drag Region to Rows, and place TWO value fields — Sum of Sales AND Count of Sales — in Values.", "headers": ["Region", "Salesperson", "Sales"], "rows": [["Johor", "Siti", 2896], ["Selangor", "Ali", 2473], ["Selangor", "Ali", 2815], ["KL", "Siti", 898], ["Selangor", "Ali", 2095], ["Selangor", "Siti", 2792], ["Selangor", "Ali", 1953], ["Selangor", "Ali", 1584], ["Johor", "Ali", 1109], ["Johor", "Ali", 1012], ["KL", "Ali", 3269], ["KL", "Siti", 843], ["Johor", "Ali", 3154], ["Selangor", "Siti", 2054], ["KL", "Ali", 1869], ["Johor", "Siti", 2440], ["Selangor", "Siti", 2914], ["Johor", "Siti", 1410], ["Selangor", "Siti", 2186], ["KL", "Siti", 3454]], "formula": "PivotTable Fields → Rows: Region | Values: Sum of Sales, Count of Sales", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Region", "Sum of Sales", "Count"], ["KL", 10333, 5], ["Selangor", 20866, 9], ["Johor", 12021, 6]]}}}, {"id": 50, "group": "PIVOT", "title": "PivotTable: Support Tickets by Priority & Agent", "intro": "Build a PivotTable to summarize raw data for support tickets by priority & agent without manual formulas.", "levels": {"Beginner": {"task": "Build a PivotTable: drag Priority to Rows, and ResolutionHours to Values (Sum of ResolutionHours).", "headers": ["Priority", "Agent", "ResolutionHours"], "rows": [["High", "Danish", 23], ["High", "Danish", 40], ["Low", "Aina", 25], ["Low", "Aina", 34], ["Medium", "Danish", 26], ["Low", "Aina", 34], ["High", "Danish", 8], ["Low", "Aina", 4], ["Low", "Aina", 3], ["Medium", "Danish", 27], ["High", "Aina", 5], ["Medium", "Danish", 33], ["High", "Danish", 40], ["High", "Danish", 36], ["High", "Aina", 23], ["High", "Aina", 6], ["High", "Aina", 9], ["High", "Danish", 2], ["High", "Aina", 7], ["Low", "Danish", 31]], "formula": "PivotTable Fields → Rows: Priority | Values: Sum of ResolutionHours", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Priority", "Sum of ResolutionHours"], ["Low", 131], ["Medium", 86], ["High", 199]]}, "Intermediate": {"task": "Build a PivotTable: drag Priority to Rows, Agent to Columns, and ResolutionHours to Values (cross-tab).", "headers": ["Priority", "Agent", "ResolutionHours"], "rows": [["High", "Danish", 23], ["High", "Danish", 40], ["Low", "Aina", 25], ["Low", "Aina", 34], ["Medium", "Danish", 26], ["Low", "Aina", 34], ["High", "Danish", 8], ["Low", "Aina", 4], ["Low", "Aina", 3], ["Medium", "Danish", 27], ["High", "Aina", 5], ["Medium", "Danish", 33], ["High", "Danish", 40], ["High", "Danish", 36], ["High", "Aina", 23], ["High", "Aina", 6], ["High", "Aina", 9], ["High", "Danish", 2], ["High", "Aina", 7], ["Low", "Danish", 31]], "formula": "PivotTable Fields → Rows: Priority | Columns: Agent | Values: Sum of ResolutionHours", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Priority", "Aina", "Danish"], ["Low", 100, 31], ["Medium", 0, 86], ["High", 50, 149]]}, "Advanced": {"task": "Build a PivotTable: drag Priority to Rows, and place TWO value fields — Sum of ResolutionHours AND Count of ResolutionHours — in Values.", "headers": ["Priority", "Agent", "ResolutionHours"], "rows": [["High", "Danish", 23], ["High", "Danish", 40], ["Low", "Aina", 25], ["Low", "Aina", 34], ["Medium", "Danish", 26], ["Low", "Aina", 34], ["High", "Danish", 8], ["Low", "Aina", 4], ["Low", "Aina", 3], ["Medium", "Danish", 27], ["High", "Aina", 5], ["Medium", "Danish", 33], ["High", "Danish", 40], ["High", "Danish", 36], ["High", "Aina", 23], ["High", "Aina", 6], ["High", "Aina", 9], ["High", "Danish", 2], ["High", "Aina", 7], ["Low", "Danish", 31]], "formula": "PivotTable Fields → Rows: Priority | Values: Sum of ResolutionHours, Count of ResolutionHours", "result": "See the full answer table below / in the Answer sheet.", "resultTable": [["Priority", "Sum of ResolutionHours", "Count"], ["Low", 131, 6], ["Medium", 86, 3], ["High", 199, 11]]}}}];
+
+    /* =========================================
+       RENDER
+    ========================================= */
+    const grid = document.getElementById("grid");
+    let activeGroup = "ALL";
+
+    function renderGrid() {
+      grid.innerHTML = "";
+      const list = activeGroup === "ALL" ? TOPICS : TOPICS.filter((t) => t.group === activeGroup);
+
+      if (list.length === 0) {
+        grid.innerHTML = '<div class="empty-state">No modules in this category.</div>';
+        return;
+      }
+
+      list.forEach((topic) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div>
+            <span class="badge">${topic.group}</span>
+            <span class="levels-badge">3 Levels</span>
+          </div>
+
+          <h3>${topic.title}</h3>
+
+          <div class="task">${topic.intro}</div>
+
+          <div class="formula">${topic.levels.Beginner.formula}</div>
+
+          <button class="dl" onclick="downloadTopic(${topic.id})">Download Excel (3 Levels)</button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    document.getElementById("tabbar").addEventListener("click", (e) => {
+      const btn = e.target.closest(".tab");
+      if (!btn) return;
+      document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+      btn.classList.add("active");
+      activeGroup = btn.dataset.group;
+      renderGrid();
+    });
+
+    /* =========================================
+       EXCEL STYLING — recolored to the black /
+       white / red / pink / blue palette.
+       Sum-related highlights use pink/red instead
+       of the original green/brass scheme.
+    ========================================= */
+
+    const EXCEL_COLORS = {
+      headerBg: "FFD6E4",     // pale pink header fill
+      headerText: "B20000",   // red
+      taskBg: "FFF0F5",       // very pale pink
+      answerBg: "FFE3EC",     // pink answer highlight
+      answerText: "8A0000",   // dark red
+      tableBg: "FFF7FA",      // near-white pink tint
+      border: "D0D0D0",
+      text: "1A1A1A"
+    };
+
+    const thinBorder = {
+      top: { style: "thin", color: { rgb: EXCEL_COLORS.border } },
+      bottom: { style: "thin", color: { rgb: EXCEL_COLORS.border } },
+      left: { style: "thin", color: { rgb: EXCEL_COLORS.border } },
+      right: { style: "thin", color: { rgb: EXCEL_COLORS.border } }
+    };
+
+    const answerBorder = {
+      top: { style: "medium", color: { rgb: EXCEL_COLORS.answerText } },
+      bottom: { style: "medium", color: { rgb: EXCEL_COLORS.answerText } },
+      left: { style: "medium", color: { rgb: EXCEL_COLORS.answerText } },
+      right: { style: "medium", color: { rgb: EXCEL_COLORS.answerText } }
+    };
+
+    function styleCell(ws, address, style) {
+      if (!ws[address]) return;
+      ws[address].s = style;
+    }
+
+    function styleRange(ws, startRow, endRow, startCol, endCol, style) {
+      for (let r = startRow; r <= endRow; r++) {
+        for (let c = startCol; c <= endCol; c++) {
+          const address = XLSX.utils.encode_cell({ r: r, c: c });
+          if (!ws[address]) continue;
+          ws[address].s = style;
+        }
+      }
+    }
+
+    function buildPracticeSheet(level) {
+      const practice = [
+        ["TASK", level.task],
+        [],
+        level.headers,
+        ...level.rows
+      ];
+
+      const ws = XLSX.utils.aoa_to_sheet(practice);
+
+      ws["!cols"] = level.headers.map((header, index) => ({
+        wch: index === 0 ? 22 : 18
+      }));
+
+      styleCell(ws, "A1", {
+        font: { name: "Calibri", sz: 12, bold: true, color: { rgb: EXCEL_COLORS.headerText } },
+        fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.headerBg } },
+        alignment: { vertical: "center", horizontal: "left", wrapText: true },
+        border: thinBorder
+      });
+
+      styleCell(ws, "B1", {
+        font: { name: "Calibri", sz: 11, bold: true, color: { rgb: EXCEL_COLORS.text } },
+        fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.taskBg } },
+        alignment: { vertical: "center", horizontal: "left", wrapText: true },
+        border: thinBorder
+      });
+
+      level.headers.forEach((header, col) => {
+        const address = XLSX.utils.encode_cell({ r: 2, c: col });
+        styleCell(ws, address, {
+          font: { name: "Calibri", sz: 11, bold: true, color: { rgb: EXCEL_COLORS.headerText } },
+          fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.headerBg } },
+          alignment: { vertical: "center", horizontal: "center", wrapText: true },
+          border: thinBorder
+        });
+      });
+
+      level.rows.forEach((row, rowIndex) => {
+        row.forEach((value, colIndex) => {
+          const address = XLSX.utils.encode_cell({ r: rowIndex + 3, c: colIndex });
+          styleCell(ws, address, {
+            font: { name: "Calibri", sz: 10, color: { rgb: EXCEL_COLORS.text } },
+            alignment: { vertical: "center", horizontal: "left", wrapText: true },
+            border: thinBorder
+          });
+        });
+      });
+
+      ws["!freeze"] = { xSplit: 0, ySplit: 3 };
+
+      return ws;
+    }
+
+    function buildAnswerSheet(topic, levelName, level) {
+      const answer = [
+        ["MODULE", topic.title],
+        ["LEVEL", levelName],
+        [],
+        ["FORMULA / STEPS", level.formula],
+        [],
+        ["ANSWER", level.result]
+      ];
+
+      if (level.resultTable) {
+        answer.push([]);
+        answer.push(["FULL ANSWER TABLE"]);
+        level.resultTable.forEach(row => {
+          answer.push(row);
+        });
+      }
+
+      const ws = XLSX.utils.aoa_to_sheet(answer);
+
+      ws["!cols"] = [
+        { wch: 27 }, { wch: 65 }, { wch: 20 }, { wch: 20 }, { wch: 20 }, { wch: 20 }
+      ];
+
+      styleCell(ws, "A1", {
+        font: { name: "Calibri", sz: 12, bold: true, color: { rgb: EXCEL_COLORS.headerText } },
+        fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.headerBg } },
+        alignment: { vertical: "center" },
+        border: thinBorder
+      });
+
+      styleCell(ws, "B1", {
+        font: { name: "Calibri", sz: 14, bold: true, color: { rgb: EXCEL_COLORS.headerText } },
+        fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.taskBg } },
+        alignment: { vertical: "center", wrapText: true },
+        border: thinBorder
+      });
+
+      styleCell(ws, "A2", {
+        font: { name: "Calibri", sz: 11, bold: true },
+        fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.tableBg } },
+        alignment: { vertical: "center" },
+        border: thinBorder
+      });
+
+      styleCell(ws, "B2", {
+        font: { name: "Calibri", sz: 11, bold: true },
+        fill: { patternType: "solid", fgColor: { rgb: "FFFFFF" } },
+        alignment: { vertical: "center" },
+        border: thinBorder
+      });
+
+      styleCell(ws, "A4", {
+        font: { name: "Calibri", sz: 11, bold: true },
+        fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.tableBg } },
+        alignment: { vertical: "center", wrapText: true },
+        border: thinBorder
+      });
+
+      styleCell(ws, "B4", {
+        font: { name: "Consolas", sz: 11, bold: true },
+        fill: { patternType: "solid", fgColor: { rgb: "FFFFFF" } },
+        alignment: { vertical: "center", wrapText: true },
+        border: thinBorder
+      });
+
+      styleCell(ws, "A6", {
+        font: { name: "Calibri", sz: 12, bold: true },
+        fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.answerBg } },
+        alignment: { horizontal: "center", vertical: "center" },
+        border: answerBorder
+      });
+
+      styleCell(ws, "B6", {
+        font: { name: "Calibri", sz: 14, bold: true, color: { rgb: EXCEL_COLORS.answerText } },
+        fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.answerBg } },
+        alignment: { horizontal: "left", vertical: "center", wrapText: true },
+        border: answerBorder
+      });
+
+      if (level.resultTable) {
+        const tableTitleRow = 8;
+
+        styleCell(ws, "A8", {
+          font: { name: "Calibri", sz: 12, bold: true, color: { rgb: EXCEL_COLORS.headerText } },
+          fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.headerBg } },
+          alignment: { vertical: "center" },
+          border: thinBorder
+        });
+
+        const headers = level.resultTable[0];
+
+        headers.forEach((header, colIndex) => {
+          const address = XLSX.utils.encode_cell({ r: tableTitleRow, c: colIndex });
+          styleCell(ws, address, {
+            font: { name: "Calibri", sz: 11, bold: true, color: { rgb: EXCEL_COLORS.headerText } },
+            fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.headerBg } },
+            alignment: { horizontal: "center", vertical: "center", wrapText: true },
+            border: thinBorder
+          });
+        });
+
+        level.resultTable.slice(1).forEach((row, rowIndex) => {
+          row.forEach((value, colIndex) => {
+            const address = XLSX.utils.encode_cell({ r: tableTitleRow + 1 + rowIndex, c: colIndex });
+            styleCell(ws, address, {
+              font: { name: "Calibri", sz: 10, bold: true, color: { rgb: EXCEL_COLORS.text } },
+              fill: { patternType: "solid", fgColor: { rgb: EXCEL_COLORS.tableBg } },
+              alignment: { vertical: "center", horizontal: "left", wrapText: true },
+              border: thinBorder
+            });
+          });
+        });
+      }
+
+      ws["!rows"] = {
+        0: { hpt: 25 }, 1: { hpt: 22 }, 3: { hpt: 35 }, 5: { hpt: 32 }, 7: { hpt: 25 }
+      };
+
+      return ws;
+    }
+
+    function downloadTopic(id) {
+      try {
+        const topic = TOPICS.find(t => t.id === id);
+
+        if (!topic) {
+          alert("Module not found.");
+          return;
+        }
+
+        if (typeof XLSX === "undefined" || !XLSX.utils || !XLSX.writeFile) {
+          alert("The Excel library failed to load. Please refresh the page and try again.");
+          return;
+        }
+
+        const wb = XLSX.utils.book_new();
+
+        LEVELS.forEach(levelName => {
+          const level = topic.levels[levelName];
+          if (!level) return;
+
+          const practiceSheet = buildPracticeSheet(level);
+          const answerSheet = buildAnswerSheet(topic, levelName, level);
+
+          XLSX.utils.book_append_sheet(wb, practiceSheet, `${levelName} Practice`);
+          XLSX.utils.book_append_sheet(wb, answerSheet, `${levelName} Answer`);
+        });
+
+        const safeTitle = topic.title
+          .replace(/[^A-Za-z0-9]+/g, "_")
+          .replace(/^_+|_+$/g, "")
+          .slice(0, 40);
+
+        const fileName = `${safeTitle}_Module_${topic.id}.xlsx`;
+
+        XLSX.writeFile(wb, fileName);
+
+      } catch (error) {
+        console.error("Excel generation error:", error);
+        alert("Failed to generate Excel.\\n\\nError: " + error.message);
+      }
+    }
+
+    // cycling formula bar - showcases real formulas from every module group
+    const FORMULAS = TOPICS
+      .filter(t => t.group !== "PIVOT")
+      .map(t => t.levels.Beginner.formula.split('|')[0].trim());
+    let fi = 0;
+    function cycleFx() {
+      const el = document.getElementById('fxCycle');
+      el.textContent = FORMULAS[fi];
+      fi = (fi + 1) % FORMULAS.length;
+    }
+    cycleFx();
+    setInterval(cycleFx, 2600);
+
+    renderGrid();
+  </script>
+</body>
+</html>

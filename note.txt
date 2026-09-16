@@ -8,7 +8,7 @@ git branch -M main
 git remote add origin https://github.com/kelassz/test.git
 git push -u origin main
 enter your github username
-enter your password--- go to https://github.com/settings/tokens > crete new token > tick repo > generate > copy and paste the token as password
+enter your PASSWORD--- go to https://github.com/settings/tokens > crete new token > tick repo > generate > copy and paste the token as PASSWORD
 
 ================================
 ================================
