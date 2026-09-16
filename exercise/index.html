@@ -961,7 +961,7 @@
     <header>
         <nav class="nav-container">
 
-            <a href="index.html" class="nav-logo">
+            <a href="../" class="nav-logo">
                 <img src="../photo/ssz-icon.png"
                      alt="SSZ Training Logo"
                      class="nav-icon">
@@ -976,7 +976,7 @@
                         Back To Learning
                     </a>
 
-                    <a href="index.html#the-team" class="nav-cta">
+                    <a href="#the-team" class="nav-cta">
                         Contact Us
                     </a>
 
@@ -2212,6 +2212,24 @@
             }
         );
 
+    </script>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href').slice(1);
+                const target = document.getElementById(targetId);
+
+                if (!target) return;
+
+                e.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
     </script>
 
 </body>
