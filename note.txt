@@ -18,7 +18,7 @@ open terminal
 
 cd /Users/zahil/Desktop/kelassz
 git add .
-git commit -m "update UI / fix layout / whatever you changed"
+git commit -m "fix bugs"
 git push
 
 wait for 5 minutes or so
